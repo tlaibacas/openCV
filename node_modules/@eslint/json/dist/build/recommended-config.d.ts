@@ -1,0 +1,7 @@
+export default rules;
+declare const rules: {
+    readonly "json/no-duplicate-keys": "error";
+    readonly "json/no-empty-keys": "error";
+    readonly "json/no-unnormalized-keys": "error";
+    readonly "json/no-unsafe-values": "error";
+};
