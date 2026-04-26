@@ -5,11 +5,10 @@ import { dataCleaner } from "./middleware/bruteShield.js";
 config();
 dataCleaner();
 
-const port: number = Number(process.env.PORT);
-const host: string = process.env.HOST || "localhost";
+const port: number = Number(process.env.PORT) || 3000;
 
 const server = buildsv();
-server.listen({ port: port, host: host }, (err, address) => {
+server.listen({ port: port, host: "0.0.0.0" }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
