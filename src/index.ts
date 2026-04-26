@@ -6,9 +6,10 @@ config();
 dataCleaner();
 
 const port: number = Number(process.env.PORT);
+const host: string = process.env.HOST || "localhost";
 
 const server = buildsv();
-server.listen({ port: port }, (err, address) => {
+server.listen({ port: port, host: host }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
