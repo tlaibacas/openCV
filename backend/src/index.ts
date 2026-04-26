@@ -5,14 +5,13 @@ import { dataCleaner } from "./middleware/bruteShield.js";
 config();
 dataCleaner();
 
-const host: string = (process.env.HOST as string | undefined) ?? "localhost";
 const port: number = Number(process.env.PORT);
 
 const server = buildsv();
-server.listen({ port: port, host: host }, (err) => {
+server.listen({ port: port }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
-  console.info("Server started at " + `${host}:${port}`);
+  console.info(`Server started at ${address}`);
 });
