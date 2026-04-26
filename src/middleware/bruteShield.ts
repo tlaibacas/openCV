@@ -4,9 +4,9 @@ type newData = {
   blockedUntil?: number | undefined;
 };
 const data = new Map<string, newData>();
-const rate: number = 150;
-const timeWindow: number = 30 * 60_000;
-const blockTime: number = 10_000;
+const rate = Number(process.env.RATE_LIMIT ?? 60);
+const timeWindow = Number(process.env.TIME_WINDOW_MS ?? 10 * 60_000);
+const blockTime = Number(process.env.BLOCK_TIME_MS ?? 2 * 60_000);
 
 export function bruteShield(ip: string) {
   const exist = data.get(ip);
