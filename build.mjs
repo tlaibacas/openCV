@@ -12,5 +12,5 @@ await build({
   sourcemap: false,
   minify: true,
 
-  external: ["fastify", "dotenv"],
+  external: ["fastify", "dotenv", "pg"],
 });
