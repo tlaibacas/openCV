@@ -3,7 +3,7 @@ import { query } from "../db/index.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 import { registerUser } from "../auth/register/register.queries.js";
 
-export async function rootRoutes(fastify: FastifyInstance) {
+export async function registerRoutes(fastify: FastifyInstance) {
   fastify.addHook("preHandler", async (request, reply) => {
     if (request.url === "/check") return;
     const ip = request.ip;
