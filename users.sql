@@ -5,7 +5,7 @@ CREATE table users (
     name TEXT NULL,
     last_name TEXT NULL,
     sex TEXT NULL,
-    role  NOT NULL DEFAULT 'visitor',
+    role TEXT NOT NULL DEFAULT 'visitor',
      CHECK (role IN ('admin', 'agent', 'visitor')),
     agency TEXT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW()
