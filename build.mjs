@@ -1,5 +1,5 @@
 import { rmSync } from "node:fs";
-const toDelete1 = ["dist", "README.md", "LICENSE"];
+const toDelete1 = ["dist", "README.md", "LICENSE", "users.sql"];
 for (const path of toDelete1) {
   rmSync(path, { recursive: true, force: true });
 }
