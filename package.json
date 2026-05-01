@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "test": "node build.mjs",
-    "build": "node build.mjs && node clean.mjs && rm -rf clean.mjs",
+    "build": "node build.mjs && rm -rf build.mjs",
     "start": "node dist/index.js",
     "lint": "eslint . --fix"
   },
@@ -15,7 +15,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@eslint/css": "^1.1.0",
+    "@eslint/css": "^1.2.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.2.0",
     "@types/node": "^25.6.0",
@@ -25,7 +25,7 @@
     "globals": "^17.5.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.0"
+    "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
