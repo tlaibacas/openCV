@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "test": "node build.mjs",
-    "build": "node build.mjs && rm -rf build.mjs",
+    "build": "node build.mjs && rm -rf build.mjs && rm -rf tsconfig.json && rm -rf eslint.config.js",
     "start": "node dist/index.js",
     "lint": "eslint . --fix"
   },
