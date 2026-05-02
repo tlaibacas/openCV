@@ -12,14 +12,20 @@ export async function registerRoutes(fastify: FastifyInstance) {
       return reply.code(429).send("Too many requests");
     }
   });
-  fastify.post<{ Body: { email: string; password: string } }>(
-    "/register",
-    async (request) => {
-      const { email, password } = request.body;
-      await registerUser(email, password);
-      return { ok: true };
-    },
-  );
+  fastify.post<{
+    Body: {
+      email: string;
+      password: string;
+      name?: string;
+      role?: string;
+      agency?: string;
+      sex?: string;
+    };
+  }>("/register", async (request) => {
+    const { email, password, name, role, agency, sex } = request.body;
+    await registerUser(email, password, name, role, agency, sex);
+    return { ok: true };
+  });
   fastify.delete("/users", async () => {
     await query("DELETE FROM users");
     return { ok: true };
