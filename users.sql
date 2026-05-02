@@ -9,8 +9,8 @@ CREATE TABLE users (
     name TEXT,
     last_name TEXT,
 
-    sex TEXT DEFAULT 'NAN',
-    CHECK (sex IN ('male', 'female', 'other', 'NAN')),
+    sex TEXT DEFAULT NULL,
+    CHECK (sex IS NULL OR sex IN ('male', 'female', 'other')),
 
     role TEXT NOT NULL DEFAULT 'visitor',
     CHECK (role IN ('admin', 'agent', 'visitor')),
@@ -20,7 +20,7 @@ CREATE TABLE users (
     created_at TIMESTAMPTZ DEFAULT NOW(),
 
     CHECK (
-        (role = 'visitor' AND name IS NOT NULL)
+        (role = 'visitor' AND name IS NOT NULL AND sex IS NOT NULL)
         OR
         (role = 'agent' AND agency IS NOT NULL)
         OR
