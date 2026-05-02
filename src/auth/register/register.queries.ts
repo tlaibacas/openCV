@@ -7,15 +7,29 @@ export const registerUser = async (
   role?: string,
   agency?: string,
   sex?: string,
-) =>
-  query(
+) => {
+  const payload = [
+    email,
+    password,
+    name ?? null,
+    role ?? "visitor",
+    agency ?? null,
+    sex ?? null,
+  ];
+
+  console.log("REGISTER USER PAYLOAD:", {
+    email,
+    password,
+    name,
+    role,
+    agency,
+    sex,
+  });
+
+  console.log("FINAL SQL VALUES:", payload);
+
+  return query(
     "INSERT INTO users (email, password, name, role, agency, sex) VALUES ($1, $2, $3, $4, $5, $6)",
-    [
-      email,
-      password,
-      name ?? null,
-      role ?? "visitor",
-      agency ?? null,
-      sex ?? null,
-    ],
+    payload,
   );
+};
