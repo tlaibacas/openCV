@@ -1,5 +1,9 @@
 import { query } from "../../db/index.js";
-import { validateEmail, validatePassword } from "./register.services.js";
+import {
+  validateEmail,
+  validatePassword,
+  validateRole,
+} from "./register.services.js";
 
 function handlePgError(err: unknown): err is { code: string } {
   return typeof err === "object" && err !== null && "code" in err;
@@ -15,12 +19,13 @@ export const registerUser = async (
 ) => {
   email = validateEmail(email);
   password = validatePassword(password);
+  role = validateRole(role);
 
   const payload = [
     email,
     password,
     name ?? null,
-    role ?? "visitor",
+    role,
     agency ?? null,
     sex ?? null,
   ];

@@ -1,3 +1,5 @@
+type Role = "visitor" | "agent" | "admin";
+
 export function validateEmail(email: string) {
   const cleaned = email.trim().toLowerCase();
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,4 +26,13 @@ export function validatePassword(password: string) {
     throw new Error("Password must contain at least one special character");
   }
   return cleaned;
+}
+
+export function validateRole(role?: string): Role {
+  const allowedRoles: Role[] = ["visitor", "agent", "admin"];
+  const cleaned = role?.trim().toLowerCase() ?? "visitor";
+  if (!allowedRoles.includes(cleaned as Role)) {
+    throw new Error("Invalid role");
+  }
+  return cleaned as Role;
 }
