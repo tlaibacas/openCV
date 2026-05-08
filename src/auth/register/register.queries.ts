@@ -1,4 +1,5 @@
 import { query } from "../../db/index.js";
+import { validateEmail } from "./register.services.js";
 
 export const registerUser = async (
   email: string,
@@ -8,6 +9,7 @@ export const registerUser = async (
   agency?: string,
   sex?: string,
 ) => {
+  email = await validateEmail(email);
   const payload = [
     email,
     password,
