@@ -9,7 +9,8 @@ export const registerUser = async (
   agency?: string,
   sex?: string,
 ) => {
-  email = await validateEmail(email);
+  email = validateEmail(email);
+
   const payload = [
     email,
     password,
