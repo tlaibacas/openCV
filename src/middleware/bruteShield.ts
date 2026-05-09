@@ -1,13 +1,15 @@
+// Type definitions
 type newData = {
   attempts: number;
   lastAttempt: number;
   blockedUntil?: number | undefined;
 };
+// Variables
 const data = new Map<string, newData>();
 const rate = Number(process.env.RATE_LIMIT ?? 60);
 const timeWindow = Number(process.env.TIME_WINDOW_MS ?? 10 * 60_000);
 const blockTime = Number(process.env.BLOCK_TIME_MS ?? 2 * 60_000);
-
+// Rate limiting middleware
 export function bruteShield(ip: string) {
   const exist = data.get(ip);
   const now: number = Date.now();
@@ -36,7 +38,7 @@ export function bruteShield(ip: string) {
   }
   return { blocked: false };
 }
-
+// Data cleaner to remove old entries
 export function dataCleaner() {
   setInterval(() => {
     const now = Date.now();
