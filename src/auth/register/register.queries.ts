@@ -17,15 +17,15 @@ export const registerUser = async (
   agency?: string,
   sex?: string,
 ) => {
-  email = validateEmail(email);
-  password = validatePassword(password);
-  role = validateRole(role);
+  const cleanedEmail = validateEmail(email);
+  const cleanedPassword = validatePassword(password);
+  const cleanedRole = validateRole(role);
 
   const payload = [
-    email,
-    password,
+    cleanedEmail,
+    cleanedPassword,
     name ?? null,
-    role,
+    cleanedRole,
     agency ?? null,
     sex ?? null,
   ];

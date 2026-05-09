@@ -1,4 +1,5 @@
-type Role = "visitor" | "agent" | "admin";
+const allowedRoles = ["visitor", "agent", "admin"];
+type Role = (typeof allowedRoles)[number];
 
 export function validateEmail(email: string) {
   const cleaned = email.trim().toLowerCase();
@@ -28,10 +29,13 @@ export function validatePassword(password: string) {
   return cleaned;
 }
 
+function isRole(role: string): role is Role {
+  return allowedRoles.includes(role);
+}
+
 export function validateRole(role?: string): Role {
-  const allowedRoles: Role[] = ["visitor", "agent", "admin"];
   const cleaned = role?.trim().toLowerCase() ?? "visitor";
-  if (!allowedRoles.includes(cleaned as Role)) {
+  if (!isRole(cleaned)) {
     throw new Error("Invalid role");
   }
   return cleaned as Role;
