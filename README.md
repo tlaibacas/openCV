@@ -9,7 +9,6 @@ Lightweight backend for managing virtual CV data. Built with a focus on performa
 - Fastify
 - PostgreSQL (`pg`)
 - esbuild
-- tsx
 
 ## Scripts
 
