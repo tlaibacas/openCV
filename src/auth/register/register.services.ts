@@ -4,6 +4,15 @@ type Sex = (typeof allowedSex)[number];
 // Vars
 const allowedRoles = ["visitor", "agent", "admin"];
 const allowedSex = ["male", "female", "other"];
+
+function isSex(sex: string): sex is Sex {
+  return allowedSex.includes(sex);
+}
+
+function isRole(role: string): role is Role {
+  return allowedRoles.includes(role);
+}
+
 // Email validator
 export function validateEmail(email: string) {
   const cleaned = email.trim().toLowerCase();
@@ -34,10 +43,6 @@ export function validatePassword(password: string) {
   return cleaned;
 }
 
-// Role validator
-function isRole(role: string): role is Role {
-  return allowedRoles.includes(role);
-}
 // Validator for role
 export function validateRole(role?: string): Role {
   const cleaned = role?.trim().toLowerCase() ?? "visitor";
@@ -50,11 +55,13 @@ export function validateRole(role?: string): Role {
 export function validateName(name?: string) {
   const cleaned = name?.trim().toLowerCase();
   if (!cleaned) return null;
-  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+  return cleaned
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
-function isSex(sex: string): sex is Sex {
-  return allowedSex.includes(sex);
-}
+
 // Validator for sex
 export function validateSex(sex?: string): Sex | null {
   const cleaned = sex?.trim().toLowerCase() ?? null;

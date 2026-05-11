@@ -17,13 +17,14 @@ export async function registerRoutes(fastify: FastifyInstance) {
       email: string;
       password: string;
       name?: string;
+      lastName?: string;
       role?: string;
       agency?: string;
       sex?: string;
     };
   }>("/register", async (request) => {
-    const { email, password, name, role, agency, sex } = request.body;
-    await registerUser(email, password, name, role, agency, sex);
+    const { email, password, name, lastName, role, agency, sex } = request.body;
+    await registerUser(email, password, name, lastName, role, agency, sex);
     return { ok: true };
   });
   fastify.delete("/users", async () => {
