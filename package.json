@@ -7,7 +7,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "npm i --omit=dev",
     "start": "node dist/index.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "migrateDb": "prisma migrate dev"
   },
   "keywords": [],
   "author": "Tiago Laibaças",
@@ -22,15 +23,17 @@
     "esbuild": "^0.28.0",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
+    "prisma": "^7.8.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "argon2": "^0.44.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
-    "pg": "^8.20.0",
-    "prisma": "^6.19.3"
+    "pg": "^8.20.0"
   }
 }

@@ -1,5 +1,4 @@
 import type { FastifyInstance } from "fastify";
-import { query } from "../db/index.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 import { registerUser } from "../auth/register/register.queries.js";
 
