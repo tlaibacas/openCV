@@ -25,7 +25,9 @@ export async function registerRoutes(fastify: FastifyInstance) {
   }>("/register", async (request) => {
     const { email, password, name, lastName, role, agency, sex } = request.body;
     await registerUser(email, password, name, lastName, role, agency, sex);
-    return { ok: true };
+    return {
+      success: true,
+    };
   });
   fastify.delete("/users", async () => {
     await query("DELETE FROM users");

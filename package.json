@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.4.15",
+  "version": "0.4.28",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "argon2": "^0.44.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "prisma": "^6.19.3"
   }
 }
