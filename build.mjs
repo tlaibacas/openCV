@@ -9,7 +9,7 @@ const start = [
   "README.md",
 ];
 
-const finish = ["src", "esling.config.js", "tsconfig.json", ".gitignore"];
+const finish = ["src", "tsconfig.json", ".gitignore"];
 
 for (const target of start) {
   fs.rmSync(target, {
