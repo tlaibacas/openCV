@@ -9,5 +9,5 @@ await build({
   format: "esm",
   sourcemap: false,
   minify: true,
-  external: ["fastify", "dotenv", "pg", "argon2", "prisma"],
+  external: ["fastify", "dotenv", "pg", "argon2", "prisma", "zod"],
 });

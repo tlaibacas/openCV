@@ -3,27 +3,24 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
-    "module": "commonjs",
-    "moduleResolution": "node",
     "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "strict": true,
 
     "types": ["node"],
 
-    "sourceMap": false,
-    "declaration": false,
-    "declarationMap": false,
+    "skipLibCheck": true,
     "removeComments": true,
-
-    "strict": true,
 
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    "verbatimModuleSyntax": false,
     "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
 
-    "moduleDetection": "force",
-    "skipLibCheck": true,
+    "sourceMap": false,
+    "declaration": false,
   },
+  "exclude": ["prisma.config.ts"],
 }
