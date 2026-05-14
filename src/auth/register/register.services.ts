@@ -1,71 +1,40 @@
-// Types
-type Role = (typeof allowedRoles)[number];
-type Sex = (typeof allowedSex)[number];
-// Vars
-const allowedRoles = ["visitor", "agent", "admin"];
-const allowedSex = ["male", "female", "other"];
+import { z } from "zod";
 
-function isSex(sex: string): sex is Sex {
-  return allowedSex.includes(sex);
-}
-
-function isRole(role: string): role is Role {
-  return allowedRoles.includes(role);
-}
-
-// Email validator
-export function validateEmail(email: string) {
-  const cleaned = email.trim().toLowerCase();
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!cleaned) {
-    throw new Error("Email cannot be empty");
-  }
-  if (!regex.test(cleaned)) {
-    throw new Error("Invalid email format");
-  }
-  return cleaned;
-}
-// Password validator
-export function validatePassword(password: string) {
-  const cleaned = password.trim();
-  if (cleaned.length < 8) {
-    throw new Error("Password must be at least 8 characters");
-  }
-  if (!/[A-Z]/.test(cleaned)) {
-    throw new Error("Password must contain at least one uppercase letter");
-  }
-  if (!/[0-9]/.test(cleaned)) {
-    throw new Error("Password must contain at least one number");
-  }
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(cleaned)) {
-    throw new Error("Password must contain at least one special character");
-  }
-  return cleaned;
-}
-
-// Validator for role
-export function validateRole(role?: string): Role {
-  const cleaned = role?.trim().toLowerCase() ?? "visitor";
-  if (!isRole(cleaned)) {
-    throw new Error("Invalid role");
-  }
-  return cleaned as Role;
-}
-// Validator for name
-export function validateName(name?: string) {
-  const cleaned = name?.trim().toLowerCase();
-  if (!cleaned) return null;
-  return cleaned
+const normalize = (value: string) => value.trim().toLowerCase();
+const normalizeName = (value: string) =>
+  normalize(value)
     .split(" ")
     .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
-}
 
-// Validator for sex
-export function validateSex(sex?: string): Sex | null {
-  const cleaned = sex?.trim().toLowerCase() ?? null;
-  if (!cleaned) return null;
-  if (!isSex(cleaned)) throw new Error("Invalid sex");
-  return cleaned;
-}
+export const sexEnum: string = z.enum(["male", "female", "other"]);
+
+export const roleEnum: string = z.enum(["admin", "visitor", "recruiter"]);
+
+export const registerSchema = z.object({
+  email: z.email().transform(normalize),
+
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character",
+    ),
+
+  confirmPassword: z.string(),
+
+  name: z.string().min(1, "Name is required").transform(normalizeName),
+
+  lastName: z.string().min(1, "Last name is required").transform(normalizeName),
+
+  role: roleEnum.transform(normalize).min(1, "Role is required"),
+
+  agency: z.string().transform(normalize).min(1, "Agency is required"),
+
+  sex: sexEnum.transform(normalize),
+});

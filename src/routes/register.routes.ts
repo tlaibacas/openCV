@@ -28,12 +28,12 @@ export async function registerRoutes(fastify: FastifyInstance) {
       success: true,
     };
   });
-  fastify.delete("/users", async () => {
-    await query("DELETE FROM users");
-    return { ok: true };
-  });
-  fastify.get("/users", async () => {
-    const result = await query("SELECT * FROM users");
-    return result.rows;
-  });
+  // fastify.delete("/users", async () => {
+  //   await query("DELETE FROM users");
+  //   return { ok: true };
+  // });
+  // fastify.get("/users", async () => {
+  //   const result = await query("SELECT * FROM users");
+  //   return result.rows;
+  // });
 }
