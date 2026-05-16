@@ -1,3 +1,5 @@
+// Comments only made to separate functions from types and variables for better readability. They're removed on build.
+
 import { buildsv } from "./server/server.js";
 import { dataCleaner } from "./middleware/bruteShield.js";
 
