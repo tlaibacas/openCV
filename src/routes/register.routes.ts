@@ -12,7 +12,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
     }
   });
   fastify.post("/register", async (request, reply) => {
-    const result = register(request.body);
+    const result = await register(request.body);
 
     if (!result.success) {
       return reply.code(400).send(result);
