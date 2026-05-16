@@ -33,5 +33,5 @@ enum Sex {
 enum Role {
   visitor
   admin
-  agent
+  recruiter
 }
