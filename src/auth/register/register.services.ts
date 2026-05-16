@@ -1,7 +1,8 @@
 import { registerSchema } from "./register.schema.js";
 import argon2 from "argon2";
+import { prisma } from "../../lib/prisma.js";
 
-export function register(data: unknown) {
+export async function register(data: unknown) {
   const { success, data: parsed, error } = registerSchema.safeParse(data);
 
   if (!success) {
@@ -10,10 +11,23 @@ export function register(data: unknown) {
       error: error.issues[0]?.message ?? "Invalid input",
     };
   }
-  const hashedPassword = hashPassword(parsed.password);
+  const hashedPassword: string = await hashPassword(parsed.password);
+
+  const user = await prisma.user.create({
+    data: {
+      email: parsed.email,
+      password: hashedPassword,
+      name: parsed.name,
+      lastName: parsed.lastName,
+      role: parsed.role,
+      agency: parsed.agency || null,
+      sex: parsed.sex || null,
+    },
+  });
+
   return {
     success: true as const,
-    data: { ...parsed, password: hashedPassword },
+    data: { user },
   };
 }
 
