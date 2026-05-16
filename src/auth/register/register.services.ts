@@ -1,40 +1,105 @@
 import { z } from "zod";
 
+// Enums
+export const sexEnum = z.enum(["male", "female", "other"]);
+export const roleEnum = z.enum(["admin", "visitor", "recruiter"]);
+
+// Utils
 const normalize = (value: string) => value.trim().toLowerCase();
-const normalizeName = (value: string) =>
-  normalize(value)
-    .split(" ")
-    .filter(Boolean)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
 
-export const sexEnum: string = z.enum(["male", "female", "other"]);
+// Password schema
+const passwordSchema = z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/[0-9]/, "Password must contain at least one number")
+  .regex(
+    /[!@#$%^&*(),.?":{}|<>]/,
+    "Password must contain at least one special character",
+  );
 
-export const roleEnum: string = z.enum(["admin", "visitor", "recruiter"]);
+// Password check
+function checkPasswords(
+  data: { password: string; confirmPassword: string },
+  ctx: z.RefinementCtx,
+) {
+  if (data.password !== data.confirmPassword) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["confirmPassword"],
+      message: "Passwords do not match",
+    });
+  }
+}
 
-export const registerSchema = z.object({
-  email: z.email().transform(normalize),
+// Role rules
+function checkRoleNeeds(
+  data: {
+    name: string;
+    lastName: string;
+    role: string;
+    agency: string;
+    sex: string;
+  },
+  ctx: z.RefinementCtx,
+) {
+  if (data.role === "visitor") {
+    if (!data.name) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["name"],
+        message: "Name is required for visitors",
+      });
+    }
 
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      "Password must contain at least one special character",
-    ),
+    if (!data.lastName) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["lastName"],
+        message: "Last name is required for visitors",
+      });
+    }
 
-  confirmPassword: z.string(),
+    if (!data.sex) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["sex"],
+        message: "Sex is required for visitors",
+      });
+    }
+  }
 
-  name: z.string().min(1, "Name is required").transform(normalizeName),
+  if (data.role === "recruiter") {
+    if (!data.agency) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["agency"],
+        message: "Company of agency is required for recruiters",
+      });
+    }
+  }
+}
 
-  lastName: z.string().min(1, "Last name is required").transform(normalizeName),
+// Schema
+export const registerSchema = z
+  .object({
+    email: z.email().transform(normalize),
 
-  role: roleEnum.transform(normalize).min(1, "Role is required"),
+    password: passwordSchema,
 
-  agency: z.string().transform(normalize).min(1, "Agency is required"),
+    confirmPassword: z.string(),
 
-  sex: sexEnum.transform(normalize),
-});
+    name: z.string().trim(),
+
+    lastName: z.string().trim(),
+
+    role: z.string().transform(normalize).pipe(roleEnum),
+
+    agency: z.string().trim(),
+
+    sex: z.string().transform(normalize).pipe(sexEnum),
+  })
+  .superRefine(checkPasswords)
+  .superRefine(checkRoleNeeds)
+  .transform(({ confirmPassword, ...data }) => data);
