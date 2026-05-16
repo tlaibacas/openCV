@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 // Enums
-export const sexEnum = z.enum(["male", "female", "other"], {
+const sexEnum = z.enum(["male", "female", "other"], {
   message: "Invalid sex",
 });
 
-export const roleEnum = z.enum(["admin", "visitor", "recruiter"], {
+const roleEnum = z.enum(["admin", "visitor", "recruiter"], {
   message: "Invalid role",
 });
 
