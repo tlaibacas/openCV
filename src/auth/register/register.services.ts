@@ -82,7 +82,7 @@ function checkRoleNeeds(
 }
 
 // Schema
-export const registerSchema = z
+const registerSchema = z
   .object({
     email: z.email().transform(normalize),
 
@@ -103,3 +103,15 @@ export const registerSchema = z
   .superRefine(checkPasswords)
   .superRefine(checkRoleNeeds)
   .transform(({ confirmPassword, ...data }) => data);
+//Functions
+export function register(data: unknown) {
+  const { success, data: parsed, error } = registerSchema.safeParse(data);
+
+  if (!success) {
+    return {
+      success: false as const,
+      error: error.issues[0]?.message ?? "Invalid input",
+    };
+  }
+  return { success: true as const, data: parsed };
+}
