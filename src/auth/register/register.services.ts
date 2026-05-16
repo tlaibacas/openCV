@@ -1,4 +1,5 @@
 import { z } from "zod";
+import argon2 from "argon2";
 
 // Enums
 const sexEnum = z.enum(["male", "female", "other"], {
@@ -118,5 +119,13 @@ export function register(data: unknown) {
       error: error.issues[0]?.message ?? "Invalid input",
     };
   }
-  return { success: true as const, data: parsed };
+  const hashedPassword = hashPassword(parsed.password);
+  return {
+    success: true as const,
+    data: { ...parsed, password: hashedPassword },
+  };
+}
+
+async function hashPassword(password: string): Promise<string> {
+  return argon2.hash(password);
 }
