@@ -15,10 +15,9 @@ Lightweight backend for managing virtual CV data. Built with a focus on performa
 
 ```bash
 npm run dev      # Run in development (watch mode)
-npm run build    # Build for production
+npm run build    # Build for production (BE VERY CAREFUL! CREATE A BACKUP BEFORE BUILDING)
 npm run start    # Run built app
 npm run lint     # Lint and fix code
-npm run migrate  # Run Prisma migrations
 ```
 
 ## Project Structure
