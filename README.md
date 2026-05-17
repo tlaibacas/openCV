@@ -24,7 +24,7 @@ npm run migrate  # Run Prisma migrations
 ## Project Structure
 src/  
 ├── index.ts  
-├── db/ 
+├── db/   
 └── modules/  
 
 ## Execution Flow
