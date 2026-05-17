@@ -22,10 +22,12 @@ npm run migrate  # Run Prisma migrations
 ```
 
 ## Project Structure
-src/  
-├── index.ts  
-├── db/   
-└── modules/  
+```text
+src/
+├── index.ts
+├── db/
+└── modules/
+```
 
 ## Execution Flow
 Development: tsx runs TypeScript directly with watch mode  
@@ -39,6 +41,7 @@ Full control over query execution
 
 ## API Example
 
+```ts
 fastify.get("/users", async () => {
   const result = await prisma.user.findMany({
     select: {
@@ -49,6 +52,7 @@ fastify.get("/users", async () => {
 
   return result;
 });
+```
 
 ## Principles
 - Minimal dependencies
