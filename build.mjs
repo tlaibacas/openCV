@@ -9,5 +9,14 @@ await build({
   format: "esm",
   sourcemap: false,
   minify: true,
-  external: ["fastify", "dotenv", "pg", "argon2", "prisma", "zod"],
+  external: [
+    "fastify",
+    "dotenv",
+    "pg",
+    "argon2",
+    "prisma",
+    "zod",
+    "@prisma/adapter-pg",
+    "@prisma/client",
+  ],
 });
