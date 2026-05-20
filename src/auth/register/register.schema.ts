@@ -1,5 +1,13 @@
 import { z } from "zod";
-import { normalize } from "./register.services.js";
+
+function normalize(value?: string) {
+  if (!value) return value;
+  return value.trim().toLowerCase();
+}
+function trimmer(value?: string) {
+  if (!value) return value;
+  return value.trim();
+}
 
 // Enums
 const sexEnum = z.enum(["male", "female", "other"], {
@@ -93,13 +101,13 @@ export const registerSchema = z
 
     confirmPassword: z.string(),
 
-    name: z.string().trim(),
+    name: z.string().transform(trimmer),
 
-    lastName: z.string().trim(),
+    lastName: z.string().transform(trimmer),
 
     role: z.string().transform(normalize).pipe(roleEnum),
 
-    agency: z.string().trim(),
+    agency: z.string().transform(trimmer),
 
     sex: z.string().transform(normalize).pipe(sexEnum),
   })
