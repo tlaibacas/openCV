@@ -17,11 +17,11 @@ export async function register(data: unknown) {
     data: {
       email: parsed.email,
       password: hashedPassword,
-      // name: parsed.name,
-      // lastName: parsed.lastName,
+      name: parsed.name,
+      lastName: parsed.lastName,
       role: parsed.role,
-      // agency: parsed.agency || null,
-      // sex: parsed.sex || null,
+      agency: parsed.agency || null,
+      sex: parsed.sex || null,
     },
   });
 
