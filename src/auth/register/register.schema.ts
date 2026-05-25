@@ -1,64 +1,62 @@
 import { z } from "zod";
 
-const normalizeString = z.preprocess(
-  (val) => (typeof val === "string" ? val.trim().toLowerCase() : val),
-  z.string(),
+const normalizeString = z.preprocess((val) => {
+  if (val === "") return undefined;
+  if (typeof val === "string") return val.trim().toLowerCase();
+  return undefined;
+}, z.string().optional());
+
+const passRegex = z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Must contain lowercase")
+  .regex(/\d/, "Must contain number")
+  .regex(/[^A-Za-z0-9]/, "Must contain symbol");
+
+const normalizeRole = z.preprocess(
+  (val) => {
+    if (val === "") return undefined;
+    if (typeof val === "string") return val.trim().toLowerCase();
+    return undefined;
+  },
+  z.enum(["visitor", "recruiter", "admin"]).default("visitor"),
 );
+
+const normalizeEmail = z.preprocess((val) => {
+  if (val === "") return undefined;
+  if (typeof val === "string") return val.trim().toLowerCase();
+  return undefined;
+}, z.email("Invalid email format"));
 
 export const registerSchema = z
   .object({
-    email: z.email("Invalid email format").trim().toLowerCase(),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Must contain lowercase")
-      .regex(/\d/, "Must contain number")
-      .regex(/[^A-Za-z0-9]/, "Must contain symbol"),
+    email: normalizeEmail,
+    password: passRegex,
     confirmPassword: z.string(),
-    name: z.string().trim().optional(),
-    lastName: z.string().trim().optional(),
-    role: normalizeString
-      .pipe(z.enum(["visitor", "recruiter", "admin"]))
-      .default("visitor"),
-    agency: z.string().optional(),
+    name: normalizeString,
+    lastName: normalizeString,
+    role: normalizeRole,
+    agency: normalizeString,
     sex: normalizeString.pipe(z.enum(["male", "female", "other"])).optional(),
   })
   .superRefine((data, ctx) => {
+    if (!data.role) return;
+
+    const add = (path: string[], message: string) =>
+      ctx.addIssue({ code: "custom", path, message });
+
     if (data.password !== data.confirmPassword) {
-      ctx.addIssue({
-        code: "custom",
-        message: "Passwords do not match",
-        path: ["confirmPassword"],
-      });
+      add(["confirmPassword"], "Passwords do not match");
     }
 
     if (data.role === "visitor") {
-      if (!data.name) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Name is required for visitors",
-          path: ["name"],
-        });
-      }
-
-      if (!data.sex) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Sex is required for visitors",
-          path: ["sex"],
-        });
-      }
+      if (!data.name) add(["name"], "Name is required for visitors");
+      if (!data.sex) add(["sex"], "Sex is required for visitors");
     }
 
     if (data.role === "recruiter") {
-      if (!data.agency) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Agency is required for recruiters",
-          path: ["agency"],
-        });
-      }
+      if (!data.agency) add(["agency"], "Agency is required for recruiters");
     }
   });
 
