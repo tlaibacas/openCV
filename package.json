@@ -1,33 +1,22 @@
 {
   "name": "backend",
-  "version": "0.4.46",
+  "version": "0.4.49",
   "description": "",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "npm i --omit=dev",
+    "build": "node build.mjs",
     "start": "node dist/index.js",
-    "lint": "eslint . --fix",
-    "migrateDb": "prisma migrate dev"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "generate": "prisma generate"
   },
   "keywords": [],
   "author": "Tiago Laibaças",
   "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@eslint/css": "^1.2.0",
-    "@eslint/js": "^10.0.1",
-    "@eslint/json": "^1.2.0",
-    "@types/node": "^25.9.1",
-    "@types/pg": "^8.20.0",
-    "esbuild": "^0.28.0",
-    "eslint": "^10.4.0",
-    "globals": "^17.6.0",
-    "prisma": "^7.8.0",
-    "tsx": "^4.22.3",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.4"
-  },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
@@ -36,5 +25,16 @@
     "fastify": "^5.8.5",
     "pg": "^8.21.0",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.1",
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "prisma": "^7.8.0",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
   }
 }
