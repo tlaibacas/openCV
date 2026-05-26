@@ -20,7 +20,12 @@ const normalizeRole = z.preprocess(
     if (typeof val === "string") return val.trim().toLowerCase();
     return undefined;
   },
-  z.enum(["visitor", "recruiter", "admin"]).default("visitor"),
+  z
+    .enum(
+      ["visitor", "recruiter", "admin"],
+      "Role doesn't match any of the allowed values",
+    )
+    .default("visitor"),
 );
 
 const normalizeEmail = z.preprocess((val) => {
