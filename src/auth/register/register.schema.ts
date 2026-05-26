@@ -58,6 +58,7 @@ export const registerSchema = z
     if (data.role === "recruiter") {
       if (!data.agency) add(["agency"], "Agency is required for recruiters");
     }
-  });
+  })
+  .transform(({ confirmPassword, ...rest }) => rest);
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
