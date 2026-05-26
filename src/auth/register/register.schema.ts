@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const normalizeString = z.preprocess((val) => {
-  if (val === "") return undefined;
+  if (val === "") return null;
   if (typeof val === "string") return val.trim().toLowerCase();
-  return undefined;
-}, z.string().optional());
+  return null;
+}, z.string().nullable());
 
 const passRegex = z
   .string()
@@ -16,22 +16,17 @@ const passRegex = z
 
 const normalizeRole = z.preprocess(
   (val) => {
-    if (val === "") return undefined;
+    if (val == null || val === "") return "visitor";
     if (typeof val === "string") return val.trim().toLowerCase();
-    return undefined;
+    return "visitor";
   },
-  z
-    .enum(
-      ["visitor", "recruiter", "admin"],
-      "Role doesn't match any of the allowed values",
-    )
-    .default("visitor"),
+  z.enum(["visitor", "recruiter", "admin"]),
 );
 
 const normalizeEmail = z.preprocess((val) => {
-  if (val === "") return undefined;
+  if (val === "") return null;
   if (typeof val === "string") return val.trim().toLowerCase();
-  return undefined;
+  return null;
 }, z.email("Invalid email format"));
 
 export const registerSchema = z
@@ -43,7 +38,7 @@ export const registerSchema = z
     lastName: normalizeString,
     role: normalizeRole,
     agency: normalizeString,
-    sex: normalizeString.pipe(z.enum(["male", "female", "other"])).optional(),
+    sex: normalizeString.pipe(z.enum(["male", "female", "other"])).nullable(),
   })
   .superRefine((data, ctx) => {
     if (!data.role) return;
