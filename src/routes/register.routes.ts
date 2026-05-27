@@ -23,5 +23,5 @@ export async function registerRoutes(fastify: FastifyInstance) {
   fastify.get("/check", async (request, reply) => {
     main();
     return reply.send("ok");
-  }
+  });
 }
