@@ -20,3 +20,9 @@ export async function register(data: unknown) {
     user,
   };
 }
+
+export async function main() {
+  const users = await prisma.user.findMany();
+
+  console.log(users);
+}
