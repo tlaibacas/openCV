@@ -20,18 +20,12 @@ importers:
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
-      esbuild:
-        specifier: ^0.28.0
-        version: 0.28.0
       fastify:
         specifier: ^5.8.5
         version: 5.8.5
       pg:
         specifier: ^8.21.0
         version: 8.21.0
-      prisma:
-        specifier: ^7.8.0
-        version: 7.8.0(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -45,12 +39,18 @@ importers:
       '@types/pg':
         specifier: ^8.20.0
         version: 8.20.0
+      esbuild:
+        specifier: ^0.28.0
+        version: 0.28.0
       eslint:
         specifier: ^10.4.0
         version: 10.4.0(jiti@2.7.0)
       globals:
         specifier: ^17.6.0
         version: 17.6.0
+      prisma:
+        specifier: ^7.8.0
+        version: 7.8.0(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3)
       tsx:
         specifier: ^4.22.3
         version: 4.22.3
