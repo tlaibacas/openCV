@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { register } from "../auth/register/register.services.js";
+import { register, main } from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 
 export async function registerRoutes(fastify: FastifyInstance) {
@@ -20,4 +20,8 @@ export async function registerRoutes(fastify: FastifyInstance) {
 
     return reply.code(201).send(result);
   });
+  fastify.get("/check", async (request, reply) => {
+    main();
+    return reply.send("ok");
+  }
 }
