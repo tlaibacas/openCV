@@ -21,7 +21,11 @@ export async function registerRoutes(fastify: FastifyInstance) {
     return reply.code(201).send(result);
   });
   fastify.get("/check", async (request, reply) => {
-    main();
-    return reply.send("ok");
+    const check = await main();
+
+    return reply.send({
+      message: "ok",
+      check,
+    });
   });
 }
