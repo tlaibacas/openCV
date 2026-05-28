@@ -38,6 +38,8 @@ export async function registerRoutes(fastify: FastifyInstance) {
       check,
     });
   });
+
+  // TO DELETE!!!!
   fastify.get("/checkTest", async (request, reply) => {
     const check = await checkTest();
 

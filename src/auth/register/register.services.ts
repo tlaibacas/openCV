@@ -29,6 +29,7 @@ export async function checkUsers() {
   return users;
 }
 
+// TO DELETE!!!!
 export async function checkTest() {
   const users = await prisma.user.findMany();
   return users;
