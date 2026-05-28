@@ -14,15 +14,20 @@ export async function registerRoutes(fastify: FastifyInstance) {
   fastify.post("/register", async (request, reply) => {
     const result = await register(request.body);
 
-    if (!result.success) {
+    if (!result.success || !result.user) {
       return reply.code(400).send(result);
     }
 
-    return reply.code(201).send(result);
+    const { password, ...safeUser } = result.user;
+
+    return reply.code(201).send({
+      sucess: true,
+      user: safeUser,
+    });
   });
   fastify.get("/check", async (request, reply) => {
     const check = await main();
-
+    
     return reply.send({
       message: "ok",
       check,
