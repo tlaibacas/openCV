@@ -22,7 +22,7 @@ export async function register(data: unknown) {
 }
 
 export async function main() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({ select: { password: false } });
 
   return users;
 }
