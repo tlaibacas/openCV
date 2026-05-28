@@ -21,8 +21,20 @@ export async function register(data: unknown) {
   };
 }
 
-export async function main() {
-  const users = await prisma.user.findMany({ select: { password: false } });
+export async function checkUsers() {
+  const users = await prisma.user.findMany({
+    select: { id: true, name: true, email: true, role: true },
+  });
 
+  return users;
+}
+
+export async function checkTest() {
+  const users = await prisma.user.findMany();
+  return users;
+}
+
+export async function deleteTest() {
+  const users = await prisma.user.deleteMany();
   return users;
 }
