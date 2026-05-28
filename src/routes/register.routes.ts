@@ -1,5 +1,10 @@
 import type { FastifyInstance } from "fastify";
-import { register, main } from "../auth/register/register.services.js";
+import {
+  register,
+  checkUsers,
+  checkTest,
+  deleteTest,
+} from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 
 export async function registerRoutes(fastify: FastifyInstance) {
@@ -26,8 +31,24 @@ export async function registerRoutes(fastify: FastifyInstance) {
     });
   });
   fastify.get("/check", async (request, reply) => {
-    const check = await main();
-    
+    const check = await checkUsers();
+
+    return reply.send({
+      message: "ok",
+      check,
+    });
+  });
+  fastify.get("/checkTest", async (request, reply) => {
+    const check = await checkTest();
+
+    return reply.send({
+      message: "ok",
+      check,
+    });
+  });
+  fastify.delete("/deleteTest", async (request, reply) => {
+    const check = await deleteTest();
+
     return reply.send({
       message: "ok",
       check,
