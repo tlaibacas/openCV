@@ -37,7 +37,7 @@ export async function checkUser(id: string) {
     where: { id },
     select: { id: true, name: true, email: true, role: true },
   });
-  if (!id || id === null) {
+  if (!id || user === null) {
     return {
       sucess: false,
       message: "User not found",
