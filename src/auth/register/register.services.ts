@@ -21,12 +21,29 @@ export async function register(data: unknown) {
   };
 }
 
-export async function checkUsers() {
+export async function users() {
   const users = await prisma.user.findMany({
     select: { id: true, name: true, email: true, role: true },
   });
 
   return users;
+}
+
+export async function checkUser(id: string) {
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: { id: true, name: true, email: true, role: true },
+  });
+
+  return user;
+}
+
+export async function deleteUser(id: string) {
+  const user = await prisma.user.delete({
+    where: { id },
+  });
+
+  return user;
 }
 
 // TO DELETE!!!!

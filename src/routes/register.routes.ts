@@ -1,7 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import {
   register,
-  checkUsers,
+  users,
+  checkUser,
+  deleteUser,
   checkTest,
   deleteTest,
 } from "../auth/register/register.services.js";
@@ -30,13 +32,43 @@ export async function registerRoutes(fastify: FastifyInstance) {
       user: safeUser,
     });
   });
-  fastify.get("/check", async (request, reply) => {
-    const check = await checkUsers();
+  fastify.get("/users", async (request, reply) => {
+    const check = await users();
 
     return reply.send({
-      message: "ok",
       check,
     });
+  });
+
+  fastify.get("/userId", async (request, reply) => {
+    checkUser("1").then((user) => {
+      if (!user) {
+        return reply.code(404).send({
+          message: "User not found",
+        });
+      }
+
+      return reply.send({
+        message: "User details",
+        user,
+      });
+    });
+  });
+
+  fastify.delete("/userId", async (request, reply) => {
+    deleteUser("1").then((user) => {
+      if (!user) {
+        return reply.code(404).send({
+          message: "User not found",
+        });
+      }
+
+      return reply.send({
+        message: "User deleted",
+        user,
+      });
+    });
+    return reply.send();
   });
 
   // TO DELETE!!!!
