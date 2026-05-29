@@ -40,8 +40,9 @@ export async function registerRoutes(fastify: FastifyInstance) {
     });
   });
 
-  fastify.get("/userId", async (request, reply) => {
-    checkUser("1").then((user) => {
+  fastify.get("/userId/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    checkUser(id).then((user) => {
       if (!user) {
         return reply.code(404).send({
           message: "User not found",
@@ -55,8 +56,9 @@ export async function registerRoutes(fastify: FastifyInstance) {
     });
   });
 
-  fastify.delete("/userId", async (request, reply) => {
-    deleteUser("1").then((user) => {
+  fastify.delete("/userId/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    deleteUser(id).then((user) => {
       if (!user) {
         return reply.code(404).send({
           message: "User not found",
