@@ -5,7 +5,6 @@ import {
   checkUser,
   deleteUser,
   checkTest,
-  deleteTest,
 } from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 
@@ -40,50 +39,31 @@ export async function registerRoutes(fastify: FastifyInstance) {
     });
   });
 
-  fastify.get("/userId/:id", async (request, reply) => {
+  fastify.get("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
-    checkUser(id).then((user) => {
-      if (!user) {
-        return reply.code(404).send({
-          message: "User not found",
-        });
-      }
+    const user = await checkUser(id);
 
-      return reply.send({
-        message: "User details",
-        user,
-      });
-    });
+    if (!user) {
+      return reply.code(404).send(user);
+    }
+
+    return reply.send(user);
   });
 
-  fastify.delete("/userId/:id", async (request, reply) => {
+  fastify.delete("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
-    deleteUser(id).then((user) => {
-      if (!user) {
-        return reply.code(404).send({
-          message: "User not found",
-        });
-      }
+    const user = await deleteUser(id);
 
-      return reply.send({
-        message: "User deleted",
-        user,
-      });
-    });
-    return reply.send();
+    if (!user) {
+      return reply.code(404).send(user);
+    }
+
+    return reply.send(user);
   });
 
   // TO DELETE!!!!
   fastify.get("/checkTest", async (request, reply) => {
     const check = await checkTest();
-
-    return reply.send({
-      message: "ok",
-      check,
-    });
-  });
-  fastify.delete("/deleteTest", async (request, reply) => {
-    const check = await deleteTest();
 
     return reply.send({
       message: "ok",

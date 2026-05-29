@@ -26,7 +26,10 @@ export async function users() {
     select: { id: true, name: true, email: true, role: true },
   });
 
-  return users;
+  return {
+    sucess: true,
+    users,
+  };
 }
 
 export async function checkUser(id: string) {
@@ -34,15 +37,32 @@ export async function checkUser(id: string) {
     where: { id },
     select: { id: true, name: true, email: true, role: true },
   });
-
-  return user;
+  if (!id) {
+    return {
+      sucess: false,
+      message: "User not found",
+    };
+  }
+  return {
+    sucess: true,
+    user,
+  };
 }
 
 export async function deleteUser(id: string) {
   const user = await prisma.user.delete({
     where: { id },
   });
-  return user;
+  if (!id) {
+    return {
+      sucess: false,
+      message: "User not found",
+    };
+  }
+  return {
+    sucess: true,
+    user,
+  };
 }
 
 // TO DELETE!!!!
