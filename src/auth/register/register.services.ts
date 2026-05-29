@@ -37,7 +37,7 @@ export async function checkUser(id: string) {
     where: { id },
     select: { id: true, name: true, email: true, role: true },
   });
-  if (!id) {
+  if (!id || null) {
     return {
       sucess: false,
       message: "User not found",
@@ -53,7 +53,7 @@ export async function deleteUser(id: string) {
   const user = await prisma.user.delete({
     where: { id },
   });
-  if (!id) {
+  if (!id || null) {
     return {
       sucess: false,
       message: "User not found",
@@ -61,7 +61,9 @@ export async function deleteUser(id: string) {
   }
   return {
     sucess: true,
-    user,
+    message: "User deleted successfully",
+    id: user.id,
+    email: user.email,
   };
 }
 
