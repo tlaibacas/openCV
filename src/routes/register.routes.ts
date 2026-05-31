@@ -4,6 +4,7 @@ import {
   users,
   checkUser,
   deleteUser,
+  updateUser,
   checkTest,
 } from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
@@ -53,6 +54,18 @@ export async function registerRoutes(fastify: FastifyInstance) {
   fastify.delete("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const user = await deleteUser(id);
+
+    if (!user) {
+      return reply.code(404).send(user);
+    }
+
+    return reply.send(user);
+  });
+
+  fastify.put("/users/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const data = request.body;
+    const user = await updateUser(id, data);
 
     if (!user) {
       return reply.code(404).send(user);
