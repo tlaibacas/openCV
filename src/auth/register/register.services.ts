@@ -62,7 +62,7 @@ export async function deleteUser(id: string) {
       message: "Invalid ID",
     };
   }
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.delete({
     where: { id },
     select: { id: true, email: true },
   });
