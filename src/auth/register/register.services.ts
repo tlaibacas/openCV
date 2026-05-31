@@ -62,21 +62,31 @@ export async function deleteUser(id: string) {
       message: "Invalid ID",
     };
   }
-  const user = await prisma.user.delete({
+
+  const exists = await prisma.user.findUnique({
     where: { id },
-    select: { id: true, email: true },
+    select: {
+      id: true,
+      email: true,
+    },
   });
-  if (!user.id) {
+
+  if (!exists) {
     return {
       success: false,
       message: "User not found",
     };
   }
+
+  await prisma.user.delete({
+    where: { id },
+  });
+
   return {
     success: true,
     message: "User deleted successfully",
-    id: user.id,
-    email: user.email,
+    id: exists.id,
+    email: exists.email,
   };
 }
 
