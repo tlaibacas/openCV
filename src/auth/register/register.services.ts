@@ -66,7 +66,7 @@ export async function deleteUser(id: string) {
     where: { id },
     select: { id: true, email: true },
   });
-  if (!user) {
+  if (!user.id) {
     return {
       success: false,
       message: "User not found",
