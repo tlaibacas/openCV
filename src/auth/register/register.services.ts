@@ -90,6 +90,16 @@ export async function deleteUser(id: string) {
   };
 }
 
+export async function updateUser(id: string, data: unknown) {
+  if (!id) {
+    return {
+      success: false,
+      message: "Invalid ID",
+    };
+  }
+  // TODO
+}
+
 // TO DELETE!!!!
 export async function checkTest() {
   const users = await prisma.user.findMany();
