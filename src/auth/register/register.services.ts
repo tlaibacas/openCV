@@ -2,6 +2,16 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 
+function checkId(id: string | undefined) {
+  if (!id || undefined) {
+    return {
+      success: false,
+      message: "Invalid ID",
+    };
+  }
+  return { success: true };
+}
+
 export async function register(data: unknown) {
   const result = registerSchema.safeParse(data);
   if (!result.success) {
@@ -33,11 +43,9 @@ export async function users() {
 }
 
 export async function checkUser(id: string) {
-  if (!id) {
-    return {
-      success: false,
-      message: "Invalid ID",
-    };
+  const idCheck = checkId(id);
+  if (!idCheck.success) {
+    return idCheck;
   }
   const user = await prisma.user.findUnique({
     where: { id },
@@ -56,13 +64,10 @@ export async function checkUser(id: string) {
 }
 
 export async function deleteUser(id: string) {
-  if (!id) {
-    return {
-      success: false,
-      message: "Invalid ID",
-    };
+  const idCheck = checkId(id);
+  if (!idCheck.success) {
+    return idCheck;
   }
-
   const exists = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -91,10 +96,22 @@ export async function deleteUser(id: string) {
 }
 
 export async function updateUser(id: string, data: unknown) {
-  if (!id) {
+  const idCheck = checkId(id);
+  if (!idCheck.success) {
+    return idCheck;
+  }
+  const exists = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      email: true,
+    },
+  });
+
+  if (!exists) {
     return {
       success: false,
-      message: "Invalid ID",
+      message: "User not found",
     };
   }
   // TODO
