@@ -12,6 +12,20 @@ function checkId(id: string | undefined) {
   return { success: true };
 }
 
+function findUniqueUserById(id: string) {
+  const user = prisma.user.findUnique({
+    where: { id },
+    select: { id: true, name: true, email: true, role: true },
+  });
+  if (!user) {
+    return {
+      success: false,
+      message: "User not found",
+    };
+  }
+  return { success: true, user };
+}
+
 export async function register(data: unknown) {
   const result = registerSchema.safeParse(data);
   if (!result.success) {
@@ -47,19 +61,13 @@ export async function checkUser(id: string) {
   if (!idCheck.success) {
     return idCheck;
   }
-  const user = await prisma.user.findUnique({
-    where: { id },
-    select: { id: true, name: true, email: true, role: true },
-  });
-  if (!user) {
-    return {
-      success: false,
-      message: "User not found",
-    };
+  const userExists = findUniqueUserById(id);
+  if (!userExists.success) {
+    return userExists;
   }
   return {
     success: true,
-    user,
+    userExists: userExists.user,
   };
 }
 
