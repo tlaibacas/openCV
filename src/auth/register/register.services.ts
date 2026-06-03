@@ -2,17 +2,13 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 
-function checkId(id: string | undefined) {
-  if (!id || undefined) {
+function checkId(id: string) {
+  if (!id) {
     return {
       success: false,
-      message: "Invalid ID",
+      message: "ID is required",
     };
   }
-  return { success: true };
-}
-
-function findUniqueUserById(id: string) {
   const user = prisma.user.findUnique({
     where: { id },
     select: { id: true, name: true, email: true, role: true },
@@ -38,10 +34,15 @@ export async function register(data: unknown) {
   const user = await prisma.user.create({
     data: { ...result.data, password: hash },
   });
-
+  const safeUser = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
   return {
     success: true,
-    user,
+    safeUser,
   };
 }
 
@@ -61,13 +62,9 @@ export async function checkUser(id: string) {
   if (!idCheck.success) {
     return idCheck;
   }
-  const userExists = findUniqueUserById(id);
-  if (!userExists.success) {
-    return userExists;
-  }
   return {
     success: true,
-    userExists: userExists.user,
+    userExists: idCheck.user,
   };
 }
 
@@ -76,30 +73,13 @@ export async function deleteUser(id: string) {
   if (!idCheck.success) {
     return idCheck;
   }
-  const exists = await prisma.user.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      email: true,
-    },
-  });
-
-  if (!exists) {
-    return {
-      success: false,
-      message: "User not found",
-    };
-  }
-
   await prisma.user.delete({
     where: { id },
   });
-
   return {
     success: true,
-    message: "User deleted successfully",
-    id: exists.id,
-    email: exists.email,
+    userDeleted: idCheck.user,
+    message: "User deleted",
   };
 }
 
@@ -107,20 +87,6 @@ export async function updateUser(id: string, data: unknown) {
   const idCheck = checkId(id);
   if (!idCheck.success) {
     return idCheck;
-  }
-  const exists = await prisma.user.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      email: true,
-    },
-  });
-
-  if (!exists) {
-    return {
-      success: false,
-      message: "User not found",
-    };
   }
   // TODO
 }

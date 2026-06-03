@@ -34,7 +34,7 @@ export function bruteShield(ip: string) {
   if (exist.attempts >= rate) {
     exist.blockedUntil = now + blockTime;
     exist.attempts = 0;
-    return { blocked: true };
+    return { blocked: true, message: "Too many requests" };
   }
   return { blocked: false };
 }
