@@ -88,6 +88,11 @@ export async function updateUser(id: string, data: unknown) {
   if (!idCheck.success) {
     return idCheck;
   }
+  return {
+    success: true,
+    data,
+    message: "User updated",
+  };
   // TODO
 }
 
