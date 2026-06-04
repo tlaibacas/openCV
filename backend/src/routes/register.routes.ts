@@ -11,7 +11,6 @@ import { bruteShield } from "../middleware/bruteShield.js";
 
 export async function registerRoutes(fastify: FastifyInstance) {
   fastify.addHook("preHandler", async (request, reply) => {
-    if (request.url === "/check") return;
     const result = bruteShield(request.ip);
     if (result.blocked) {
       return reply.status(429).send({ message: result.message });
