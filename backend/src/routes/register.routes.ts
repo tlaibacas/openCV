@@ -14,13 +14,16 @@ export async function registerRoutes(fastify: FastifyInstance) {
     if (request.url === "/check") return;
     const result = bruteShield(request.ip);
     if (result.blocked) {
-      return reply.send({ message: result.message });
+      return reply.status(429).send({ message: result.message });
     }
   });
 
   fastify.post("/register", async (request, reply) => {
     const result = await register(request.body);
-    return reply.send(result);
+    if (!result.success) {
+      return reply.status(400).send(result.error);
+    }
+    return reply.send(result.user);
   });
 
   fastify.get("/users", async (_request, reply) => {
@@ -31,19 +34,28 @@ export async function registerRoutes(fastify: FastifyInstance) {
   fastify.get("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const user = await checkUser(id);
-    return reply.send(user);
+    if (!user.success) {
+      return reply.status(400).send(user.error);
+    }
+    return reply.code(200).send(user.userExists);
   });
 
   fastify.delete("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const user = await deleteUser(id);
-    return reply.send(user);
+    if (!user.success) {
+      return reply.status(400).send(user.error);
+    }
+    return reply.code(200).send(user.userDeleted);
   });
 
   fastify.put("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const user = await updateUser(id, request.body);
-    return reply.send(user);
+    if (!user.success) {
+      return reply.status(400).send(user.error);
+    }
+    return reply.code(200).send(user);
   });
 
   // TO DELETE!!!!
