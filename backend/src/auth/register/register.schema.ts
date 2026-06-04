@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const normalEmail = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return undefined;
-  return val.trim().toLowerCase() || undefined;
+  if (typeof val !== "string") return null;
+  return val.trim().toLowerCase() || null;
 }, z.email("Invalid email address"));
 
 const passRegex = z
@@ -14,16 +14,16 @@ const passRegex = z
   .regex(/[^A-Za-z0-9]/, "Must contain symbol");
 
 const normalizeString = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return undefined;
+  if (typeof val !== "string") return null;
   const trimmed = val.trim();
-  return trimmed === "" ? undefined : trimmed;
-}, z.string().optional());
+  return trimmed === "" ? null : trimmed;
+}, z.string().nullable());
 
 const roles = ["visitor", "recruiter", "admin"] as const;
 const roleSchema = z.enum(roles).default("visitor");
 
 const normalizeRole = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return undefined;
+  if (typeof val !== "string") return null;
   return val.trim().toLowerCase();
 }, roleSchema);
 
