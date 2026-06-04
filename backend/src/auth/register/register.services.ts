@@ -26,7 +26,6 @@ export async function register(data: unknown) {
   const result = registerSchema.safeParse(data);
   if (!result.success) {
     return {
-      success: false,
       error: result.error.issues[0],
     };
   }
