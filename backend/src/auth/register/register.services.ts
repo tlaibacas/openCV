@@ -2,11 +2,22 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 
+const uuidRegex =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+const isUuid = (v: string) => uuidRegex.test(v);
+
 async function checkId(id: string) {
   if (!id) {
     return {
       success: false,
       error: "ID is required",
+    };
+  }
+  if (!isUuid(id)) {
+    return {
+      success: false,
+      error: "Invalid ID format",
     };
   }
   const user = await prisma.user.findUnique({
