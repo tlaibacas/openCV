@@ -2,14 +2,14 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 
-function checkId(id: string) {
+async function checkId(id: string) {
   if (!id) {
     return {
       success: false,
       error: "ID is required",
     };
   }
-  const user = prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id },
     select: { id: true, name: true, email: true, role: true },
   });
@@ -55,7 +55,7 @@ export async function users() {
 }
 
 export async function checkUser(id: string) {
-  const idCheck = checkId(id);
+  const idCheck = await checkId(id);
   if (!idCheck.success) {
     return { success: idCheck.success, error: idCheck.error };
   }
@@ -66,7 +66,7 @@ export async function checkUser(id: string) {
 }
 
 export async function deleteUser(id: string) {
-  const idCheck = checkId(id);
+  const idCheck = await checkId(id);
   if (!idCheck.success) {
     return { success: idCheck.success, error: idCheck.error };
   }
@@ -81,7 +81,7 @@ export async function deleteUser(id: string) {
 }
 
 export async function updateUser(id: string, data: unknown) {
-  const idCheck = checkId(id);
+  const idCheck = await checkId(id);
   if (!idCheck.success) {
     return idCheck;
   }
