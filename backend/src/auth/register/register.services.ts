@@ -6,7 +6,7 @@ function checkId(id: string) {
   if (!id) {
     return {
       success: false,
-      message: "ID is required",
+      error: "ID is required",
     };
   }
   const user = prisma.user.findUnique({
@@ -16,7 +16,7 @@ function checkId(id: string) {
   if (!user) {
     return {
       success: false,
-      message: "User not found",
+      error: "User not found",
     };
   }
   return { success: true, user };
@@ -40,10 +40,7 @@ export async function register(data: unknown) {
     email: user.email,
     role: user.role,
   };
-  return {
-    success: true,
-    safeUser,
-  };
+  return { success: true, user: safeUser };
 }
 
 export async function users() {
@@ -60,10 +57,10 @@ export async function users() {
 export async function checkUser(id: string) {
   const idCheck = checkId(id);
   if (!idCheck.success) {
-    return idCheck;
+    return { success: idCheck.success, error: idCheck.error };
   }
   return {
-    success: true,
+    success: idCheck.success,
     userExists: idCheck.user,
   };
 }
@@ -71,13 +68,13 @@ export async function checkUser(id: string) {
 export async function deleteUser(id: string) {
   const idCheck = checkId(id);
   if (!idCheck.success) {
-    return idCheck;
+    return { success: idCheck.success, error: idCheck.error };
   }
   await prisma.user.delete({
     where: { id },
   });
   return {
-    success: true,
+    success: idCheck.success,
     userDeleted: idCheck.user,
     message: "User deleted",
   };
@@ -89,7 +86,7 @@ export async function updateUser(id: string, data: unknown) {
     return idCheck;
   }
   return {
-    success: true,
+    success: idCheck.success,
     data,
     message: "User updated",
   };
