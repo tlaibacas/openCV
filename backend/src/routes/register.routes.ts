@@ -20,7 +20,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
   fastify.post("/register", async (request, reply) => {
     const result = await register(request.body);
     if (!result.success) {
-      return reply.status(400).send(result.error);
+      return reply.status(400).send(result);
     }
     return reply.send(result.user);
   });
@@ -34,7 +34,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
     const { id } = request.params as { id: string };
     const user = await checkUser(id);
     if (!user.success) {
-      return reply.status(400).send(user.error);
+      return reply.status(400).send(user);
     }
     return reply.code(200).send(user.userExists);
   });
@@ -43,7 +43,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
     const { id } = request.params as { id: string };
     const user = await deleteUser(id);
     if (!user.success) {
-      return reply.status(400).send(user.error);
+      return reply.status(400).send(user);
     }
     return reply.code(200).send(user.userDeleted);
   });
@@ -52,7 +52,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
     const { id } = request.params as { id: string };
     const user = await updateUser(id, request.body);
     if (!user.success) {
-      return reply.status(400).send(user.error);
+      return reply.status(400).send(user);
     }
     return reply.code(200).send(user);
   });
