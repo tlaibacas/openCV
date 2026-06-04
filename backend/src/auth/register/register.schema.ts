@@ -1,10 +1,9 @@
 import { z } from "zod";
 
-const normalizeString = z.preprocess((val) => {
-  if (val === "") return null;
-  if (typeof val === "string") return val.trim().toLowerCase();
-  return null;
-}, z.string().nullable());
+const normalEmail = z.preprocess((val: unknown) => {
+  if (typeof val !== "string") return undefined;
+  return val.trim().toLowerCase() || undefined;
+}, z.email("Invalid email address"));
 
 const passRegex = z
   .string()
@@ -14,31 +13,30 @@ const passRegex = z
   .regex(/\d/, "Must contain number")
   .regex(/[^A-Za-z0-9]/, "Must contain symbol");
 
-const normalizeRole = z.preprocess(
-  (val) => {
-    if (val == null || val === "") return "visitor";
-    if (typeof val === "string") return val.trim().toLowerCase();
-    return "visitor";
-  },
-  z.enum(["visitor", "recruiter", "admin"]),
-);
+const normalizeString = z.preprocess((val: unknown) => {
+  if (typeof val !== "string") return undefined;
+  const trimmed = val.trim();
+  return trimmed === "" ? undefined : trimmed;
+}, z.string().optional());
 
-const normalizeEmail = z.preprocess((val) => {
-  if (val === "") return null;
-  if (typeof val === "string") return val.trim().toLowerCase();
-  return null;
-}, z.email("Invalid email format"));
+const roles = ["visitor", "recruiter", "admin"] as const;
+const roleSchema = z.enum(roles).default("visitor");
+
+const normalizeRole = z.preprocess((val: unknown) => {
+  if (typeof val !== "string") return undefined;
+  return val.trim().toLowerCase();
+}, roleSchema);
 
 export const registerSchema = z
   .object({
-    email: normalizeEmail,
+    email: normalEmail,
     password: passRegex,
     confirmPassword: z.string(),
     name: normalizeString,
     lastName: normalizeString,
     role: normalizeRole,
     agency: normalizeString,
-    sex: normalizeString.pipe(z.enum(["male", "female", "other"])).nullable(),
+    sex: normalizeString.pipe(z.enum(["male", "female", "other"])),
   })
   .superRefine((data, ctx) => {
     if (!data.role) return;
