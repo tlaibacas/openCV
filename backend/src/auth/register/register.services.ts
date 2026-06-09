@@ -108,5 +108,5 @@ export async function updateUser(id: string, data: unknown) {
 // TO DELETE!!!!
 export async function checkTest() {
   const users = await prisma.user.findMany();
-  return users;
+  return { sucess: true, users };
 }

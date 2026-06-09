@@ -61,9 +61,6 @@ export async function registerRoutes(fastify: FastifyInstance) {
   // TO DELETE!!!!
   fastify.get("/checkTest", async (request, reply) => {
     const check = await checkTest();
-    return reply.send({
-      message: "ok",
-      check,
-    });
+    return reply.send(check);
   });
 }
