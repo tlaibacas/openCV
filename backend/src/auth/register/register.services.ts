@@ -2,7 +2,18 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 
-const uuidRegex =
+type Register = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  lastName: string;
+  role: string;
+  agency: string;
+  sex: string;
+};
+
+const uuidRegex: RegExp =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const isUuid = (v: string) => uuidRegex.test(v);
@@ -33,7 +44,7 @@ async function checkId(id: string) {
   return { success: true, user };
 }
 
-export async function register(data: unknown) {
+export async function register(data: Register) {
   const result = registerSchema.safeParse(data);
   if (!result.success) {
     return {
