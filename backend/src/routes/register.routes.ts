@@ -5,7 +5,7 @@ import {
   checkUser,
   deleteUser,
   updateUser,
-  checkTest,
+  checkAll,
 } from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
 import type { Register } from "../types.js";
@@ -60,7 +60,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
 
   // TO DELETE!!!!
   fastify.get("/checkTest", async (request, reply) => {
-    const check = await checkTest();
+    const check = await checkAll();
     return reply.send(check);
   });
 }
