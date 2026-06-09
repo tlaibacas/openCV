@@ -1,9 +1,4 @@
-// Type definitions
-type newData = {
-  attempts: number;
-  lastAttempt: number;
-  blockedUntil?: number | undefined;
-};
+import type { newData } from "../../src/types";
 // Variables
 const data = new Map<string, newData>();
 const rate = Number(process.env.RATE_LIMIT ?? 60);

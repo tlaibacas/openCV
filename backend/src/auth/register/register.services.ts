@@ -1,17 +1,7 @@
 import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
-
-type Register = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  name: string;
-  lastName: string;
-  role: string;
-  agency: string;
-  sex: string;
-};
+import type { Register } from "../../types.js";
 
 const uuidRegex: RegExp =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;

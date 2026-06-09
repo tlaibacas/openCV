@@ -8,6 +8,7 @@ import {
   checkTest,
 } from "../auth/register/register.services.js";
 import { bruteShield } from "../middleware/bruteShield.js";
+import type { Register } from "../types.js";
 
 export async function registerRoutes(fastify: FastifyInstance) {
   fastify.addHook("preHandler", async (request, reply) => {
@@ -17,7 +18,7 @@ export async function registerRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.post("/register", async (request, reply) => {
+  fastify.post<{ Body: Register }>("/register", async (request, reply) => {
     const result = await register(request.body);
     if (!result.success) {
       return reply.status(400).send(result.error?.message);
