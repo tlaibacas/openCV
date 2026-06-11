@@ -22,12 +22,11 @@ const normalizeString = z.preprocess((val: unknown) => {
 const roles = ["visitor", "recruiter", "admin"] as const;
 const roleSchema = z.enum(roles).default("visitor");
 
-const normalizeRole = z
-  .preprocess((val: unknown) => {
-    if (typeof val !== "string") return null;
-    return val.trim().toLowerCase();
-  }, roleSchema)
-  .default("visitor");
+const normalizeRole = z.preprocess((val: unknown) => {
+  if (typeof val !== "string") return null;
+  if (val.trim() === "") return "visitor";
+  return val.trim().toLowerCase();
+}, roleSchema);
 
 export const registerSchema = z
   .object({
