@@ -1,63 +1,127 @@
 import { z } from "zod";
 
-const normalEmail = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return null;
-  return val.trim().toLowerCase() || null;
-}, z.email("Invalid email address"));
+const email = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : val.trim().toLocaleLowerCase() === ""
+        ? undefined
+        : val,
+  z.email("Invalid email").min(1, "Email is required dor registration"),
+);
 
-const passRegex = z
-  .string()
-  .min(8, "Password must be at least 8 characters")
-  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-  .regex(/[a-z]/, "Must contain lowercase")
-  .regex(/\d/, "Must contain number")
-  .regex(/[^A-Za-z0-9]/, "Must contain symbol");
+const password = z.preprocess(
+  (val: unknown) => (typeof val !== "string" ? undefined : val),
+  z
+    .string()
+    .min(8, "Password must be at least 8 characters long.")
+    .regex(/[a-z]/, "Must contain lowercase")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/\d/, "Must contain number")
+    .regex(/[^A-Za-z0-9]/, "Must contain symbol"),
+);
 
-const normalizeString = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return null;
-  const trimmed = val.trim();
-  return trimmed === "" ? null : trimmed;
-}, z.string().nullable());
+const confirmPassword = z.preprocess(
+  (val: unknown) => (typeof val !== "string" ? undefined : val),
+  z.string().min(1, "You must confirm password"),
+);
 
-const roles = ["visitor", "recruiter", "admin"] as const;
-const roleSchema = z.enum(roles).default("visitor");
+const name = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : ((v) => (v === "" ? undefined : v))(val.trim()),
+  z.string().optional(),
+);
 
-const normalizeRole = z.preprocess((val: unknown) => {
-  if (typeof val !== "string") return null;
-  if (val.trim() === "") return "visitor";
-  return val.trim().toLowerCase();
-}, roleSchema);
+const lastName = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : ((v) => (v === "" ? undefined : v))(val.trim()),
+  z.string().optional(),
+);
+
+const role = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
+  z.enum(["visitor", "recruiter", "admin"]),
+);
+
+const agency = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : ((v) => (v === "" ? undefined : v))(val.trim()),
+  z.string().optional(),
+);
+
+const sex = z.preprocess(
+  (val: unknown) =>
+    typeof val !== "string"
+      ? undefined
+      : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
+  z.enum(["male", "female", "other"]),
+);
 
 export const registerSchema = z
   .object({
-    email: normalEmail,
-    password: passRegex,
-    confirmPassword: z.string(),
-    name: normalizeString,
-    lastName: normalizeString,
-    role: normalizeRole,
-    agency: normalizeString,
-    sex: normalizeString.pipe(z.enum(["male", "female", "other"])),
+    email: email,
+    password: password,
+    confirmPassword: confirmPassword,
+    name: name,
+    lastName: lastName,
+    role: role,
+    agency: agency,
+    sex: sex,
   })
   .superRefine((data, ctx) => {
-    if (!data.role) return;
-
-    const add = (path: string[], message: string) =>
-      ctx.addIssue({ code: "custom", path, message });
-
     if (data.password !== data.confirmPassword) {
-      add(["confirmPassword"], "Passwords do not match");
+      ctx.addIssue({
+        code: "custom",
+        path: ["confirmPassword"],
+        message: "Passwords do not match!",
+      });
     }
 
     if (data.role === "visitor") {
-      if (!data.name) add(["name"], "Name is required for visitors");
-      if (!data.sex) add(["sex"], "Sex is required for visitors");
-    }
+      if (!data.name) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["name"],
+          message: "Name is required for visitors",
+        });
+      }
 
-    if (data.role === "recruiter") {
-      if (!data.agency) add(["agency"], "Agency is required for recruiters");
+      if (!data.lastName) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["lastName"],
+          message: "Last name is required for visitors",
+        });
+      }
+
+      if (!data.sex) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["sex"],
+          message: "Sex is required for visitors",
+        });
+      }
+    }
+    if (data.role === "recruiter" && !data.agency) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["role"],
+        message: "Agency is required for recruiters",
+      });
     }
   })
-  .transform(({ confirmPassword, ...rest }) => rest);
-
-export type RegisterSchema = z.infer<typeof registerSchema>;
+  .transform(({ confirmPassword, ...data }) => ({
+    ...data,
+    name: data.name ?? null,
+    lastName: data.lastName ?? null,
+    agency: data.agency ?? null,
+  }));
