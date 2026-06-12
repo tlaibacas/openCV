@@ -63,7 +63,7 @@ const sex = z.preprocess(
     typeof val !== "string"
       ? undefined
       : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
-  z.enum(["male", "female", "other"]),
+  z.enum(["male", "female", "other"]).optional(),
 );
 
 export const registerSchema = z
@@ -124,4 +124,5 @@ export const registerSchema = z
     name: data.name ?? null,
     lastName: data.lastName ?? null,
     agency: data.agency ?? null,
+    sex: data.sex ?? null,
   }));
