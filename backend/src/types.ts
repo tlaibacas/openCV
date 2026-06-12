@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { registerSchema } from "./auth/register/register.schema";
+
 export type Register = {
   email: string;
   password: string;
@@ -13,3 +16,4 @@ export type newData = {
   lastAttempt: number;
   blockedUntil?: number | undefined;
 };
+export type RegisterSchema = z.infer<typeof registerSchema>;
