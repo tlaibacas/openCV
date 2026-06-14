@@ -7,7 +7,7 @@ export async function rootRoutes(fastify: FastifyInstance) {
     const result = bruteShield(request.ip);
     return result;
   });
-  fastify.get("/", async () => {
+  fastify.get("/warmUp", async () => {
     return true;
   });
 }
