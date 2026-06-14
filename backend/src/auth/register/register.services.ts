@@ -42,6 +42,15 @@ export async function register(data: Register) {
       error: result.error.issues[0],
     };
   }
+  const existingUser = await prisma.user.findUnique({
+    where: { email: result.data.email },
+    select: { email: true },
+  });
+
+  if (existingUser) {
+    throw new Error("Email already exists");
+  }
+
   const hash = await argon2.hash(result.data.password);
   const user = await prisma.user.create({
     data: { ...result.data, password: hash },
