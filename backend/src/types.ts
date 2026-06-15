@@ -17,3 +17,13 @@ export type newData = {
   blockedUntil?: number | undefined;
 };
 export type RegisterSchema = z.infer<typeof registerSchema>;
+
+export type check = {
+  success: boolean;
+  users: {
+    email: string;
+    name: string | null;
+    role: unknown;
+    id: string;
+  }[];
+};
