@@ -18,5 +18,6 @@ await build({
     "zod",
     "@prisma/adapter-pg",
     "@prisma/client",
+    "@fastify/rate-limit",
   ],
 });
