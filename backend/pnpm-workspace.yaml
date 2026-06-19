@@ -3,3 +3,5 @@ allowBuilds:
   argon2: true
   esbuild: true
   prisma: true
+minimumReleaseAgeExclude:
+  - '@types/node@26.0.0'
