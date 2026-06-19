@@ -1,4 +1,4 @@
-import type { FastifyInstance } from "fastify";
+import { type FastifyInstance } from "fastify";
 import {
   register,
   users,
@@ -7,35 +7,34 @@ import {
   updateUser,
   checkAll,
 } from "../auth/register/register.services.js";
-import type { check, Register } from "../types.js";
+import type { ArrayResult, Register, Result } from "../types.js";
 
-export async function authRoutes(fastify: FastifyInstance) {
-  fastify.post<{ Body: Register }>("/register", async (request, reply) => {
-    const result = await register(request.body);
-    return result.success
-      ? reply.send(result.user)
-      : reply.status(400).send(result.error?.message);
+export const authRoutes = async (fastify: FastifyInstance) => {
+  fastify.post<{ Body: Register; Reply: Result }>(
+    "/register",
+    async (request, reply) => {
+      const result = await register(request.body);
+      return result.success
+        ? reply.send(result)
+        : reply.status(400).send(result);
+    },
+  );
+
+  fastify.get<{ Reply: ArrayResult }>("/users", async (_, reply) => {
+    const result = await users();
+    return result.success ? reply.send(result) : reply.status(400).send(result);
   });
 
-  fastify.get<{ Reply: check }>("/users", async (_request, reply) => {
-    const check = await users();
-    return reply.send(check);
-  });
-
-  fastify.get("/users/:id", async (request, reply) => {
+  fastify.get<{ Reply: Result }>("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const result = await checkUser(id);
-    return result.success
-      ? reply.send(result.userExists)
-      : reply.code(400).send(result.error);
+    return result.success ? reply.send(result) : reply.code(400).send(result);
   });
 
-  fastify.delete("/users/:id", async (request, reply) => {
+  fastify.delete<{ Reply: Result }>("/users/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const result = await deleteUser(id);
-    return result.success
-      ? reply.send(result.userDeleted)
-      : reply.status(400).send(result.error);
+    return result.success ? reply.send(result) : reply.status(400).send(result);
   });
 
   fastify.put("/users/:id", async (request, reply) => {
@@ -49,4 +48,4 @@ export async function authRoutes(fastify: FastifyInstance) {
     const check = await checkAll();
     return reply.send(check);
   });
-}
+};

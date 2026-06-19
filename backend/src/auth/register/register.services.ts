@@ -1,105 +1,88 @@
 import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
-import type { Register } from "../../types.js";
+import type { ArrayResult, Register, Result } from "../../types.js";
 
 const uuidRegex: RegExp =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const isUuid = (v: string) => uuidRegex.test(v);
 
-async function checkId(id: string) {
-  if (!id) {
-    return {
-      success: false,
-      error: "ID is required",
-    };
-  }
-  if (!isUuid(id)) {
-    return {
-      success: false,
-      error: "Invalid ID format",
-    };
-  }
-  const user = await prisma.user.findUnique({
-    where: { id },
-    select: { id: true, name: true, email: true, role: true },
-  });
-  if (!user) {
-    return {
-      success: false,
-      error: "User not found",
-    };
-  }
-  return { success: true, user };
-}
+export const checkId = async (id: string): Promise<Result> =>
+  !id
+    ? { success: false, error: "ID is required" }
+    : !isUuid(id)
+      ? { success: false, error: "Invalid ID format" }
+      : ((user) =>
+          !user
+            ? { success: false, error: "User not found" }
+            : { success: true, user })(
+          await prisma.user.findUnique({
+            where: { id },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              role: true,
+            },
+          }),
+        );
 
-export async function register(data: Register) {
-  const result = registerSchema.safeParse(data);
-  if (!result.success) {
-    return {
-      success: false,
-      error: result.error.issues[0],
-    };
-  }
-  const existingUser = await prisma.user.findUnique({
-    where: { email: result.data.email },
-    select: { email: true },
-  });
+export const register = async (data: Register): Promise<Result> =>
+  (async () => {
+    const parsed = registerSchema.safeParse(data);
 
-  if (existingUser) {
-    throw new Error("Email already exists");
-  }
+    return !parsed.success
+      ? { success: false, error: parsed.error.issues[0] }
+      : await (async () => {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: parsed.data.email },
+            select: { email: true },
+          });
 
-  const hash = await argon2.hash(result.data.password);
-  const user = await prisma.user.create({
-    data: { ...result.data, password: hash },
-  });
-  const safeUser = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  };
-  return { success: true, user: safeUser };
-}
+          return existingUser
+            ? { success: false, error: "Email already exists" }
+            : await (async () => {
+                const hash = await argon2.hash(parsed.data.password);
 
-export async function users() {
+                const user = await prisma.user.create({
+                  data: { ...parsed.data, password: hash },
+                });
+
+                return {
+                  success: true,
+                  user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                  },
+                };
+              })();
+        })();
+  })();
+
+export const users = async (): Promise<ArrayResult> => {
   const users = await prisma.user.findMany({
     select: { id: true, name: true, email: true, role: true },
   });
+  return users.length > 0
+    ? { success: true, users }
+    : { success: false, error: "No users found at DB" };
+};
 
-  return {
-    success: true,
-    users,
-  };
-}
-
-export async function checkUser(id: string) {
+export const checkUser = async (id: string): Promise<Result> => {
   const idCheck = await checkId(id);
-  if (!idCheck.success) {
-    return { success: idCheck.success, error: idCheck.error };
-  }
-  return {
-    success: idCheck.success,
-    userExists: idCheck.user,
-  };
-}
+  return idCheck;
+};
 
-export async function deleteUser(id: string) {
-  const idCheck = await checkId(id);
-  if (!idCheck.success) {
-    return { success: idCheck.success, error: idCheck.error };
-  }
-  await prisma.user.delete({
-    where: { id },
-  });
-  return {
-    success: idCheck.success,
-    userDeleted: idCheck.user,
-    message: "User deleted",
-  };
-}
+export const deleteUser = async (id: string): Promise<Result> => {
+  const result = await checkId(id);
+
+  return !result.success
+    ? { success: false, error: result.error }
+    : { success: true, user: await prisma.user.delete({ where: { id } }) };
+};
 
 export async function updateUser(id: string, data: unknown) {
   const idCheck = await checkId(id);

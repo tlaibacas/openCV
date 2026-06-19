@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { registerSchema } from "./auth/register/register.schema";
+import { $ZodIssue } from "zod/v4/core";
 
 export type Register = {
   email: string;
@@ -11,19 +10,25 @@ export type Register = {
   agency: string;
   sex: string;
 };
-export type newData = {
-  attempts: number;
-  lastAttempt: number;
-  blockedUntil?: number | undefined;
-};
-export type RegisterSchema = z.infer<typeof registerSchema>;
 
-export type check = {
-  success: boolean;
-  users: {
-    email: string;
-    name: string | null;
-    role: unknown;
-    id: string;
-  }[];
+type User = {
+  id: string;
+  email: string;
+  name: string | null;
+  role: "visitor" | "recruiter" | "admin";
 };
+
+type UserArray = { success: true; users: User[] };
+
+export type UserResponse = {
+  success: true;
+  user: User;
+};
+
+export type ErrorResponse = {
+  success: false;
+  error: $ZodIssue | undefined | string;
+};
+
+export type Result = ErrorResponse | UserResponse;
+export type ArrayResult = ErrorResponse | UserArray;
