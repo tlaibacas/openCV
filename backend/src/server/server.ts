@@ -5,10 +5,7 @@ import rateLimit from "@fastify/rate-limit";
 
 export function buildServer() {
   const app = fastify();
-  app.register(rateLimit, {
-    max: 120,
-    timeWindow: "1 minute",
-  });
+  app.register(rateLimit);
   app.register(rootRoutes, { prefix: "api/v1" });
   app.register(authRoutes, { prefix: "api/auth/v1" });
   return app;
