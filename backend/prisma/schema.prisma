@@ -17,6 +17,8 @@ model User {
   sex       Sex?
   role      Role     @default(visitor)
   agency    String?
+  isConfirmed Boolean @default(false)
+  confirmationCode String?
   createdAt DateTime @default(now()) @db.Timestamptz(6)
 }
 

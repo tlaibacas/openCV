@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.5.03",
+  "version": "0.5.08",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "argon2": "^0.44.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
-    "pg": "^8.21.0",
+    "pg": "^8.22.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
