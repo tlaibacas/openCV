@@ -7,7 +7,7 @@ import {
   updateUser,
   checkAll,
 } from "../auth/register/register.services.js";
-import type { ArrayResult, Register, Result } from "../types.js";
+import type { ArrayResult, Register, Result, UpdateUser } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
 
 export const authRoutes = async (fastify: FastifyInstance) => {
@@ -71,7 +71,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.put(
+  fastify.put<{ Body: UpdateUser; Reply: Result }>(
     "/users/:id",
     {
       config: {
@@ -79,7 +79,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params as { id: string };
+      const { id } = request.params as { id: string; user: UpdateUser };
       const result = await updateUser(id, request.body);
       return result.success
         ? reply.send(result)
