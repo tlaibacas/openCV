@@ -1,34 +1,53 @@
-import { $ZodIssue } from "zod/v4/core";
+export type Role = "visitor" | "recruiter" | "admin";
+export type Sex = "male" | "female" | "other";
 
 export type Register = {
+  id: string;
   email: string;
   password: string;
   confirmPassword: string;
   name: string;
   lastName: string;
-  role: string;
+  role: Role;
   agency: string;
-  sex: string;
+  sex: Sex;
 };
 
-type User = {
+export type UpdateUser = {
+  id?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  name?: string;
+  lastName?: string;
+  role?: Role;
+  agency?: string;
+  sex?: Sex;
+};
+
+export type User = {
   id: string;
   email: string;
   name: string | null;
-  role: "visitor" | "recruiter" | "admin";
+  role: Role;
 };
-
-type UserArray = { success: true; users: User[] };
 
 export type UserResponse = {
   success: true;
   user: User;
+  message?: string;
+};
+
+export type UserResponseArray = {
+  success: true;
+  users: User[];
+  message?: string;
 };
 
 export type ErrorResponse = {
   success: false;
-  error: $ZodIssue | undefined | string;
+  error: string;
 };
 
+export type ArrayResult = UserResponseArray | ErrorResponse;
 export type Result = ErrorResponse | UserResponse;
-export type ArrayResult = ErrorResponse | UserArray;
