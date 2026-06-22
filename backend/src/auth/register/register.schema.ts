@@ -50,6 +50,11 @@ const role = z.preprocess(
   z.enum(["visitor", "recruiter", "admin"]),
 );
 
+const isConfirmed = z.preprocess(
+  (v) => (typeof v === "boolean" ? v : false),
+  z.boolean().default(false),
+);
+
 const agency = z.preprocess(
   (val: unknown) =>
     typeof val !== "string"
@@ -74,6 +79,7 @@ export const registerSchema = z
     name: name,
     lastName: lastName,
     role: role,
+    isConfirmed: isConfirmed,
     agency: agency,
     sex: sex,
   })
