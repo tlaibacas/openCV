@@ -5,7 +5,7 @@ import {
   checkUser,
   deleteUser,
   updateUser,
-  checkAll,
+  getUsers,
 } from "../auth/register/register.services.js";
 import type { ArrayResult, Register, Result, UpdateUser } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
@@ -89,7 +89,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
 
   // TO DELETE!!!!
   fastify.get("/checkTest", async (_request, reply) => {
-    const check = await checkAll();
+    const check = await getUsers();
     return reply.send(check);
   });
 };
