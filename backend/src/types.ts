@@ -6,11 +6,13 @@ export type Register = {
   email: string;
   password: string;
   confirmPassword: string;
-  name: string;
-  lastName: string;
+  name?: string | null;
+  lastName?: string | null;
   role: Role;
-  agency: string;
-  sex: Sex;
+  isConfirmed: boolean;
+  confirmationCode: string;
+  agency?: string | null;
+  sex?: Sex | null;
 };
 
 export type UpdateUser = {

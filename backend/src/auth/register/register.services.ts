@@ -2,6 +2,7 @@ import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
 import type { ArrayResult, Register, Result, UpdateUser } from "../../types.js";
+import { Prisma } from "../../generated/prisma/client.js";
 
 const uuidRegex: RegExp =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -13,11 +14,8 @@ export const checkId = async (id: string): Promise<Result> =>
     ? { success: false, error: "ID is required" }
     : !isUuid(id)
       ? { success: false, error: "Invalid ID format" }
-      : ((user) =>
-          !user
-            ? { success: false, error: "User not found" }
-            : { success: true, user })(
-          await prisma.user.findUnique({
+      : await prisma.user
+          .findUnique({
             where: { id },
             select: {
               id: true,
@@ -25,8 +23,17 @@ export const checkId = async (id: string): Promise<Result> =>
               email: true,
               role: true,
             },
-          }),
-        );
+          })
+          .then(
+            (user): Result =>
+              !user
+                ? { success: false, error: "User not found" }
+                : { success: true, user },
+          )
+          .catch(() => ({
+            success: false,
+            error: "Internal error",
+          }));
 
 export const register = async (data: Register): Promise<Result> => {
   const parsed = registerSchema.safeParse(data);
@@ -36,22 +43,26 @@ export const register = async (data: Register): Promise<Result> => {
         success: false,
         error: parsed.error.issues[0]?.message ?? "Validation error",
       }
-    : (await prisma.user.findUnique({
-          where: { email: parsed.data.email },
-          select: { email: true },
-        }))
-      ? { success: false, error: "Email already exists" }
-      : {
-          success: true,
-          user: {
-            ...(await prisma.user.create({
-              data: {
-                ...parsed.data,
-                password: await argon2.hash(parsed.data.password),
-              },
-            })),
+    : await prisma.user
+        .create({
+          data: {
+            ...parsed.data,
+            password: await argon2.hash(parsed.data.password),
+            confirmationCode: crypto.randomUUID(),
           },
-        };
+        })
+        .then(
+          (user): Result => ({
+            success: true,
+            user,
+          }),
+        )
+        .catch((error: unknown) =>
+          error instanceof Prisma.PrismaClientKnownRequestError &&
+          error.code === "P2002"
+            ? { success: false, error: "Email already exists" }
+            : { success: false, error: "Internal error" },
+        );
 };
 
 export const users = async (): Promise<ArrayResult> => {
@@ -73,7 +84,20 @@ export const deleteUser = async (id: string): Promise<Result> => {
 
   return !result.success
     ? { success: false, error: result.error }
-    : { success: true, user: await prisma.user.delete({ where: { id } }) };
+    : await prisma.user
+        .delete({ where: { id } })
+        .then(
+          (user): Result => ({
+            success: true,
+            user,
+          }),
+        )
+        .catch((error: unknown) =>
+          error instanceof Prisma.PrismaClientKnownRequestError &&
+          error.code === "P2025"
+            ? { success: false, error: "User not found" }
+            : { success: false, error: "Internal error" },
+        );
 };
 
 export const updateUser = async (
@@ -89,7 +113,6 @@ export const updateUser = async (
           where: { id },
           data,
         }),
-        message: "User updated",
       }
     : {
         success: false,
@@ -98,7 +121,19 @@ export const updateUser = async (
 };
 
 // TO DELETE!!!!
-export async function checkAll() {
-  const users = await prisma.user.findMany();
-  return { sucess: true, users };
-}
+export const getUsers = async (): Promise<ArrayResult> => {
+  return await prisma.user
+    .findMany({
+      select: { id: true, name: true, email: true, role: true },
+    })
+    .then(
+      (users): ArrayResult =>
+        users.length > 0
+          ? { success: true, users }
+          : { success: false, error: "No users found at DB" },
+    )
+    .catch(() => ({
+      success: false,
+      error: "Internal error",
+    }));
+};
