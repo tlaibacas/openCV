@@ -1,7 +1,14 @@
 import { registerSchema } from "./register.schema.js";
 import { prisma } from "../../lib/prisma.js";
 import * as argon2 from "argon2";
-import type { ArrayResult, Register, Result, UpdateUser } from "../../types.js";
+import type {
+  Register,
+  UserResponse,
+  UsersResponse,
+  ErrorResponse,
+  UpdateUser,
+} from "../../types.js";
+import { userSelect } from "../../user.selects.js";
 import { Prisma } from "../../generated/prisma/client.js";
 
 const uuidRegex: RegExp =
@@ -9,7 +16,9 @@ const uuidRegex: RegExp =
 
 const isUuid = (v: string) => uuidRegex.test(v);
 
-export const checkId = async (id: string): Promise<Result> =>
+export const checkId = async (
+  id: string,
+): Promise<UserResponse | ErrorResponse> =>
   !id
     ? { success: false, error: "ID is required" }
     : !isUuid(id)
@@ -17,25 +26,21 @@ export const checkId = async (id: string): Promise<Result> =>
       : await prisma.user
           .findUnique({
             where: { id },
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              role: true,
-            },
+            select: userSelect,
           })
-          .then(
-            (user): Result =>
-              !user
-                ? { success: false, error: "User not found" }
-                : { success: true, user },
+          .then((user): UserResponse | ErrorResponse =>
+            !user
+              ? { success: false, error: "User not found" }
+              : { success: true, user },
           )
           .catch(() => ({
             success: false,
             error: "Internal error",
           }));
 
-export const register = async (data: Register): Promise<Result> => {
+export const register = async (
+  data: Register,
+): Promise<UserResponse | ErrorResponse> => {
   const parsed = registerSchema.safeParse(data);
 
   return !parsed.success
@@ -50,13 +55,12 @@ export const register = async (data: Register): Promise<Result> => {
             password: await argon2.hash(parsed.data.password),
             confirmationCode: crypto.randomUUID(),
           },
+          select: userSelect,
         })
-        .then(
-          (user): Result => ({
-            success: true,
-            user,
-          }),
-        )
+        .then((user): UserResponse | ErrorResponse => ({
+          success: true,
+          user,
+        }))
         .catch((error: unknown) =>
           error instanceof Prisma.PrismaClientKnownRequestError &&
           error.code === "P2002"
@@ -65,33 +69,35 @@ export const register = async (data: Register): Promise<Result> => {
         );
 };
 
-export const users = async (): Promise<ArrayResult> => {
+export const users = async (): Promise<UsersResponse | ErrorResponse> => {
   const users = await prisma.user.findMany({
-    select: { id: true, name: true, email: true, role: true },
+    select: userSelect,
   });
   return users.length > 0
     ? { success: true, users }
     : { success: false, error: "No users found at DB" };
 };
 
-export const checkUser = async (id: string): Promise<Result> => {
+export const checkUser = async (
+  id: string,
+): Promise<UserResponse | ErrorResponse> => {
   const idCheck = await checkId(id);
   return idCheck;
 };
 
-export const deleteUser = async (id: string): Promise<Result> => {
+export const deleteUser = async (
+  id: string,
+): Promise<UserResponse | ErrorResponse> => {
   const result = await checkId(id);
 
   return !result.success
     ? { success: false, error: result.error }
     : await prisma.user
         .delete({ where: { id } })
-        .then(
-          (user): Result => ({
-            success: true,
-            user,
-          }),
-        )
+        .then((user): UserResponse | ErrorResponse => ({
+          success: true,
+          user: user,
+        }))
         .catch((error: unknown) =>
           error instanceof Prisma.PrismaClientKnownRequestError &&
           error.code === "P2025"
@@ -103,7 +109,7 @@ export const deleteUser = async (id: string): Promise<Result> => {
 export const updateUser = async (
   id: string,
   data: UpdateUser,
-): Promise<Result> => {
+): Promise<UserResponse | ErrorResponse> => {
   const idCheck = await checkId(id);
 
   return idCheck.success
@@ -115,22 +121,21 @@ export const updateUser = async (
         }),
       }
     : {
-        success: false,
+        success: idCheck.success,
         error: idCheck.error,
       };
 };
 
 // TO DELETE!!!!
-export const getUsers = async (): Promise<ArrayResult> => {
+export const getUsers = async (): Promise<UsersResponse | ErrorResponse> => {
   return await prisma.user
     .findMany({
-      select: { id: true, name: true, email: true, role: true },
+      select: userSelect,
     })
-    .then(
-      (users): ArrayResult =>
-        users.length > 0
-          ? { success: true, users }
-          : { success: false, error: "No users found at DB" },
+    .then((users): UsersResponse | ErrorResponse =>
+      users.length > 0
+        ? { success: true, users }
+        : { success: false, error: "No users found at DB" },
     )
     .catch(() => ({
       success: false,
