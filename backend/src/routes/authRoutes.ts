@@ -7,11 +7,17 @@ import {
   updateUser,
   getUsers,
 } from "../auth/register/register.services.js";
-import type { ArrayResult, Register, Result, UpdateUser } from "../types.js";
+import type {
+  Register,
+  UpdateUser,
+  UserResponse,
+  ErrorResponse,
+  UsersResponse,
+} from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
 
 export const authRoutes = async (fastify: FastifyInstance) => {
-  fastify.post<{ Body: Register; Reply: Result }>(
+  fastify.post<{ Body: Register; Reply: UserResponse | ErrorResponse }>(
     "/register",
     {
       config: {
@@ -26,7 +32,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.get<{ Reply: ArrayResult }>(
+  fastify.get<{ Reply: UsersResponse | ErrorResponse }>(
     "/users",
     {
       config: {
@@ -41,7 +47,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.get<{ Reply: Result }>(
+  fastify.get<{ Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
       config: {
@@ -55,7 +61,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.delete<{ Reply: Result }>(
+  fastify.delete<{ Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
       config: {
@@ -71,7 +77,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.put<{ Body: UpdateUser; Reply: Result }>(
+  fastify.put<{ Body: UpdateUser; Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
       config: {
