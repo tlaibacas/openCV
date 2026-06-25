@@ -31,7 +31,12 @@ export type User = {
   id: string;
   email: string;
   name: string | null;
+  lastName: string | null;
+  sex: string | null;
+  agency: string | null;
+  confirmationCode: string;
   role: Role;
+  createdAt: Date;
 };
 
 export type UserResponse = {
@@ -40,7 +45,7 @@ export type UserResponse = {
   message?: string;
 };
 
-export type UserResponseArray = {
+export type UsersResponse = {
   success: true;
   users: User[];
   message?: string;
@@ -50,6 +55,3 @@ export type ErrorResponse = {
   success: false;
   error: string;
 };
-
-export type ArrayResult = UserResponseArray | ErrorResponse;
-export type Result = ErrorResponse | UserResponse;
