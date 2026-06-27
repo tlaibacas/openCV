@@ -42,7 +42,6 @@ export const register = async (
   data: Register,
 ): Promise<UserResponse | ErrorResponse> => {
   const parsed = registerSchema.safeParse(data);
-
   return !parsed.success
     ? {
         success: false,

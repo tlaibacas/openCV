@@ -1,87 +1,39 @@
 import { z } from "zod";
 
-const email = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : val.trim().toLocaleLowerCase() === ""
-        ? undefined
-        : val,
-  z.email("Invalid email").min(1, "Email is required dor registration"),
-);
-
-const password = z.preprocess(
-  (val: unknown) => (typeof val !== "string" ? undefined : val),
-  z
-    .string()
-    .min(8, "Password must be at least 8 characters long.")
-    .regex(/[a-z]/, "Must contain lowercase")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/\d/, "Must contain number")
-    .regex(/[^A-Za-z0-9]/, "Must contain symbol"),
-);
-
-const confirmPassword = z.preprocess(
-  (val: unknown) => (typeof val !== "string" ? undefined : val),
-  z.string().min(1, "You must confirm password"),
-);
-
-const name = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : ((v) => (v === "" ? undefined : v))(val.trim()),
-  z.string().optional(),
-);
-
-const lastName = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : ((v) => (v === "" ? undefined : v))(val.trim()),
-  z.string().optional(),
-);
-
-const role = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
-  z.enum(["visitor", "recruiter"]),
-);
-
-const isConfirmed = z.preprocess(
-  (v) => (typeof v === "boolean" ? v : false),
-  z.boolean().default(false),
-);
-
-const agency = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : ((v) => (v === "" ? undefined : v))(val.trim()),
-  z.string().optional(),
-);
-
-const sex = z.preprocess(
-  (val: unknown) =>
-    typeof val !== "string"
-      ? undefined
-      : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
-  z.enum(["male", "female", "other"]).optional(),
-);
-
 export const registerSchema = z
   .object({
-    email: email,
-    password: password,
-    confirmPassword: confirmPassword,
-    name: name,
-    lastName: lastName,
-    role: role,
-    isConfirmed: isConfirmed,
-    agency: agency,
-    sex: sex,
+    email: z
+      .email({ error: "Email must be a valid email address" })
+      .min(1, "Email is required for registration")
+      .toLowerCase()
+      .trim(),
+    password: z
+      .string({ error: "Password must be a string" })
+      .min(1, "Password is required")
+      .min(8, "Password must be at least 8 characters long.")
+      .regex(/[a-z]/, "Must contain lowercase")
+      .regex(/[A-Z]/, "Must contain uppercase")
+      .regex(/\d/, "Must contain number")
+      .regex(/[^A-Za-z0-9]/, "Must contain symbol"),
+    confirmPassword: z
+      .string({ error: "Confirm password must be a string" })
+      .min(1, "You must confirm password"),
+    name: z
+      .string({ error: "Name must be a string" })
+      .trim()
+      .optional()
+      .nullable(),
+    lastName: z
+      .string({ error: "Last name must be a string" })
+      .trim()
+      .optional()
+      .nullable(),
+    role: z.enum(["visitor", "recruiter"]),
+    agency: z
+      .string({ error: "Agency must be a string" })
+      .optional()
+      .nullable(),
+    sex: z.enum(["male", "female", "other"]).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
