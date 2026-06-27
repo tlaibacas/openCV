@@ -47,7 +47,7 @@ const role = z.preprocess(
     typeof val !== "string"
       ? undefined
       : ((v) => (v === "" ? undefined : v))(val.trim().toLocaleLowerCase()),
-  z.enum(["visitor", "recruiter", "admin"]),
+  z.enum(["visitor", "recruiter"]),
 );
 
 const isConfirmed = z.preprocess(

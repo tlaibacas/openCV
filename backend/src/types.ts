@@ -1,16 +1,14 @@
-export type Role = "visitor" | "recruiter" | "admin";
-export type Sex = "male" | "female" | "other";
+import { Sex, Role, User } from "../src/generated/prisma/client.js";
+
+export type RegisterRole = "visitor" | "recruiter";
 
 export type Register = {
-  id: string;
   email: string;
   password: string;
   confirmPassword: string;
   name?: string | null;
   lastName?: string | null;
-  role: Role;
-  isConfirmed: boolean;
-  confirmationCode: string;
+  role?: RegisterRole;
   agency?: string | null;
   sex?: Sex | null;
 };
@@ -25,18 +23,6 @@ export type UpdateUser = {
   role?: Role;
   agency?: string;
   sex?: Sex;
-};
-
-export type User = {
-  id: string;
-  email: string;
-  name: string | null;
-  lastName: string | null;
-  sex: string | null;
-  agency: string | null;
-  confirmationCode: string;
-  role: Role;
-  createdAt: Date;
 };
 
 export type UserResponse = {

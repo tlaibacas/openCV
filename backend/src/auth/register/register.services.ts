@@ -93,16 +93,18 @@ export const deleteUser = async (
   return !result.success
     ? { success: false, error: result.error }
     : await prisma.user
-        .delete({ where: { id } })
-        .then((user): UserResponse | ErrorResponse => ({
-          success: true,
-          user: user,
-        }))
-        .catch((error: unknown) =>
-          error instanceof Prisma.PrismaClientKnownRequestError &&
-          error.code === "P2025"
-            ? { success: false, error: "User not found" }
-            : { success: false, error: "Internal error" },
+        .delete({ where: { id }, select: userSelect })
+        .then(
+          (user): UserResponse => ({
+            success: true,
+            user,
+          }),
+        )
+        .catch(
+          (): ErrorResponse => ({
+            success: false,
+            error: "Internal error",
+          }),
         );
 };
 
@@ -118,6 +120,7 @@ export const updateUser = async (
         user: await prisma.user.update({
           where: { id },
           data,
+          select: userSelect,
         }),
       }
     : {
