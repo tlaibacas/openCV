@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.5.13",
+  "version": "0.5.16",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -29,10 +29,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.0.1",
     "@types/pg": "^8.20.0",
     "esbuild": "^0.28.1",
-    "eslint": "^10.5.0",
+    "eslint": "^10.6.0",
     "globals": "^17.7.0",
     "prisma": "^7.8.0",
     "tsx": "^4.22.4",
