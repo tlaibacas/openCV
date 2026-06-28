@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.5.16",
+  "version": "0.5.18",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -10,8 +10,6 @@
     "start": "node dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "migrate:dev": "prisma migrate dev",
-    "migrate:deploy": "prisma migrate deploy",
     "generate": "prisma generate"
   },
   "keywords": [],
