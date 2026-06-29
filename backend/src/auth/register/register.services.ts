@@ -10,6 +10,7 @@ import type {
 } from "../../types.js";
 import { userSelect } from "../../user.selects.js";
 import { Prisma } from "../../generated/prisma/client.js";
+import { isDev } from "../../index.js";
 
 const uuidRegex: RegExp =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -61,10 +62,16 @@ export const register = async (
           user,
         }))
         .catch((error: unknown) =>
-          error instanceof Prisma.PrismaClientKnownRequestError &&
-          error.code === "P2002"
-            ? { success: false, error: "Email already exists" }
-            : { success: false, error: "Internal error" },
+          isDev
+            ? {
+                success: false,
+                error:
+                  error instanceof Error ? error.message : "Internal error",
+              }
+            : error instanceof Prisma.PrismaClientKnownRequestError &&
+                error.code === "P2002"
+              ? { success: false, error: "Email already exists" }
+              : { success: false, error: "Internal error" },
         );
 };
 
