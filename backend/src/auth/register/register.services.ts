@@ -11,33 +11,7 @@ import type {
 import { userSelect } from "../../user.selects.js";
 import { Prisma } from "../../generated/prisma/client.js";
 import { isDev } from "../../index.js";
-
-const uuidRegex: RegExp =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-const isUuid = (v: string) => uuidRegex.test(v);
-
-export const checkId = async (
-  id: string,
-): Promise<UserResponse | ErrorResponse> =>
-  !id
-    ? { success: false, error: "ID is required" }
-    : !isUuid(id)
-      ? { success: false, error: "Invalid ID format" }
-      : await prisma.user
-          .findUnique({
-            where: { id },
-            select: userSelect,
-          })
-          .then((user): UserResponse | ErrorResponse =>
-            !user
-              ? { success: false, error: "User not found" }
-              : { success: true, user },
-          )
-          .catch(() => ({
-            success: false,
-            error: "Internal error",
-          }));
+import { checkId } from "../../utils/checkId.js";
 
 export const register = async (
   data: Register,
