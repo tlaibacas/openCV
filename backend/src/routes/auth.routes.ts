@@ -15,8 +15,11 @@ import type {
   UsersResponse,
 } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
+import { validateUser } from "../auth/register/register.services.js";
 
 export const authRoutes = async (fastify: FastifyInstance) => {
+  // posts.
+
   fastify.post<{ Body: Register; Reply: UserResponse | ErrorResponse }>(
     "/register",
     {
@@ -31,6 +34,8 @@ export const authRoutes = async (fastify: FastifyInstance) => {
         : reply.status(400).send(result);
     },
   );
+
+  // gets.
 
   fastify.get<{ Reply: UsersResponse | ErrorResponse }>(
     "/users",
@@ -61,6 +66,15 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
+  fastify.get("/checkTest", async (_request, reply) => {
+    const check = await getUsers();
+    return reply.send(check);
+  });
+
+  fastify.get("/validateUser", async (_request, _reply) => {});
+
+  // deletes.
+
   fastify.delete<{ Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
@@ -77,6 +91,8 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
+  // updates.
+
   fastify.put<{ Body: UpdateUser; Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
@@ -92,10 +108,4 @@ export const authRoutes = async (fastify: FastifyInstance) => {
         : reply.status(400).send(result);
     },
   );
-
-  // TO DELETE!!!!
-  fastify.get("/checkTest", async (_request, reply) => {
-    const check = await getUsers();
-    return reply.send(check);
-  });
 };
