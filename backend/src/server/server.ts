@@ -1,6 +1,6 @@
 import fastify from "fastify";
-import { rootRoutes } from "../routes/rootRoutes.js";
-import { authRoutes } from "../routes/authRoutes.js";
+import { rootRoutes } from "../routes/root.routes.js";
+import { authRoutes } from "../routes/auth.routes.js";
 import rateLimit from "@fastify/rate-limit";
 
 export function buildServer() {
