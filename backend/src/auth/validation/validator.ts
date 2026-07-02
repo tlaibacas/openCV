@@ -1,8 +1,11 @@
 import { prisma } from "../../lib/prisma.js";
 import { isUuid } from "../../utils/uuid.js";
 import { userSelect } from "../../user.selects.js";
+import { ErrorResponse, UserResponse } from "../../types.js";
 
-export const validateUser = async (value: string) => {
+export const validateUser = async (
+  value: string,
+): Promise<UserResponse | ErrorResponse> => {
   if (!isUuid(value)) {
     return { success: false, error: "Invalid UUID format" };
   }
@@ -24,8 +27,8 @@ export const validateUser = async (value: string) => {
 
     return {
       success: true,
-      message: "User confirmed successfully",
       user: updatedUser,
+      message: "User validated successfully",
     };
   } catch {
     return { success: false, error: "Internal error" };

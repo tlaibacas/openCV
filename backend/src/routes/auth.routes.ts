@@ -15,7 +15,7 @@ import type {
   UsersResponse,
 } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
-import { validateUser } from "../auth/register/register.services.js";
+import { validateUser } from "../auth/validation/validator.js";
 
 export const authRoutes = async (fastify: FastifyInstance) => {
   // posts.
@@ -66,12 +66,24 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.get("/checkTest", async (_request, reply) => {
+  fastify.get("/checkTest", async (_, reply) => {
     const check = await getUsers();
     return reply.send(check);
   });
 
-  fastify.get("/validateUser", async (_request, _reply) => {});
+  fastify.get<{ Reply: UserResponse | ErrorResponse }>(
+    "/validateUser/:id",
+    {
+      config: {
+        rateLimit: rateLimits.read,
+      },
+    },
+    async (request, reply) => {
+      const { id } = request.params as { id: string };
+      const check = await validateUser(id);
+      return reply.send(check);
+    },
+  );
 
   // deletes.
 
