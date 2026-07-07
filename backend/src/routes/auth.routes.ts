@@ -52,7 +52,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     },
   );
 
-  fastify.get<{ Reply: UserResponse | ErrorResponse }>(
+  fastify.get<{ Params: { id: string }; Reply: UserResponse | ErrorResponse }>(
     "/users/:id",
     {
       config: {
@@ -60,7 +60,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params as { id: string };
+      const { id } = request.params;
       const result = await checkUser(id);
       return result.success ? reply.send(result) : reply.code(400).send(result);
     },
@@ -71,7 +71,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
     return reply.send(check);
   });
 
-  fastify.get<{ Reply: UserResponse | ErrorResponse }>(
+  fastify.get<{ Params: { id: string }; Reply: UserResponse | ErrorResponse }>(
     "/validateUser/:id",
     {
       config: {
@@ -79,7 +79,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params as { id: string };
+      const { id } = request.params;
       const check = await validateUser(id);
       return reply.send(check);
     },
@@ -87,7 +87,10 @@ export const authRoutes = async (fastify: FastifyInstance) => {
 
   // deletes.
 
-  fastify.delete<{ Reply: UserResponse | ErrorResponse }>(
+  fastify.delete<{
+    Params: { id: string };
+    Reply: UserResponse | ErrorResponse;
+  }>(
     "/users/:id",
     {
       config: {
@@ -95,7 +98,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params as { id: string };
+      const { id } = request.params;
       const result = await deleteUser(id);
       return result.success
         ? reply.send(result)
@@ -105,7 +108,11 @@ export const authRoutes = async (fastify: FastifyInstance) => {
 
   // updates.
 
-  fastify.put<{ Body: UpdateUser; Reply: UserResponse | ErrorResponse }>(
+  fastify.put<{
+    Params: { id: string };
+    Body: UpdateUser;
+    Reply: UserResponse | ErrorResponse;
+  }>(
     "/users/:id",
     {
       config: {
@@ -113,7 +120,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params as { id: string; user: UpdateUser };
+      const { id } = request.params;
       const result = await updateUser(id, request.body);
       return result.success
         ? reply.send(result)
