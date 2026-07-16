@@ -11,7 +11,7 @@ import type {
 import { userSelect } from "../../user.selects.js";
 import { Prisma } from "../../generated/prisma/client.js";
 import { isDev } from "../../index.js";
-import { checkId } from "../../utils/checkId.js";
+import { checkId } from "../../utils/checks.js";
 
 export const register = async (
   data: Register,

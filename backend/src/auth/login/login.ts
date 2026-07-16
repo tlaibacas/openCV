@@ -1,16 +1,41 @@
-import jwt from "jsonwebtoken";
-import { JwtPayload } from "../../types";
+import { JwtPayload } from "jsonwebtoken";
+import { prisma } from "../../lib/prisma";
+import { Login, ErrorResponse } from "../../types";
+import { generateToken } from "./jwt";
 
-export const generateToken = (payload: JwtPayload): string => {
-  return jwt.sign(payload, process.env.JWT_SECRET!, {
-    expiresIn: "1h",
+export const login = async (
+  auth: Login,
+): Promise<JwtPayload | ErrorResponse> => {
+  const { email, password } = auth;
+  const user = await prisma.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+      password: true,
+      isVerified: true,
+      role: true,
+    },
   });
-};
 
-export const verifyToken = (token: string): JwtPayload | null => {
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-  } catch {
-    return null;
+  if (!user) {
+    return { success: false, error: "Invalid email or password" };
   }
+
+  const isPasswordValid = user.password === password; // Replace with proper password hashing check
+
+  if (!isPasswordValid) {
+    return { success: false, error: "Invalid email or password" };
+  }
+
+  const result = {
+    id: user.id,
+    isVerified: user.isVerified,
+    role: user.role,
+  };
+  const token: string = generateToken(result);
+
+  return {
+    success: true,
+    token,
+  };
 };

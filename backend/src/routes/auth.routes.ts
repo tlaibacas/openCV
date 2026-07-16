@@ -13,9 +13,12 @@ import type {
   UserResponse,
   ErrorResponse,
   UsersResponse,
+  JwtPayload,
+  Login,
 } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
 import { validateUser } from "../auth/validation/validator.js";
+import { login } from "../auth/login/login.js";
 
 export const authRoutes = async (fastify: FastifyInstance) => {
   // posts.
@@ -36,6 +39,22 @@ export const authRoutes = async (fastify: FastifyInstance) => {
   );
 
   // gets.
+
+  fastify.get<{ Body: Login; Reply: JwtPayload | ErrorResponse }>(
+    "/login",
+    {
+      config: {
+        rateLimit: rateLimits.auth,
+      },
+    },
+    async (request, reply) => {
+      const auth: Login = request.body;
+      const result = await login(auth);
+      return result.success
+        ? reply.send(result)
+        : reply.status(400).send(result);
+    },
+  );
 
   fastify.get<{ Reply: UsersResponse | ErrorResponse }>(
     "/users",

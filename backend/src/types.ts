@@ -47,3 +47,8 @@ export type JwtPayload = {
   isVerified: boolean;
   role: Role;
 };
+
+export type Login = {
+  email: string;
+  password: string;
+};
