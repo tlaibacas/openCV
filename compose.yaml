@@ -1,13 +1,4 @@
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "1111:1111"
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgresql://admin:1234@postgres:5432/opencv
-
   postgres:
     image: postgres:latest
     restart: unless-stopped
@@ -19,3 +10,11 @@ services:
 
     ports:
       - "5432:5432"
+  backend:
+    build: ./backend
+    ports:
+      - "1111:1111"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://admin:1234@postgres:5432/opencv
