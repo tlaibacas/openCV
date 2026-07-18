@@ -19,7 +19,7 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "argon2": "^0.44.0",
+    "argon2": "^0.45.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.10.0",
     "jsonwebtoken": "^9.0.3",
@@ -31,12 +31,17 @@
     "@types/node": "^26.1.1",
     "@types/pg": "^8.20.0",
     "esbuild": "^0.28.1",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "globals": "^17.7.0",
-    "prisma": "^7.8.0",
-    "tsx": "^4.23.0",
-    "typescript": "^7.0.2",
-    "typescript-eslint": "^8.63.0"
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.64.0"
   },
-  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8"
+  "allowScripts": {
+    "@prisma/engines@6.19.3": true,
+    "argon2@0.45.0": true,
+    "esbuild@0.28.1": true,
+    "prisma@6.19.3": true
+  }
 }
