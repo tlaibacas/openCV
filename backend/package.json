@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.5.19",
+  "version": "0.6.01",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@fastify/rate-limit": "^11.1.0",
     "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^6.19.3",
     "@types/jsonwebtoken": "^9.0.10",
     "argon2": "^0.45.0",
     "dotenv": "^17.4.2",
@@ -42,6 +42,7 @@
     "argon2@0.45.0": true,
     "esbuild@0.28.1": true,
     "@prisma/engines@6.19.3": true,
-    "prisma@6.19.3": true
+    "prisma@6.19.3": true,
+    "@prisma/client@6.19.3": true
   }
 }
