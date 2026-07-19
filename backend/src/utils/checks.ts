@@ -15,7 +15,7 @@ export const checkId = async (
             where: { id },
             select: userSelect,
           })
-          .then((user): UserResponse | ErrorResponse =>
+          .then((user: any): UserResponse | ErrorResponse =>
             !user
               ? { success: false, error: "User not found" }
               : { success: true, user },

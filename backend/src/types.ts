@@ -42,7 +42,12 @@ export type ErrorResponse = {
   error: string;
 };
 
-export type JwtPayload = {
+export type JwtResponse = {
+  success: true;
+  token: string;
+};
+
+export type Jwt = {
   id: string;
   isVerified: boolean;
   role: Role;

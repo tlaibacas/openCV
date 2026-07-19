@@ -1,14 +1,13 @@
-import { JwtPayload } from "jsonwebtoken";
 import { prisma } from "../../lib/prisma";
-import { Login, ErrorResponse } from "../../types";
+import argon2 from "argon2";
+import { Login, ErrorResponse, JwtResponse } from "../../types";
 import { generateToken } from "./jwt";
 
 export const login = async (
   auth: Login,
-): Promise<JwtPayload | ErrorResponse> => {
-  const { email, password } = auth;
+): Promise<JwtResponse | ErrorResponse> => {
   const user = await prisma.user.findUnique({
-    where: { email },
+    where: { email: auth.email },
     select: {
       id: true,
       password: true,
@@ -16,26 +15,16 @@ export const login = async (
       role: true,
     },
   });
-
-  if (!user) {
-    return { success: false, error: "Invalid email or password" };
-  }
-
-  const isPasswordValid = user.password === password; // Replace with proper password hashing check
-
-  if (!isPasswordValid) {
-    return { success: false, error: "Invalid email or password" };
-  }
-
-  const result = {
-    id: user.id,
-    isVerified: user.isVerified,
-    role: user.role,
-  };
-  const token: string = generateToken(result);
-
-  return {
-    success: true,
-    token,
-  };
+  return !user
+    ? { success: false, error: "Invalid email or password" }
+    : !(await argon2.verify(user.password, auth.password))
+      ? { success: false, error: "Invalid email or password" }
+      : {
+          success: true,
+          token: generateToken({
+            id: user.id,
+            isVerified: user.isVerified,
+            role: user.role,
+          }),
+        };
 };

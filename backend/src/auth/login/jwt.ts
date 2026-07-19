@@ -1,15 +1,15 @@
 import jwt from "jsonwebtoken";
-import { JwtPayload, Payload } from "../../types";
+import { Jwt } from "../../types";
 
-export const generateToken = (payload: Payload): string => {
-  return jwt.sign(payload, process.env.JWT_SECRET!, {
+export const generateToken = (auth: Jwt): string => {
+  return jwt.sign(auth, process.env.JWT_SECRET!, {
     expiresIn: "1h",
   });
 };
 
-export const verifyToken = (token: string): JwtPayload | null => {
+export const verifyToken = (token: string): Jwt | null => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    return jwt.verify(token, process.env.JWT_SECRET!) as Jwt;
   } catch {
     return null;
   }
