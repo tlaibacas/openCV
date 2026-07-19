@@ -19,5 +19,6 @@ await build({
     "@prisma/adapter-pg",
     "@prisma/client",
     "@fastify/rate-limit",
+    "jsonwebtoken",
   ],
 });
