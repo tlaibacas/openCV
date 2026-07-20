@@ -21,7 +21,7 @@ export const validateUser = async (
     }
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
-      data: { isConfirmed: true, confirmationCode: null },
+      data: { isVerified: true, confirmationCode: null },
       select: userSelect,
     });
 
