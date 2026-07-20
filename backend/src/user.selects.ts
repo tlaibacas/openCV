@@ -8,7 +8,7 @@ export const userSelect: Prisma.UserSelect = {
   sex: true,
   role: true,
   agency: true,
-  isConfirmed: true,
+  isVerified: true,
   confirmationCode: true,
   createdAt: true,
 };

@@ -27,6 +27,7 @@ export const register = async (
           data: {
             ...parsed.data,
             password: await argon2.hash(parsed.data.password),
+            isVerified: false,
             confirmationCode: crypto.randomUUID(),
           },
           select: userSelect,
