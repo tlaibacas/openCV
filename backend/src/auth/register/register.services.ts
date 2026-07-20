@@ -79,6 +79,7 @@ export const deleteUser = async (
           (user): UserResponse => ({
             success: true,
             user,
+            message: "User deleted successfully",
           }),
         )
         .catch(
