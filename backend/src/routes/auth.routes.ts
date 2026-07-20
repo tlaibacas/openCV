@@ -13,8 +13,8 @@ import type {
   UserResponse,
   ErrorResponse,
   UsersResponse,
-  JwtPayload,
   Login,
+  JwtResponse,
 } from "../types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
 import { validateUser } from "../auth/validation/validator.js";
@@ -40,7 +40,7 @@ export const authRoutes = async (fastify: FastifyInstance) => {
 
   // gets.
 
-  fastify.get<{ Body: Login; Reply: JwtPayload | ErrorResponse }>(
+  fastify.post<{ Body: Login; Reply: JwtResponse | ErrorResponse }>(
     "/login",
     {
       config: {
