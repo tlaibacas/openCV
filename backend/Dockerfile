@@ -2,29 +2,33 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json ./
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
 
-RUN npm install
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+RUN pnpm i
 
 ENV CI=true
 
 COPY . .
 
-RUN npx prisma generate
-RUN npm run build
+RUN pnpm prisma generate
+RUN pnpm run build
 
 FROM node:24-alpine AS runner
 
 WORKDIR /app
 
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
 
-COPY package.json  ./
+COPY package.json  pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN npm install --omit=dev
-
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules/ ./
 
 EXPOSE 1111
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
