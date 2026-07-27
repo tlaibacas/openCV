@@ -1,7 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 import { isUuid } from "../../utils/uuid.js";
-import { userSelect } from "../../user.selects.js";
-import { ErrorResponse, UserResponse } from "../../types.js";
+import { userSelect } from "../../utils/user.selects.js";
+import { ErrorResponse, UserResponse } from "../../utils/types.js";
 
 export const validateUser = async (
   value: string,

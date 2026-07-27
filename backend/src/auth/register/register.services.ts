@@ -7,8 +7,8 @@ import type {
   UsersResponse,
   ErrorResponse,
   UpdateUser,
-} from "../../types.js";
-import { userSelect } from "../../user.selects.js";
+} from "../../utils/types.js";
+import { userSelect } from "../../utils/user.selects.js";
 import { Prisma } from "../../generated/prisma/client.js";
 import { isDev } from "../../index.js";
 import { checkId } from "../../utils/checks.js";

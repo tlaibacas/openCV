@@ -15,7 +15,7 @@ import type {
   UsersResponse,
   Login,
   JwtResponse,
-} from "../types.js";
+} from "../utils/types.js";
 import { rateLimits } from "../infra/fastify/rateLimit.js";
 import { validateUser } from "../auth/validation/validator.js";
 import { login } from "../auth/login/login.js";

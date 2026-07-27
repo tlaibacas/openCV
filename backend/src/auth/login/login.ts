@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import argon2 from "argon2";
-import { Login, ErrorResponse, JwtResponse } from "../../types";
+import { Login, ErrorResponse, JwtResponse } from "../../utils/types";
 import { generateToken } from "./jwt";
 
 export const login = async (

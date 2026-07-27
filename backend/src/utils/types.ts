@@ -1,4 +1,4 @@
-import { Sex, Role, User } from "../src/generated/prisma/client.js";
+import { Sex, Role, User } from "../generated/prisma/client.js";
 
 export type RegisterRole = "visitor" | "recruiter";
 

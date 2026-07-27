@@ -1,6 +1,6 @@
 import { prisma } from "../lib/prisma";
-import { ErrorResponse, UserResponse } from "../types";
-import { userSelect } from "../user.selects";
+import { ErrorResponse, UserResponse } from "./types";
+import { userSelect } from "./user.selects";
 import { isUuid } from "./uuid";
 
 export const checkId = async (
