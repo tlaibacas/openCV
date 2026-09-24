@@ -1,0 +1,26 @@
+{
+  "pt": {
+    "country": "Portugal",
+    "nationality": "Portuguese",
+    "language": "Português",
+    "flag": "/assets/pt.svg"
+  },
+  "en": {
+    "country": "United Kingdom",
+    "nationality": "British",
+    "language": "English",
+    "flag": "/assets/en.svg"
+  },
+  "es": {
+    "country": "Spain",
+    "nationality": "Spanish",
+    "language": "Español",
+    "flag": "/assets/es.svg"
+  },
+  "fr": {
+    "country": "France",
+    "nationality": "French",
+    "language": "Français",
+    "flag": "/assets/fr.svg"
+  }
+}
