@@ -1,11 +1,11 @@
-import flag from "@/libs/i18n/flags/flag.json";
+import flag from "@/libs/i18n/locates/countries.json";
 import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>Select your language</h1>
+      <h1 className={styles.title}>Select your language</h1>
 
       <div className={styles.countries}>
         {Object.entries(flag).map(([code, data]) => (
