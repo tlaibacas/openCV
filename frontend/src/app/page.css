@@ -1,0 +1,29 @@
+@import "./globals.css";
+@property --primary-position {
+  syntax: "<percentage>";
+  initial-value: 100%;
+  inherits: false;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text);
+
+  background: linear-gradient(
+    to bottom right,
+    var(--primary) var(--primary-position),
+    var(--secondary) 100%
+  );
+
+  animation: gradient 3s forwards;
+}
+
+@keyframes gradient {
+  from {
+    --primary-position: 100%;
+  }
+
+  to {
+    --primary-position: 50%;
+  }
+}

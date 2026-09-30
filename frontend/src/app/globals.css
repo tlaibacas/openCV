@@ -1,16 +1,13 @@
 :root {
-  --background: #fff;
   --text: #111;
+  --primary: #fff;
+  --secondary: #368bb3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #111;
-    --text: #fff;
+    --text: #999999;
+    --primary: #111;
+    --secondary: #003b66;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--text);
 }
