@@ -4,12 +4,20 @@ type Props = {
 type CardProps = {
   countries: Countries;
 };
+type Code = "pt" | "en" | "es" | "fr";
 type Country = {
-  code: string;
-  alt: string;
-  language: string;
-  flagPath: string;
+  code: Code;
+  alt: "Portuguese" | "English" | "Spanish" | "French";
+  language: "Português" | "English" | "Español" | "Français";
+  flagPath: `/assets/${Code}.svg`;
 };
-type Countries = Record<string, Country>;
+type Countries = Record<Code, Country>;
 
-export type { Props, CardProps, Countries };
+type CardStyles = {
+  container: string;
+  card: string;
+  flag: string;
+  text: string;
+};
+
+export type { Props, CardProps, Countries, Code, CardStyles };
