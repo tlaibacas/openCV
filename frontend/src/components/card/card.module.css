@@ -1,0 +1,65 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    padding: 60px;
+    max-width: 80%;
+    gap: 15px 60px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    overflow-y: auto;
+    max-height: 90dvh;
+    overflow-y: auto;
+    animation: fadeIn 3s ease forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.card {
+    width: fit-content;
+    padding: 6px;
+    background: linear-gradient(
+        to top left,
+        var(--primary) 50%,
+        var(--secondary) 100%
+    );
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+@media (hover: hover) and (pointer: fine) {
+    .card:hover {
+        transform: scale(1.1);
+        outline: 1px solid var(--secondary);
+        cursor: pointer;
+        box-shadow: 0 10px 30px 10px var(--secondary);
+        transition: box-shadow 0.2s;
+    }
+}
+.card:active {
+    transform: scale(0.9);
+    outline: 2px solid var(--secondary);
+}
+.text {
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 10s ease forwards;
+}
+.flag {
+    height: 80px;
+    opacity: 0;
+    animation: fadeIn 5s ease forwards;
+}
