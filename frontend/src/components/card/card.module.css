@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 120px));
     justify-content: center;
     justify-items: center;
     width: 100%;
@@ -14,7 +14,6 @@
     opacity: 0;
     overflow-y: auto;
     max-height: 90dvh;
-    overflow-y: auto;
     animation: fadeIn 3s ease forwards;
 }
 @keyframes fadeIn {
