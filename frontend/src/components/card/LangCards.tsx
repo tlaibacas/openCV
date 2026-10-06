@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { langList } from "@/libs/i18n/logic/langList";
-import styles from "@/components/card/card.module.css";
+import styles from "@/components/card/LangCards.module.css";
 
 const countries = langList;
 
