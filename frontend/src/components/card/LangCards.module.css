@@ -5,20 +5,17 @@
     justify-content: center;
     width: 100%;
     max-width: 80%;
-    padding: 50px;
+    padding: 20px;
     box-sizing: border-box;
     gap: 20px 35px;
-
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     max-height: 50dvh;
     overflow-y: auto;
-
     opacity: 0;
-    animation: fadeIn 3s ease forwards;
+    animation: fadeIn 5s ease forwards;
 }
 
 @keyframes fadeIn {
@@ -34,7 +31,6 @@
 .card {
     width: fit-content;
     padding: 6px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,7 +65,7 @@
 .text {
     font-size: 1.2rem;
     opacity: 0;
-    animation: fadeIn 10s ease forwards;
+    animation: fadeIn 5s ease forwards;
 }
 
 .flag {
