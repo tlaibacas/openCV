@@ -1,21 +1,37 @@
-.container {
+.main {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    width: min(90%, 60rem);
+    max-height: 70dvh;
+    box-sizing: border-box;
+    padding: 2rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: fadeIn 0.6s ease-out backwards;
+}
+.title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-family: "Trebuchet MS", sans-serif;
+    margin: 0;
+    color: var(--text);
+    text-align: center;
+}
+
+.grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(6.25rem, 7.5rem));
     justify-content: center;
     justify-items: center;
     gap: 1.25rem clamp(1rem, 5vw, 2.25rem);
-    position: fixed;
-    inset: 0;
-    margin: auto;
-    width: min(90%, 60rem);
-    height: fit-content;
-    max-height: 70dvh;
-    box-sizing: border-box;
-    padding: 2rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    animation: fadeIn 0.6s ease-out backwards;
+    width: 100%;
 }
 @keyframes fadeIn {
     from {
@@ -32,7 +48,6 @@
     text-decoration: none;
     cursor: pointer;
     box-sizing: border-box;
-    width: fit-content;
     min-width: 100%;
     padding: 0.5rem;
     display: flex;
@@ -57,7 +72,6 @@
     .card:hover {
         transform: scale(1.05);
         outline: 1px solid var(--secondary);
-        box-shadow: 0 0.5rem 1.5rem -0.25rem var(--secondary);
         box-shadow: 0 0.5rem 1.5rem -0.25rem
             color-mix(in srgb, var(--secondary) 60%, transparent);
     }
@@ -78,13 +92,15 @@
     -webkit-user-drag: none;
 }
 .text {
+    margin: 0;
+    font-family: Arial, sans-serif;
     font-size: 1.2rem;
     line-height: 1.2;
     text-align: center;
     text-wrap: balance;
 }
 @media (prefers-reduced-motion: reduce) {
-    .container {
+    .main {
         animation: none;
     }
     .card {
