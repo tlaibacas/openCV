@@ -18,6 +18,7 @@ export default function LangCards() {
               alt={`${country.alt} flag`}
               width={120}
               height={80}
+              loading="eager"
             />
             <span className={styles.text}>{country.language}</span>
           </a>
