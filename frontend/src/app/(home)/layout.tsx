@@ -1,11 +1,13 @@
+import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import "./globals.css";
-export const metadata: Metadata = {
-  title: "OpenCV",
-  description: "Página CV",
-};
+import { metadata as siteMetadata } from "@/app/metadata/metadata";
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const metadata: Metadata = siteMetadata;
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const cookieStore = await cookies();
+  console.log(cookieStore);
   return (
     <html lang="en">
       <body>{children}</body>
