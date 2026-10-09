@@ -11,7 +11,7 @@ export default function LangCards() {
           <a key={code} href={`${country.code}`} className={styles.card}>
             <Image
               className={styles.flag}
-              src={`/assets/${country.code}.svg`}
+              src={country.flagPath}
               alt={`${country.alt} flag`}
               width={120}
               height={80}
