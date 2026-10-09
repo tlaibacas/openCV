@@ -8,17 +8,16 @@ export default function LangCards() {
       <h1 className={styles.title}>Select your language</h1>
       <div className={styles.grid}>
         {Object.entries(langList).map(([code, country]) => (
-          <button key={code} type="button" lang={code} className={styles.card}>
+          <a key={code} href={`${country.code}`} className={styles.card}>
             <Image
               className={styles.flag}
               src={`/assets/${country.code}.svg`}
               alt={`${country.alt} flag`}
               width={120}
               height={80}
-              unoptimized
             />
             <span className={styles.text}>{country.language}</span>
-          </button>
+          </a>
         ))}
       </div>
     </main>
