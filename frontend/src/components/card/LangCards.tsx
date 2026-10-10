@@ -1,6 +1,8 @@
 import styles from "@/components/card/LangCards.module.css";
 import Image from "next/image";
 import { countries } from "@/libs/i18n/locales/countries";
+import Remember from "@/components/card/remember/remember";
+
 export default function LangCards() {
   return (
     <main className={styles.main}>
@@ -24,6 +26,7 @@ export default function LangCards() {
           </a>
         ))}
       </div>
+      <Remember />
     </main>
   );
 }
