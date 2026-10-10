@@ -2,6 +2,8 @@
     --text: #111;
     --primary: #fff;
     --secondary: #368bb3;
+    --active: var(--secondary);
+    --desactive: #999;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,5 +11,7 @@
         --text: #fff;
         --primary: #111;
         --secondary: #003b66;
+        --active: var(--secondary);
+        --desactive: #888;
     }
 }
