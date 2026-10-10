@@ -73,6 +73,7 @@
     touch-action: manipulation;
     -webkit-user-select: none;
     user-select: none;
+    margin: 5px;
 }
 @media (hover: hover) and (pointer: fine) {
     .card:hover {
