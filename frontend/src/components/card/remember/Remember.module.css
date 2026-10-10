@@ -1,0 +1,90 @@
+.switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.switch input {
+    position: absolute;
+    opacity: 0;
+}
+
+.slider {
+    position: relative;
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.4rem;
+    background: var(--desactive);
+
+    border-radius: 999px;
+    transition:
+        background 0.2s,
+        filter 0.2s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    left: 0.2rem;
+    top: 0.2rem;
+    background: lightgray;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.yes,
+.no {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text);
+    font-size: 0.5rem;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.yes {
+    left: 0.25rem;
+    opacity: 0;
+}
+
+.no {
+    right: 0.25rem;
+}
+
+.switch input:checked + .slider {
+    background: var(--active);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(1.1rem);
+}
+
+.switch input:checked + .slider .yes {
+    opacity: 1;
+}
+
+.switch input:checked + .slider .no {
+    opacity: 0;
+}
+
+.switch input:focus-visible + .slider {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+.switch:hover .slider {
+    filter: brightness(1.2);
+    cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .slider,
+    .slider::before,
+    .yes,
+    .no {
+        transition: none;
+    }
+}
