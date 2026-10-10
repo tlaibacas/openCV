@@ -26,7 +26,7 @@ export default function LangCards() {
           </a>
         ))}
       </div>
-      <span>Remember language</span>
+      <span className={styles.remember}>Remember language</span>
       <Remember />
     </main>
   );
