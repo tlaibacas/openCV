@@ -1,8 +1,10 @@
+import styles from "./Remember.module.css";
+
 export default function Remember() {
   return (
-    <label>
+    <label className={styles.switch}>
       <input type="checkbox" name="rememberLanguage" />
-      <span></span>
+      <span className={styles.slider}></span>
       Remember language
     </label>
   );
