@@ -29,7 +29,7 @@
     height: 1rem;
     left: 0.2rem;
     top: 0.2rem;
-    background: lightgray;
+    background: var(--primary);
     border-radius: 50%;
     transition: transform 0.3s;
 }
@@ -42,7 +42,7 @@
     color: var(--text);
     font-size: 0.5rem;
     font-weight: bold;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
 }
 
 .yes {
