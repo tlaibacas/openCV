@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import RecommendLang from "@/components/recommend/Recommend";
 
 export default async function LangLayout({
   children,
@@ -11,7 +12,10 @@ export default async function LangLayout({
 
   return (
     <html lang={lang}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {recommend && <RecommendLang lang={cookieLang!} />}
+      </body>
     </html>
   );
 }
