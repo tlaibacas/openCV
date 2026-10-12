@@ -1,9 +1,7 @@
-export default async function Page({ params }: PageProps<"/[lang]">) {
-  const { lang } = await params;
+export default async function Page({}: PageProps<"/[lang]">) {
   return (
     <main>
       <h1>Language</h1>
-      <p>{lang}</p>
     </main>
   );
 }
