@@ -1,6 +1,6 @@
 import { Countries } from "@/types/types";
 
-export const countries: Countries = {
+const countries: Countries = {
   pt: {
     code: "pt",
     alt: "Portuguese",
@@ -26,3 +26,5 @@ export const countries: Countries = {
     flagPath: "/assets/fr.svg",
   },
 };
+
+export { countries };
