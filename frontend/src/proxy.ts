@@ -4,8 +4,6 @@ export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const lang = pathname.split("/")[1];
 
-  console.log("Path:", lang);
-
   return NextResponse.next();
 }
 
