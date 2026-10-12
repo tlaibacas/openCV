@@ -27,4 +27,6 @@ const countries: Countries = {
   },
 };
 
-export { countries };
+const countryCodes = new Set(Object.values(countries).map(({ code }) => code));
+
+export { countries, countryCodes };
