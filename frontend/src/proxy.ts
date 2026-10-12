@@ -1,9 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export function proxy(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const lang = pathname.split("/")[1];
-
+export async function proxy() {
   return NextResponse.next();
 }
 
