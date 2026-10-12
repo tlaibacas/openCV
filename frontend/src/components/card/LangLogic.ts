@@ -1,6 +1,6 @@
-function handleLang(remember: boolean) {
+function handleLang(remember: boolean, code: string) {
   if (remember) {
-    localStorage.setItem("rememberLanguage", "true");
+    localStorage.setItem("rememberLanguage", code);
   }
 }
 
