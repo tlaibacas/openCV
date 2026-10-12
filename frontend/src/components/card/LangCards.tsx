@@ -3,18 +3,11 @@ import styles from "@/components/card/LangCards.module.css";
 import Image from "next/image";
 import { countries } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
+import { handleLang } from "@/components/card/LangLogic";
 import { useState } from "react";
 
 export default function LangCards() {
   const [remember, setRemember] = useState(false);
-  function handleRemember(checked: boolean) {
-    setRemember(checked);
-  }
-  function handleLang() {
-    if (remember) {
-    }
-  }
-
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Select your language</h1>
@@ -24,7 +17,7 @@ export default function LangCards() {
             key={country.code}
             href={`${country.code}`}
             className={styles.card}
-            onClick={() => handleLang()}
+            onClick={() => handleLang(remember)}
           >
             <Image
               className={styles.flag}
@@ -39,7 +32,7 @@ export default function LangCards() {
         ))}
       </div>
       <span className={styles.remember}>Remember language</span>
-      <Remember onChange={handleRemember} />
+      <Remember onChange={setRemember} />
     </main>
   );
 }
