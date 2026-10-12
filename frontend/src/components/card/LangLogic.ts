@@ -1,7 +1,9 @@
 function handleLang(remember: boolean, code: string) {
   if (remember) {
-    localStorage.setItem("rememberLanguage", code);
+    document.cookie = `lang=${code}; path=/; max-age=2592000; samesite=lax`;
   }
+
+  window.location.href = code;
 }
 
 export { handleLang };
