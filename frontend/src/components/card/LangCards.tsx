@@ -15,7 +15,6 @@ export default function LangCards() {
         {Object.values(countries).map((country) => (
           <a
             key={country.code}
-            href={`${country.code}`}
             className={styles.card}
             onClick={() => handleLang(remember, country.code)}
           >
