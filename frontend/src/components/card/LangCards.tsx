@@ -17,7 +17,7 @@ export default function LangCards() {
             key={country.code}
             href={`${country.code}`}
             className={styles.card}
-            onClick={() => handleLang(remember)}
+            onClick={() => handleLang(remember, country.code)}
           >
             <Image
               className={styles.flag}
