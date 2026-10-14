@@ -1,3 +1,5 @@
+import "@/app/(home)/globals.css";
+
 export default async function Page({}: PageProps<"/[lang]">) {
   return (
     <main>
