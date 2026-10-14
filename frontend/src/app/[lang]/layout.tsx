@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
-import RecommendLang from "@/components/popUps/RecommendLang";
+import RecommendLang from "@/components/popUps/RecommendLang/RecommendLang";
 import RevokeCookie from "@/components/popUps/RevokeCookie";
 import { countryCodes } from "@/libs/i18n/locales/countries";
-import type { Code } from "@/types/types";
+import type { Country } from "@/types/types";
+import style from "./layout.module.css";
 
 export default async function LangLayout({
   children,
@@ -11,8 +12,9 @@ export default async function LangLayout({
   const { lang } = await params;
   const cookieStore = await cookies();
   const cookieLang: string | undefined = cookieStore.get("lang")?.value;
+  const cookieAlt: string | undefined = cookieStore.get("alt")?.value;
   const wrong: boolean = Boolean(
-    countryCodes.has(cookieLang as Code) || undefined,
+    countryCodes.has(cookieLang as Country["code"]) || undefined,
   );
 
   const validCookieLang: boolean = !cookieLang
@@ -27,8 +29,13 @@ export default async function LangLayout({
   return (
     <html lang={lang}>
       <body>
-        {children}
-        {validCookie && <RecommendLang lang={cookieLang!} />}
+        <div className={validCookie ? style.opaque : undefined}>{children}</div>
+        {validCookie && (
+          <RecommendLang
+            lang={cookieLang! as Country["code"]}
+            alt={cookieAlt! as Country["alt"]}
+          />
+        )}
         {revokeWrong && <RevokeCookie />}
       </body>
     </html>
