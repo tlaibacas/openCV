@@ -1,17 +1,24 @@
 type Props = {
-  params: Promise<{ lang: string }>;
+  params: Promise<{ lang: string }> | { lang: string };
 };
+
+type Param = {
+  lang: Country["code"];
+  alt: Country["alt"];
+};
+
 type CardProps = {
   countries: Countries;
 };
-type Code = "pt" | "en" | "es" | "fr";
+
 type Country = {
-  code: Code;
+  code: "pt" | "en" | "es" | "fr";
   alt: "Portuguese" | "English" | "Spanish" | "French";
   language: "Português" | "English" | "Español" | "Français";
-  flagPath: `/assets/${Code}.svg`;
+  flagPath: `/assets/${Country["code"]}.svg`;
 };
-type Countries = Record<Code, Country>;
+
+type Countries = Record<Country["code"], Country>;
 
 type CardStyles = {
   container: string;
@@ -20,4 +27,4 @@ type CardStyles = {
   text: string;
 };
 
-export type { Props, CardProps, Countries, Code, CardStyles };
+export type { Props, Country, CardProps, Countries, CardStyles, Param };

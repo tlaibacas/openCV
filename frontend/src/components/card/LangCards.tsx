@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/components/card/LangCards.module.css";
+import styles from "./LangCards.module.css";
 import Image from "next/image";
 import { countries } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
@@ -16,7 +16,9 @@ export default function LangCards() {
           <a
             key={country.code}
             className={styles.card}
-            onClick={() => handleLang(remember, country.code)}
+            onClick={() => {
+              handleLang(remember, country.code, country.alt);
+            }}
           >
             <Image
               className={styles.flag}
