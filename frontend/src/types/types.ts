@@ -27,4 +27,20 @@ type CardStyles = {
   text: string;
 };
 
-export type { Props, Country, CardProps, Countries, CardStyles, Param };
+type CookieCode = {
+  code: CookieCodes;
+  message?: string;
+};
+
+type CookieCodes =
+  "COOKIE_INVALID" | "COOKIE_MISSING" | "LANG_DIFFERENT" | "LANG_MATCH";
+
+export type {
+  Props,
+  Country,
+  CardProps,
+  Countries,
+  CardStyles,
+  Param,
+  CookieCode,
+};
