@@ -1,36 +1,35 @@
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import { countryCodes } from "@/libs/i18n/locales/countries";
-import { countries } from "@/libs/i18n/locales/countries";
+import { countryCodes, countries } from "@/libs/i18n/locales/countries";
 import type { Country, CookieCode } from "@/types/types";
 
 export function cookieChecker(
   value: ReadonlyRequestCookies,
   lang: string,
 ): CookieCode {
-  const languageVal = value.get("lang")?.value as Country["code"];
-  const languageName = countries[languageVal as keyof typeof countries]
-    ?.language as Country["language"];
+  const languageVal = value.get("lang")?.value;
+  const warn = value.get("warn")?.value === "true";
 
   if (!languageVal) {
-    return {
-      status: false,
-    };
+    return { status: false };
   }
+
   if (!countryCodes.has(languageVal as Country["code"])) {
     return {
       status: true,
       code: "INVALID_LANG",
-      languageVal: languageVal,
-      languageName: languageName,
+      languageVal: languageVal as Country["code"],
+      languageName: countries[languageVal as keyof typeof countries]?.language,
     };
   }
-  if (languageVal !== lang) {
+
+  if (languageVal !== lang && warn) {
     return {
       status: true,
-      code: "INVALID_SAVED_LANG",
-      languageVal: languageVal,
-      languageName: languageName,
+      code: "LANG_NOT_EQUAL",
+      languageVal: languageVal as Country["code"],
+      languageName: countries[languageVal as keyof typeof countries].language,
     };
   }
+
   return { status: false };
 }
