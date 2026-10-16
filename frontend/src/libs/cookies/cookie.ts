@@ -22,7 +22,7 @@ export function cookieChecker(
     };
   }
 
-  if (languageVal !== lang && warn) {
+  if (languageVal !== lang && !warn) {
     return {
       status: true,
       code: "LANG_NOT_EQUAL",
