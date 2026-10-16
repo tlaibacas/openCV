@@ -24,7 +24,7 @@ export default function CookieDialog({ cookie }: Props) {
         </dialog>
       )}
 
-      {cookie.code === "INVALID_SAVED_LANG" && (
+      {cookie.code === "LANG_NOT_EQUAL" && (
         <dialog ref={dialogRef} open>
           <p>
             Your saved language differs from the current page. <br></br>Would
