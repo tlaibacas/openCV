@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "eslint && next dev",
+    "dev": "eslint && tsc --noEmit && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
