@@ -26,7 +26,7 @@ type CardStyles = {
   flag: string;
   text: string;
 };
-type Code = "INVALID_LANG" | "INVALID_SAVED_LANG";
+type Code = "INVALID_LANG" | "LANG_NOT_EQUAL";
 type CookieCode = {
   status: boolean;
   code?: Code | undefined;
