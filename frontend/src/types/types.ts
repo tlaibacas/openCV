@@ -28,10 +28,10 @@ type CardStyles = {
 };
 type Code = "INVALID_LANG" | "INVALID_SAVED_LANG";
 type CookieCode = {
-  status?: boolean;
+  status: boolean;
   code?: Code | undefined;
   languageVal?: Country["code"];
-  languageName?: Country["alt"];
+  languageName?: Country["language"];
 };
 
 export type {
