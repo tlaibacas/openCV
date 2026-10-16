@@ -1,27 +1,21 @@
 import { cookies } from "next/headers";
-import { cookieChecker } from "./cookie";
-import CookieDialog from "@/components/popUp/cookieDialog";
+import { cookieChecker } from "../../libs/cookies/cookie";
+import CookieDialog from "@/components/popUp/CookieDialog";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import type { CookieCode } from "@/types/types";
 
 export default async function LangLayout({
   children,
   params,
 }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
-  const cookieStore = await cookies();
-  const cookieResult = cookieChecker(cookieStore, lang);
-
+  const cookieStore: ReadonlyRequestCookies = await cookies();
+  const cookieResult: CookieCode = cookieChecker(cookieStore, lang);
   return (
     <html lang={lang}>
       <body>
         {children}
-
-        {cookieResult.code === "LANG_DIFFERENT" && (
-          <CookieDialog message={cookieResult.message} />
-        )}
-
-        {cookieResult.code === "COOKIE_INVALID" && (
-          <CookieDialog message={cookieResult.message} />
-        )}
+        {cookieResult.status && <CookieDialog cookie={cookieResult} />}
       </body>
     </html>
   );
