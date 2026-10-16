@@ -9,7 +9,7 @@ export function cookieChecker(
 ): CookieCode {
   const languageVal = value.get("lang")?.value as Country["code"];
   const languageName = countries[languageVal as keyof typeof countries]
-    ?.alt as Country["alt"];
+    ?.language as Country["language"];
 
   if (!languageVal) {
     return {
