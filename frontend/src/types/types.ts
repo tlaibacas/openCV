@@ -26,14 +26,13 @@ type CardStyles = {
   flag: string;
   text: string;
 };
-
+type Code = "INVALID_LANG" | "INVALID_SAVED_LANG";
 type CookieCode = {
-  code: CookieCodes;
-  message?: string;
+  status?: boolean;
+  code?: Code | undefined;
+  languageVal?: Country["code"];
+  languageName?: Country["alt"];
 };
-
-type CookieCodes =
-  "COOKIE_INVALID" | "COOKIE_MISSING" | "LANG_DIFFERENT" | "LANG_MATCH";
 
 export type {
   Props,
