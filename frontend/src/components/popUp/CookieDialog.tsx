@@ -1,6 +1,6 @@
 "use client";
 import type { CookieCode } from "@/types/types";
-
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
 import { removeCookie, dontWarn } from "@/libs/cookies/cookieDialog";
@@ -12,15 +12,16 @@ type Props = {
 export default function CookieDialog({ cookie }: Props) {
   const [remember, setRemember] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const router = useRouter();
 
   return (
     <>
       {cookie.code === "INVALID_LANG" && (
-        <dialog ref={dialogRef} open>
+        <dialog>
           <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
 
-          <button onClick={removeCookie}>Go to home</button>
+          <button onClick={() => removeCookie()}>Go to home</button>
         </dialog>
       )}
 
@@ -34,13 +35,21 @@ export default function CookieDialog({ cookie }: Props) {
           <Remember onChange={setRemember} />
           <button
             onClick={() => {
-              dontWarn(remember);
+              dialogRef.current?.close();
+              router.push(`/${cookie.languageVal}`);
             }}
           >
             Go to {cookie.languageName}
           </button>
 
-          <button onClick={() => dialogRef.current?.close()}>Continue</button>
+          <button
+            onClick={() => {
+              dontWarn(remember);
+              dialogRef.current?.close();
+            }}
+          >
+            Continue
+          </button>
         </dialog>
       )}
     </>
