@@ -34,6 +34,11 @@ type CookieCode = {
   languageName?: Country["language"];
 };
 
+type SavedLanguage = {
+  status: boolean;
+  val?: Country["code"];
+};
+
 export type {
   Props,
   Country,
@@ -42,4 +47,5 @@ export type {
   CardStyles,
   Param,
   CookieCode,
+  SavedLanguage,
 };
