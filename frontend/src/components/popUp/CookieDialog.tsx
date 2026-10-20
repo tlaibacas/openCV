@@ -17,7 +17,7 @@ export default function CookieDialog({ cookie }: Props) {
   return (
     <>
       {cookie.code === "INVALID_LANG" && (
-        <dialog>
+        <dialog open>
           <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
 
