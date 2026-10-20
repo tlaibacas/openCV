@@ -1,6 +1,6 @@
 import { Countries } from "@/types/types";
 
-const countries: Countries = {
+const languages: Countries = {
   pt: {
     code: "pt",
     alt: "Portuguese",
@@ -27,6 +27,8 @@ const countries: Countries = {
   },
 };
 
-const countryCodes = new Set(Object.values(countries).map(({ code }) => code));
+const supportedLanguageCodes = new Set(
+  Object.values(languages).map(({ code }) => code),
+);
 
-export { countries, countryCodes };
+export { languages, supportedLanguageCodes };
