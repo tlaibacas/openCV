@@ -1,7 +1,7 @@
 "use client";
 import styles from "./LangCards.module.css";
 import Image from "next/image";
-import { countries } from "@/libs/i18n/locales/countries";
+import { languages } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
 import { saveLanguagePreference } from "@/libs/cookies/cookieHandler";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function LangCards() {
     <main className={styles.main}>
       <h1 className={styles.title}>Select your language</h1>
       <div className={styles.grid}>
-        {Object.values(countries).map((country) => (
+        {Object.values(languages).map((country) => (
           <a
             key={country.code}
             className={styles.card}
