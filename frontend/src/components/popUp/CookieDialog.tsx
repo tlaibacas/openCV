@@ -35,7 +35,6 @@ export default function CookieDialog({ cookie }: Props) {
           <Remember onChange={setRemember} />
           <button
             onClick={() => {
-              dialogRef.current?.close();
               router.push(`/${cookie.languageVal}`);
             }}
           >
