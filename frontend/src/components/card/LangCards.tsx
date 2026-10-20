@@ -5,9 +5,11 @@ import { countries } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
 import { handleLang } from "@/libs/cookies/cookieHandler";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LangCards() {
   const [remember, setRemember] = useState(false);
+  const router = useRouter();
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Select your language</h1>
@@ -18,6 +20,7 @@ export default function LangCards() {
             className={styles.card}
             onClick={() => {
               handleLang(remember, country.code);
+              router.push(`/${country.code}`);
             }}
           >
             <Image
