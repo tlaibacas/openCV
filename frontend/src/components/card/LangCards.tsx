@@ -3,7 +3,7 @@ import styles from "./LangCards.module.css";
 import Image from "next/image";
 import { countries } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
-import { handleLang } from "@/libs/cookies/cookieHandler";
+import { saveLanguagePreference } from "@/libs/cookies/cookieHandler";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +19,7 @@ export default function LangCards() {
             key={country.code}
             className={styles.card}
             onClick={() => {
-              handleLang(remember, country.code);
+              saveLanguagePreference(remember, country.code);
               router.push(`/${country.code}`);
             }}
           >

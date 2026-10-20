@@ -3,7 +3,10 @@ import type { CookieCode } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
-import { removeCookie, dontWarn } from "@/libs/cookies/cookieHandler";
+import {
+  clearLanguageCookies,
+  setLanguageWarningPreference,
+} from "@/libs/cookies/cookieHandler";
 
 type Props = {
   cookie: CookieCode;
@@ -23,7 +26,7 @@ export default function CookieDialog({ cookie }: Props) {
 
           <button
             onClick={() => {
-              removeCookie();
+              clearLanguageCookies();
               router.push("/");
             }}
           >
@@ -50,7 +53,7 @@ export default function CookieDialog({ cookie }: Props) {
 
           <button
             onClick={() => {
-              dontWarn(remember);
+              setLanguageWarningPreference(remember);
               dialogRef.current?.close();
             }}
           >
