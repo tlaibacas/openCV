@@ -17,12 +17,10 @@ export function cookieChecker(
     return {
       status: true,
       code: "INVALID_LANG",
-      languageVal: languageVal as Country["code"],
-      languageName: countries[languageVal as keyof typeof countries]?.language,
     };
   }
 
-  if (languageVal !== lang || !warn) {
+  if (languageVal !== lang && !warn) {
     return {
       status: true,
       code: "LANG_NOT_EQUAL",
