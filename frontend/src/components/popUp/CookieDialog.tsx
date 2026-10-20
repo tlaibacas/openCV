@@ -21,7 +21,14 @@ export default function CookieDialog({ cookie }: Props) {
           <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
 
-          <button onClick={() => removeCookie()}>Go to home</button>
+          <button
+            onClick={() => {
+              removeCookie();
+              router.push("/");
+            }}
+          >
+            Go to home
+          </button>
         </dialog>
       )}
 
