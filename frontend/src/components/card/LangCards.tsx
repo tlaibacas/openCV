@@ -3,7 +3,7 @@ import styles from "./LangCards.module.css";
 import Image from "next/image";
 import { countries } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
-import { handleLang } from "@/libs/cookies/langLogic";
+import { handleLang } from "@/libs/cookies/cookieHandler";
 import { useState } from "react";
 
 export default function LangCards() {
