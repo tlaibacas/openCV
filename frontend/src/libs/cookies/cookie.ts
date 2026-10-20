@@ -7,7 +7,8 @@ export function cookieChecker(
   lang: string,
 ): CookieCode {
   const languageVal: string | undefined = value.get("lang")?.value;
-  const warn: boolean | undefined = value.get("warn")?.value === "true";
+  const warnPreference: boolean | undefined =
+    value.get("warn")?.value === "true";
 
   if (!languageVal) {
     return { status: false };
@@ -20,7 +21,7 @@ export function cookieChecker(
     };
   }
 
-  if (languageVal !== lang && !warn) {
+  if (languageVal !== lang && !warnPreference) {
     return {
       status: true,
       code: "LANG_NOT_EQUAL",
