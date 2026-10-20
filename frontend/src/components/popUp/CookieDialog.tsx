@@ -3,7 +3,7 @@ import type { CookieCode } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
-import { removeCookie, dontWarn } from "@/libs/cookies/cookieDialog";
+import { removeCookie, dontWarn } from "@/libs/cookies/cookieHandler";
 
 type Props = {
   cookie: CookieCode;
