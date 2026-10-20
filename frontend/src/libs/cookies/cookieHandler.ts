@@ -6,11 +6,11 @@ function dontWarn(remember: boolean) {
   document.cookie = `warn=${remember}; path=/; max-age=2592000; samesite=lax`;
 }
 
-export function handleLang(remember: boolean, code: string) {
+function handleLang(remember: boolean, code: string) {
   if (remember) {
     document.cookie = `lang=${code}; path=/; max-age=2592000; samesite=lax`;
   }
 
   window.location.href = code;
 }
-export { removeCookie, dontWarn };
+export { removeCookie, dontWarn, handleLang };
