@@ -1,6 +1,6 @@
 function removeCookie() {
   document.cookie = "lang=; path=/; max-age=0; samesite=lax";
-  document.cookie = "warn=; path=/; max-age=2592000; samesite=lax";
+  document.cookie = "warn=; path=/; max-age=0; samesite=lax";
 
   window.location.replace("/");
 }
