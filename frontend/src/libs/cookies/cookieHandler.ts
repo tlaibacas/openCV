@@ -21,8 +21,15 @@ function saveLanguagePreference(remember: boolean, code: string) {
   }
 }
 
-function redirectToSavedLanguage(value: ReadonlyRequestCookies) {
-  const languageVal: string | undefined = value.get("lang")?.value;
+function redirectToSavedLanguage(cookies: ReadonlyRequestCookies) {
+  const savedLanguage: string | undefined = cookies.get("lang")?.value;
+  if (!savedLanguage) {
+    return { status: false };
+  }
+  if (!supportedLanguageCodes.has(savedLanguage as Country["code"])) {
+    return { status: false };
+  }
+  return { status: true, val: savedLanguage };
 }
 
 function checkLanguageCookie(
@@ -52,7 +59,10 @@ function checkLanguageCookie(
     };
   }
 
-  return { status: false };
+  return {
+    status: false,
+    code: "LANGUAGE_COOKIE_VALID",
+  };
 }
 
 export {
