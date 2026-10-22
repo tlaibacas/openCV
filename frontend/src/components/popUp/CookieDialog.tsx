@@ -1,13 +1,14 @@
 "use client";
+
 import type { CookieCode } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
 import {
   clearLanguageCookies,
   setLanguageWarningPreference,
 } from "@/libs/cookies/cookieHandler";
-
+import styles from "./CookieDialog.module.css";
 type Props = {
   cookie: CookieCode;
 };
@@ -17,13 +18,22 @@ export default function CookieDialog({ cookie }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
 
+  useEffect(() => {
+    const dialog: HTMLDialogElement | null = dialogRef.current;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+    }
+  }, [cookie.code]);
+  if (cookie.code !== "INVALID_LANG" && cookie.code !== "LANG_NOT_EQUAL") {
+    return null;
+  }
+
   return (
-    <>
-      {cookie.code === "INVALID_LANG" && (
-        <dialog open>
+    <dialog ref={dialogRef} className={styles.dialog}>
+      {cookie.code === "INVALID_LANG" ? (
+        <>
           <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
-
           <button
             onClick={() => {
               clearLanguageCookies();
@@ -32,25 +42,18 @@ export default function CookieDialog({ cookie }: Props) {
           >
             Go to home
           </button>
-        </dialog>
-      )}
-
-      {cookie.code === "LANG_NOT_EQUAL" && (
-        <dialog ref={dialogRef} open>
+        </>
+      ) : (
+        <>
           <p>
-            Your saved language differs from the current page. <br></br>Would
-            you like to continue or go to your preferred language?
+            Your saved language differs from the current page. Would you like to
+            continue or go to your preferred language?
           </p>
           <p>Don&apos;t warn me again</p>
           <Remember onChange={setRemember} />
-          <button
-            onClick={() => {
-              router.push(`/${cookie.languageVal}`);
-            }}
-          >
+          <button onClick={() => router.push(`/${cookie.languageVal}`)}>
             Go to {cookie.languageName}
           </button>
-
           <button
             onClick={() => {
               setLanguageWarningPreference(remember);
@@ -59,8 +62,8 @@ export default function CookieDialog({ cookie }: Props) {
           >
             Continue
           </button>
-        </dialog>
+        </>
       )}
-    </>
+    </dialog>
   );
 }
