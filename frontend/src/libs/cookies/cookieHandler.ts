@@ -1,5 +1,5 @@
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import type { Country, CookieCode } from "@/types/types";
+import type { Country, CookieCode, SavedLanguage } from "@/types/types";
 import {
   supportedLanguageCodes,
   languages,
@@ -21,14 +21,19 @@ function saveLanguagePreference(remember: boolean, code: string) {
   }
 }
 
-function redirectToSavedLanguage(cookies: ReadonlyRequestCookies) {
+function isSupportedLanguage(value: string): value is Country["code"] {
+  return supportedLanguageCodes.has(value as Country["code"]);
+}
+
+function redirectToSavedLanguage(
+  cookies: ReadonlyRequestCookies,
+): SavedLanguage {
   const savedLanguage: string | undefined = cookies.get("lang")?.value;
-  if (!savedLanguage) {
+
+  if (!savedLanguage || !isSupportedLanguage(savedLanguage)) {
     return { status: false };
   }
-  if (!supportedLanguageCodes.has(savedLanguage as Country["code"])) {
-    return { status: false };
-  }
+
   return { status: true, val: savedLanguage };
 }
 
@@ -36,8 +41,9 @@ function checkLanguageCookie(
   cookies: ReadonlyRequestCookies,
   currentLanguage?: string,
 ): CookieCode {
-  const savedLanguage = cookies.get("lang")?.value;
-  const hasDisabledLanguageWarning = cookies.get("warn")?.value === "true";
+  const savedLanguage: string | undefined = cookies.get("lang")?.value;
+  const hasDisabledLanguageWarning: boolean =
+    cookies.get("warn")?.value === "true";
 
   if (!savedLanguage) {
     return { status: false };
