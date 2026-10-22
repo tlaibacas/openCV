@@ -35,8 +35,8 @@ type CookieCode = {
 };
 
 type SavedLanguage = {
-  status: boolean;
-  val?: Country["code"];
+  status: boolean | undefined;
+  val?: Country["code"] | undefined;
 };
 
 export type {
