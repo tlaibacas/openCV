@@ -1,5 +1,5 @@
-import { countryCodes } from "@/libs/i18n/locales/countries";
+import { supportedLanguageCodes } from "@/libs/i18n/locales/countries";
 
 export async function register() {
-  console.log("Country codes loaded:", countryCodes.size);
+  console.log("Country codes loaded:", supportedLanguageCodes.size);
 }
