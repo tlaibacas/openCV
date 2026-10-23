@@ -21,7 +21,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "@netlify/plugin-nextjs": "latest"
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
