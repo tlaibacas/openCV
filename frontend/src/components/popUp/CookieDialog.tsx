@@ -25,7 +25,12 @@ export default function CookieDialog({ cookie }: Props) {
     }
   }, [cookie.code]);
   return (
-    <dialog ref={dialogRef} className={styles.dialog}>
+    <dialog
+      ref={dialogRef}
+      className={`${styles.dialog} ${
+        cookie.code === "INVALID_LANG" ? styles.warning : styles.invalid
+      }`}
+    >
       {cookie.code === "INVALID_LANG" ? (
         <>
           <p>{cookie.code}</p>

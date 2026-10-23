@@ -1,3 +1,26 @@
-dialog::backdrop {
+.dialog::backdrop {
     backdrop-filter: blur(3px);
+}
+.dialog {
+    padding: 2rem;
+    border: none;
+    border-radius: 1rem;
+    color: var(--text);
+    background: var(--primary);
+}
+
+.invalid::backdrop {
+    background: linear-gradient(
+        to bottom right,
+        var(--primary) 50%,
+        var(--invalid) 100%
+    );
+}
+
+.warning::backdrop {
+    background: linear-gradient(
+        to bottom right,
+        var(--primary) 50%,
+        var(--warn) 100%
+    );
 }
