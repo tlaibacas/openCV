@@ -19,12 +19,11 @@ export default function CookieDialog({ cookie }: Props) {
   const router = useRouter();
 
   useEffect(() => {
-    const dialog: HTMLDialogElement | null = dialogRef.current;
+    const dialog = dialogRef.current;
     if (dialog && !dialog.open) {
       dialog.showModal();
     }
   }, [cookie.code]);
-
   return (
     <dialog ref={dialogRef} className={styles.dialog}>
       {cookie.code === "INVALID_LANG" ? (
