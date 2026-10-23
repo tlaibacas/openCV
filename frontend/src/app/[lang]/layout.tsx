@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { checkLanguageCookie } from "../../libs/cookies/cookieHandler";
 import CookieDialog from "@/components/popUp/CookieDialog";
 import type { CookieCode } from "@/types/types";
+import "@/app/(home)/globals.css";
 
 export default async function LangLayout({
   children,
