@@ -107,15 +107,3 @@
     text-align: center;
     text-wrap: balance;
 }
-@media (prefers-reduced-motion: reduce) {
-    .main {
-        animation: none;
-    }
-    .card {
-        transition: none;
-    }
-    .card:hover,
-    .card:active {
-        transform: none;
-    }
-}
