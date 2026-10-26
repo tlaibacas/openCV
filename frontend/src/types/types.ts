@@ -39,7 +39,10 @@ type SavedLanguage = {
   val?: Country["code"] | undefined;
 };
 
+type Loading = Record<Country["code"], string>;
+
 export type {
+  Loading,
   Props,
   Country,
   CardProps,
