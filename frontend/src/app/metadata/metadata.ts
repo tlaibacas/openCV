@@ -5,6 +5,7 @@ const siteName = "OpenCV";
 const title = "OpenCV | Full-Stack Developer Portfolio";
 const description =
   "Explore my web development portfolio, projects, technical skills, and experience building modern web applications.";
+const name = "Tiago";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: siteName,
-  authors: [{ name: "Tiago" }],
-  creator: "Tiago",
-  publisher: "Tiago",
+  authors: [{ name: name }],
+  creator: name,
+  publisher: name,
   category: "technology",
 
   robots: {
