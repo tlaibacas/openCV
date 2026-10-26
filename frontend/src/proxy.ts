@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function proxy() {
+export function proxy() {
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/:lang(pt|en|es|fr|uk)", "/:lang(pt|en|es|fr|uk)/:path*"],
+  matcher: ["/", "/:lang(pt|en|es|fr)", "/:lang(pt|en|es|fr)/:path*"],
 };
