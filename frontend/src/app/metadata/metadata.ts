@@ -52,7 +52,6 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-icon.png" }],
   },
 
-  manifest: "/manifest.webmanifest",
   referrer: "strict-origin-when-cross-origin",
 };
 
