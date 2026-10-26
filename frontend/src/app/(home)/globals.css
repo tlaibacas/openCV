@@ -4,7 +4,7 @@
   --secondary: #368bb3;
   --active: var(--secondary);
   --desactive: #999;
-  --invalid: #ff0000;
+  --invalid: #f00;
   --warn: #ff9800;
 }
 
