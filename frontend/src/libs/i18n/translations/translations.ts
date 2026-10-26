@@ -6,3 +6,5 @@ const loading: Loading = {
   en: "Loading...",
   fr: "Chargement...",
 };
+
+export { loading };
