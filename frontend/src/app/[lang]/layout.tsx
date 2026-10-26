@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-
 import { checkLanguageCookie } from "@/libs/cookies/cookieHandler";
 import CookieDialog from "@/components/popUp/CookieDialog";
 import { metadata as siteMetadata } from "@/app/metadata/metadata";
