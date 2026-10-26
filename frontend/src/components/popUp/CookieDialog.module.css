@@ -1,26 +1,50 @@
+@property --primary-position {
+  syntax: "<percentage>";
+  initial-value: 100%;
+  inherits: false;
+}
+
 .dialog::backdrop {
-    backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
 }
 .dialog {
-    padding: 2rem;
-    border: none;
-    border-radius: 1rem;
-    color: var(--text);
-    background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 2rem;
+  border: none;
+  border-radius: 1rem;
+  color: var(--text);
+  background: var(--primary);
+  text-align: center;
 }
 
 .invalid::backdrop {
-    background: linear-gradient(
-        to bottom right,
-        var(--primary) 50%,
-        var(--invalid) 100%
-    );
+  background: linear-gradient(
+    to bottom right,
+    var(--primary) var(--primary-position),
+    var(--invalid) 100%
+  );
+  animation: gradient 3s forwards;
 }
 
 .warning::backdrop {
-    background: linear-gradient(
-        to bottom right,
-        var(--primary) 50%,
-        var(--warn) 100%
-    );
+  background: linear-gradient(
+    to bottom right,
+    var(--primary) var(--primary-position),
+    var(--warn) 100%
+  );
+  animation: gradient 3s forwards;
+}
+
+@keyframes gradient {
+  from {
+    --primary-position: 100%;
+  }
+
+  to {
+    --primary-position: 50%;
+  }
 }
