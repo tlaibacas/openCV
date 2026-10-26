@@ -1,16 +1,15 @@
 import type { MetadataRoute } from "next";
+import { config } from "@/cfg/site.config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://your-domain.com";
-
   return [
     {
-      url: baseUrl,
+      url: config.siteUrl,
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/projects`,
+      url: new URL("/projects", config.siteUrl).href,
       changeFrequency: "monthly",
       priority: 0.8,
     },
