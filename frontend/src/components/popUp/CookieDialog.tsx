@@ -24,11 +24,17 @@ export default function CookieDialog({ cookie }: Props) {
       dialog.showModal();
     }
   }, [cookie.code]);
+  console.log({
+    code: cookie.code,
+    isInvalid: cookie.code === "INVALID_LANG",
+    invalidClass: styles.invalid,
+    warningClass: styles.warning,
+  });
   return (
     <dialog
       ref={dialogRef}
       className={`${styles.dialog} ${
-        cookie.code === "INVALID_LANG" ? styles.warning : styles.invalid
+        cookie.code === "INVALID_LANG" ? styles.invalid : styles.warning
       }`}
     >
       {cookie.code === "INVALID_LANG" ? (
