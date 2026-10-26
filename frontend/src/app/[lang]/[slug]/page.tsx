@@ -1,4 +1,7 @@
-export default async function Page({ params }: PageProps<"/[lang]/[slug]">) {
+type Props = {
+  params: Promise<{ lang: string; slug: string }>;
+};
+export default async function Page({ params }: Props) {
   const { lang, slug } = await params;
 
   return (

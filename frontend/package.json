@@ -20,14 +20,8 @@
     "@types/react-dom": "^19.3.0",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.5",
-<<<<<<< HEAD
-    "eslint-config-next": "^16.4.0",
-    "typescript": "^6.0.3",
-    "@netlify/plugin-nextjs": "latest"
-=======
     "eslint-config-next": "^16.4.3",
     "typescript": "^6.0.3"
->>>>>>> 89a6da4 (Updated dependecies and added pnpm)
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
