@@ -1,30 +1,37 @@
 :root {
-    --text: #111;
-    --primary: #fff;
-    --secondary: #368bb3;
-    --active: var(--secondary);
-    --desactive: #999;
-    --warn: #ff0000;
-    --invalid: #ff9800;
+  --text: #111;
+  --primary: #fff;
+  --secondary: #368bb3;
+  --active: var(--secondary);
+  --desactive: #999;
+  --invalid: #ff0000;
+  --warn: #ff9800;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --text: #fff;
-        --primary: #111;
-        --secondary: #003b66;
-        --active: var(--secondary);
-        --desactive: #888;
-        --warn: #8b0000;
-        --invalid: #e65100;
-    }
+  :root {
+    --text: #fff;
+    --primary: #111;
+    --secondary: #003b66;
+    --active: var(--secondary);
+    --desactive: #888;
+    --invalid: #8b0000;
+    --warn: #e65100;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
-    }
+  *,
+  *::before,
+  *::after,
+  *::backdrop {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+    backdrop-filter: none !important;
+  }
+
+  body,
+  *::backdrop {
+    --primary-position: 50%;
+  }
 }
