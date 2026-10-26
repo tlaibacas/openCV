@@ -24,12 +24,7 @@ export default function CookieDialog({ cookie }: Props) {
       dialog.showModal();
     }
   }, [cookie.code]);
-  console.log({
-    code: cookie.code,
-    isInvalid: cookie.code === "INVALID_LANG",
-    invalidClass: styles.invalid,
-    warningClass: styles.warning,
-  });
+
   return (
     <dialog
       ref={dialogRef}
