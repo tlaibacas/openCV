@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-
+import { config } from "@/cfg/site.config";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/private/"],
     },
-    sitemap: "https://your-domain.com/sitemap.xml",
+    sitemap: new URL("/sitemap.xml", config.siteUrl).href,
   };
 }
