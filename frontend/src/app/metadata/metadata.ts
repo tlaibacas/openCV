@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 const siteUrl = "https://your-domain.com";
 const siteName = "OpenCV";
-const title = "OpenCV | Full-Stack Developer Portfolio";
+const title = siteName;
 const description =
   "Explore my web development portfolio, projects, technical skills, and experience building modern web applications.";
 const name = "Tiago";
