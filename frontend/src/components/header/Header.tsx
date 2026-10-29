@@ -1,5 +1,5 @@
 "use client";
-
+import Theme from "./themeButton/Theme";
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 
@@ -28,6 +28,7 @@ export default function Header() {
         <a href="/">Início</a>
         <a href="/about">Sobre</a>
       </nav>
+      <Theme />
     </header>
   );
 }
