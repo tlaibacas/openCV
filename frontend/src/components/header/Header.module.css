@@ -1,0 +1,21 @@
+.header {
+  margin: 0;
+  padding: 0;
+  background-color: var(--extras);
+  color: var(--text);
+  border-radius: 12px;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: transform 0.2s ease;
+}
+
+.header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hidden {
+  transform: translateY(-100%);
+}
