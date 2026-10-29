@@ -11,6 +11,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { redirectToSavedLanguage } from "@/libs/cookies/cookieHandler";
 import type { SavedLanguage } from "@/types/types";
+import Header from "@/components/header/Header";
 
 export const metadata: Metadata = siteMetadata;
 export const viewport: Viewport = siteViewport;
@@ -29,7 +30,10 @@ export default async function RootLayout({ children }: Props) {
 
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
