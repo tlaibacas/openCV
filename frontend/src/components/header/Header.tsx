@@ -24,10 +24,10 @@ export default function Header() {
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
-      <nav>
+      {/* <nav>
         <a href="/">Início</a>
         <a href="/about">Sobre</a>
-      </nav>
+      </nav> */}
       <Theme onChange={setTheme} />
     </header>
   );
