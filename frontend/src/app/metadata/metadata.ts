@@ -48,8 +48,8 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: config.img }],
-    apple: [{ url: "/apple-icon.png" }],
+    icon: [{ url: config.ogImg, type: config.img }],
+    apple: [{ url: config.ogImg }],
   },
 
   referrer: "strict-origin-when-cross-origin",
