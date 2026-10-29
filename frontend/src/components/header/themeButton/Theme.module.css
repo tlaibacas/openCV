@@ -1,0 +1,76 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.slider {
+  position: relative;
+  display: inline-block;
+  width: 4rem;
+  height: 1.4rem;
+  background: var(--desactive);
+  border-radius: 999px;
+  z-index: 0;
+  transition:
+    background 0.2s,
+    filter 0.2s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  left: 0;
+  top: 0;
+  background: url("/assets/moon.svg") center / contain no-repeat;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: url("/assets/sun.svg") center / contain no-repeat;
+  transform: translateY(-50%) scale(1);
+  z-index: -1;
+  transition: transform 0.3s;
+}
+
+.switch input:not(:checked) + .slider .sun {
+  transform: translateY(-50%) scale(0.5);
+}
+
+.switch input:checked + .slider {
+  background: var(--active);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(2.57rem) rotate(360deg);
+}
+
+.switch input:focus-visible + .slider {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.switch:hover .slider {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider::before,
+  .sun {
+    transition: none;
+  }
+}

@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);
-
+  const [theme, setTheme] = useState(false);
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
       if (event.deltaY > 0) {
@@ -28,7 +28,7 @@ export default function Header() {
         <a href="/">Início</a>
         <a href="/about">Sobre</a>
       </nav>
-      <Theme />
+      <Theme onChange={setTheme} />
     </header>
   );
 }
