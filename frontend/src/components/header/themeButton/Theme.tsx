@@ -12,12 +12,12 @@ export default function Theme({
       <input
         type="checkbox"
         name="theme"
+        onClick={() => console.log("Switch clicado")}
         onChange={(event) => onChange(event.currentTarget.checked)}
       />
 
       <span className={styles.slider}>
         <span className={styles.sun}></span>
-        <span className={styles.moon}></span>
       </span>
     </label>
   );
