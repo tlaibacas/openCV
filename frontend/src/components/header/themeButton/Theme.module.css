@@ -31,7 +31,9 @@
   top: 0;
   background: url("/assets/moon.svg") center / contain no-repeat;
   border-radius: 50%;
-  transition: transform 0.3s;
+  transition:
+    transform 0.3s,
+    filter 0.4s;
 }
 
 .sun {
@@ -49,12 +51,9 @@
   transform: translateY(-50%) scale(0.5);
 }
 
-.switch input:checked + .slider {
-  background: var(--active);
-}
-
 .switch input:checked + .slider::before {
   transform: translateX(2.57rem) rotate(360deg);
+  filter: brightness(0.1);
 }
 
 .switch input:focus-visible + .slider {
