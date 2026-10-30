@@ -3,18 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Theme.module.css";
 import setThemeCookie from "./themeCookie";
+import type { ThemeType } from "@/types/types";
 
-export default function Theme() {
-  const [isDark, setIsDark] = useState(false);
+type ThemeProps = {
+  initialTheme?: ThemeType;
+};
+
+export default function Theme({ initialTheme }: ThemeProps) {
+  const [isDark, setIsDark] = useState(initialTheme === "dark");
   const manualTheme = useRef(false);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
-    setIsDark(media.matches);
+    if (!initialTheme) {
+      setIsDark(media.matches);
+    }
 
     function handleChange(event: MediaQueryListEvent) {
-      if (!manualTheme.current) {
+      if (!initialTheme && !manualTheme.current) {
         setIsDark(event.matches);
       }
     }
@@ -22,7 +29,7 @@ export default function Theme() {
     media.addEventListener("change", handleChange);
 
     return () => media.removeEventListener("change", handleChange);
-  }, []);
+  }, [initialTheme]);
 
   return (
     <label className={styles.switch}>
@@ -32,7 +39,7 @@ export default function Theme() {
         checked={!isDark}
         onChange={(event) => {
           const checked = event.currentTarget.checked;
-          const theme = checked ? "light" : "dark";
+          const theme: ThemeType = checked ? "light" : "dark";
 
           manualTheme.current = true;
           setIsDark(!checked);

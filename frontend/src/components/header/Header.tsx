@@ -2,8 +2,12 @@
 import Theme from "./themeButton/Theme";
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
+import type { ThemeType } from "@/types/types";
+type HeaderProps = {
+  initialTheme?: ThemeType;
+};
 
-export default function Header() {
+export default function Header({ initialTheme }: HeaderProps) {
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
@@ -27,7 +31,7 @@ export default function Header() {
         <a href="/">Início</a>
         <a href="/about">Sobre</a>
       </nav> */}
-      <Theme />
+      <Theme initialTheme={initialTheme} />
     </header>
   );
 }

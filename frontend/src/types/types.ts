@@ -41,6 +41,8 @@ type SavedLanguage = {
 
 type Loading = Record<Country["code"], string>;
 
+type ThemeType = "light" | "dark";
+
 export type {
   Loading,
   Props,
@@ -51,4 +53,5 @@ export type {
   Param,
   CookieCode,
   SavedLanguage,
+  ThemeType,
 };
