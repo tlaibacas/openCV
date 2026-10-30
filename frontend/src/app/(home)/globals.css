@@ -1,6 +1,7 @@
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
+
   --text: #111;
   --primary: #fff;
   --secondary: #368bb3;
@@ -17,11 +18,9 @@
   --text: #fff;
   --primary: #111;
   --secondary: #003b66;
-  --active: var(--secondary);
   --desactive: #555;
   --invalid: #8b0000;
   --warn: #e65100;
-  --extras: var(--desactive);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,13 +30,12 @@
     --text: #fff;
     --primary: #111;
     --secondary: #003b66;
-    --active: var(--secondary);
     --desactive: #555;
     --invalid: #8b0000;
     --warn: #e65100;
-    --extras: var(--desactive);
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -55,6 +53,7 @@
     --primary-position: 50%;
   }
 }
+
 body {
   margin: 0;
 }
