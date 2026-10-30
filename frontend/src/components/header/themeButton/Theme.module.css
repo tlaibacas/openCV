@@ -69,11 +69,3 @@
   filter: brightness(1.2);
   cursor: pointer;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .slider,
-  .slider::before,
-  .sun {
-    transition: none;
-  }
-}

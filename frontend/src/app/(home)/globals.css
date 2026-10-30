@@ -38,7 +38,6 @@
     --extras: var(--desactive);
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -50,6 +49,7 @@
     backdrop-filter: none !important;
   }
 
+  :root,
   body,
   *::backdrop {
     --primary-position: 50%;
