@@ -27,11 +27,16 @@ export default function Header({ initialTheme }: HeaderProps) {
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
-      {/* <nav>
-        <a href="/">Início</a>
-        <a href="/about">Sobre</a>
-      </nav> */}
       <Theme initialTheme={initialTheme} />
+
+      <button
+        className={styles.toggle}
+        onClick={() => setHidden(!hidden)}
+        aria-label={hidden ? "Mostrar header" : "Esconder header"}
+        aria-expanded={!hidden}
+      >
+        {hidden ? "▼" : "▲"}
+      </button>
     </header>
   );
 }
