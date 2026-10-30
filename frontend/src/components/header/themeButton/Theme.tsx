@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import styles from "./Theme.module.css";
 import setThemeCookie from "./themeCookie";
 import type { ThemeType } from "@/types/types";
@@ -9,27 +9,49 @@ type ThemeProps = {
   initialTheme?: ThemeType;
 };
 
+const mediaQuery = "(prefers-color-scheme: dark)";
+
+function subscribe(callback: () => void) {
+  const media = window.matchMedia(mediaQuery);
+
+  media.addEventListener("change", callback);
+
+  return () => media.removeEventListener("change", callback);
+}
+
+function getSnapshot() {
+  return window.matchMedia(mediaQuery).matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
 export default function Theme({ initialTheme }: ThemeProps) {
-  const [isDark, setIsDark] = useState(initialTheme === "dark");
-  const manualTheme = useRef(false);
+  const systemDark = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
+  const [manualTheme, setManualTheme] = useState<ThemeType | null>(null);
 
-    if (!initialTheme) {
-      setIsDark(media.matches);
-    }
+  const isDark =
+    manualTheme !== null
+      ? manualTheme === "dark"
+      : initialTheme !== undefined
+        ? initialTheme === "dark"
+        : systemDark;
 
-    function handleChange(event: MediaQueryListEvent) {
-      if (!initialTheme && !manualTheme.current) {
-        setIsDark(event.matches);
-      }
-    }
+  function handleChange(checked: boolean) {
+    const theme: ThemeType = checked ? "light" : "dark";
 
-    media.addEventListener("change", handleChange);
+    setManualTheme(theme);
 
-    return () => media.removeEventListener("change", handleChange);
-  }, [initialTheme]);
+    document.documentElement.dataset.theme = theme;
+
+    setThemeCookie(theme);
+  }
 
   return (
     <label className={styles.switch}>
@@ -37,16 +59,7 @@ export default function Theme({ initialTheme }: ThemeProps) {
         type="checkbox"
         name="theme"
         checked={!isDark}
-        onChange={(event) => {
-          const checked = event.currentTarget.checked;
-          const theme: ThemeType = checked ? "light" : "dark";
-
-          manualTheme.current = true;
-          setIsDark(!checked);
-
-          document.documentElement.dataset.theme = theme;
-          setThemeCookie(theme);
-        }}
+        onChange={(event) => handleChange(event.currentTarget.checked)}
       />
 
       <span className={styles.slider}>
