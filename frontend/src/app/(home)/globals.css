@@ -5,7 +5,7 @@
   --primary: #fff;
   --secondary: #368bb3;
   --active: var(--secondary);
-  --desactive: #999;
+  --desactive: #666;
   --invalid: #f00;
   --warn: #ff9800;
   --extras: var(--desactive);
@@ -18,7 +18,7 @@
   --primary: #111;
   --secondary: #003b66;
   --active: var(--secondary);
-  --desactive: #888;
+  --desactive: #555;
   --invalid: #8b0000;
   --warn: #e65100;
   --extras: var(--desactive);
@@ -32,7 +32,7 @@
     --primary: #111;
     --secondary: #003b66;
     --active: var(--secondary);
-    --desactive: #888;
+    --desactive: #555;
     --invalid: #8b0000;
     --warn: #e65100;
     --extras: var(--desactive);
