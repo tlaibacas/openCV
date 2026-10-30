@@ -5,7 +5,6 @@ import styles from "./Header.module.css";
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);
-  const [, setTheme] = useState(false);
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
       if (event.deltaY > 0) {
