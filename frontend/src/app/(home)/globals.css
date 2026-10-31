@@ -37,7 +37,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  :where(label, a):hover {
+  :where(label, a, button):hover {
     cursor: pointer;
     filter: brightness(1.1);
     box-shadow: 0 0.5rem 1.5rem -0.25rem

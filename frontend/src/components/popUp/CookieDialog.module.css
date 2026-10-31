@@ -37,6 +37,9 @@
   );
   animation: gradient 3s forwards;
 }
+.dialog:not([open]) {
+  display: none;
+}
 
 @keyframes gradient {
   from {
