@@ -18,9 +18,11 @@
   --text: #fff;
   --primary: #111;
   --secondary: #003b66;
+  --active: var(--secondary);
   --desactive: #444;
   --invalid: #8b0000;
   --warn: #e65100;
+  --extras: var(--desactive);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,9 +32,11 @@
     --text: #fff;
     --primary: #111;
     --secondary: #003b66;
+    --active: var(--secondary);
     --desactive: #444;
     --invalid: #8b0000;
     --warn: #e65100;
+    --extras: var(--desactive);
   }
 }
 
@@ -63,17 +67,14 @@
   }
 }
 
-body {
-  margin: 0;
-}
 .slider {
   background-color: var(--desactive);
 }
 
-.slider::before {
-  background: var(--primary);
-}
-
 .switch input:checked + .slider {
   background: var(--active);
+}
+
+body {
+  margin: 0;
 }

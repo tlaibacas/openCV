@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { metadata as siteMetadata } from "@/app/metadata/metadata";
-import { isSupportedLanguage } from "@/libs/cookies/cookieHandler";
-import { getLanguageLayoutData } from "@/libs/cookies/cookieHandler";
+import {
+  isSupportedLanguage,
+  getLanguageLayoutData,
+} from "@/libs/cookies/cookieHandler";
 
 import CookieDialog from "@/components/popUp/CookieDialog";
 import Header from "@/components/header/Header";
@@ -25,14 +27,16 @@ export default async function Layout({ children, params }: Props) {
     notFound();
   }
 
-  const { cookieResult, theme } = await getLanguageLayoutData(lang);
+  const preferences = await getLanguageLayoutData(lang);
 
   return (
-    <html lang={lang} data-theme={theme}>
+    <html lang={lang} data-theme={preferences.theme}>
       <body>
-        <Header initialTheme={theme} />
+        <Header initialTheme={preferences.theme} />
         {children}
-        {cookieResult.status && <CookieDialog cookie={cookieResult} />}
+        {preferences.cookieResult.status && (
+          <CookieDialog cookie={preferences.cookieResult} />
+        )}
       </body>
     </html>
   );
