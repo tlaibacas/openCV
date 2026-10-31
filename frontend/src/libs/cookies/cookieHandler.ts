@@ -11,11 +11,6 @@ import {
 } from "@/libs/i18n/locales/countries";
 import { cookies } from "next/headers";
 
-type InitialPreferences = {
-  theme: ThemeType | undefined;
-  savedLanguage: SavedLanguage;
-};
-
 function isSupportedLanguage(value: string): value is Country["code"] {
   return supportedLanguageCodes.has(value as Country["code"]);
 }
