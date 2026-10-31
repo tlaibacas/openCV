@@ -14,7 +14,6 @@
   display: inline-block;
   width: 4rem;
   height: 1.4rem;
-  background: var(--desactive);
   border-radius: 999px;
   z-index: 0;
   transition:
