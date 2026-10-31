@@ -3,9 +3,9 @@ import styles from "./LangCards.module.css";
 import Image from "next/image";
 import { languages } from "@/libs/i18n/locales/countries";
 import Remember from "@/components/card/remember/Remember";
-import { saveLanguagePreference } from "@/libs/cookies/cookieHandler";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createCookie } from "@/libs/cookies/cookies";
 
 export default function LangCards() {
   const [remember, setRemember] = useState(false);
@@ -19,7 +19,10 @@ export default function LangCards() {
             key={country.code}
             className={styles.card}
             onClick={() => {
-              saveLanguagePreference(remember, country.code);
+              if (remember) {
+                createCookie("lang", country.code);
+              }
+
               router.push(`/${country.code}`);
             }}
           >

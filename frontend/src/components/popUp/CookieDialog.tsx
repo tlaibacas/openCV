@@ -4,11 +4,8 @@ import type { CookieCode } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
-import {
-  clearLanguageCookies,
-  setLanguageWarningPreference,
-} from "@/libs/cookies/cookieHandler";
 import styles from "./CookieDialog.module.css";
+import { clearCookies, createCookie } from "@/libs/cookies/cookies";
 type Props = {
   cookie: CookieCode;
 };
@@ -38,7 +35,7 @@ export default function CookieDialog({ cookie }: Props) {
           <p>Your saved language is invalid or the cookie is corrupted.</p>
           <button
             onClick={() => {
-              clearLanguageCookies();
+              clearCookies("lang", "warn");
               router.push("/");
             }}
           >
@@ -59,7 +56,7 @@ export default function CookieDialog({ cookie }: Props) {
             </button>
             <button
               onClick={() => {
-                setLanguageWarningPreference(remember);
+                createCookie("warn", String(remember));
                 dialogRef.current?.close();
               }}
             >
