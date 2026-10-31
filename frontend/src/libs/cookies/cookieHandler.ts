@@ -1,9 +1,19 @@
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import type { Country, CookieCode, SavedLanguage } from "@/types/types";
+import type {
+  Country,
+  CookieCode,
+  SavedLanguage,
+  ThemeType,
+} from "@/types/types";
 import {
   supportedLanguageCodes,
   languages,
 } from "@/libs/i18n/locales/countries";
+
+type InitialPreferences = {
+  theme: ThemeType | undefined;
+  savedLanguage: SavedLanguage;
+};
 
 function isSupportedLanguage(value: string): value is Country["code"] {
   return supportedLanguageCodes.has(value as Country["code"]);
@@ -55,4 +65,17 @@ function checkLanguageCookie(
   };
 }
 
-export { redirectToSavedLanguage, checkLanguageCookie };
+function getInitialPreferences(
+  cookieStore: ReadonlyRequestCookies,
+): InitialPreferences {
+  const cookieTheme = cookieStore.get("theme")?.value;
+
+  const theme: ThemeType | undefined =
+    cookieTheme === "light" || cookieTheme === "dark" ? cookieTheme : undefined;
+
+  const savedLanguage = redirectToSavedLanguage(cookieStore);
+
+  return { theme, savedLanguage };
+}
+
+export { redirectToSavedLanguage, checkLanguageCookie, getInitialPreferences };

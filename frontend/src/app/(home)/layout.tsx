@@ -10,8 +10,7 @@ import {
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { redirectToSavedLanguage } from "@/libs/cookies/cookieHandler";
-import type { SavedLanguage, ThemeType } from "@/types/types";
+import { getInitialPreferences } from "@/libs/cookies/cookieHandler";
 import Header from "@/components/header/Header";
 
 export const metadata: Metadata = siteMetadata;
@@ -22,20 +21,16 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const cookieStore = await cookies();
-  const cookieTheme = cookieStore.get("theme")?.value as ThemeType;
-  const theme: ThemeType | undefined =
-    cookieTheme === "light" || cookieTheme === "dark" ? cookieTheme : undefined;
-  const savedLanguage: SavedLanguage = redirectToSavedLanguage(cookieStore);
+  const preferences = getInitialPreferences(await cookies());
 
-  if (savedLanguage.status) {
-    redirect(`/${savedLanguage.val}`);
+  if (preferences.savedLanguage.status) {
+    redirect(`/${preferences.savedLanguage.val}`);
   }
 
   return (
-    <html lang="en" data-theme={theme}>
+    <html lang="en" data-theme={preferences.theme}>
       <body>
-        <Header initialTheme={theme} />
+        <Header initialTheme={preferences.theme} />
         {children}
       </body>
     </html>
