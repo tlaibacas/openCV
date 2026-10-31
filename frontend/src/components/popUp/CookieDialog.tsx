@@ -56,7 +56,7 @@ export default function CookieDialog({ cookie }: Props) {
             </button>
             <button
               onClick={() => {
-                createCookie("warn", "true");
+                createCookie("warn", String(remember));
                 dialogRef.current?.close();
               }}
             >
