@@ -2,8 +2,8 @@
 
 import { useState, useSyncExternalStore } from "react";
 import styles from "./Theme.module.css";
-import setThemeCookie from "./themeCookie";
 import type { ThemeType } from "@/types/types";
+import { createCookie } from "@/libs/cookies/cookies";
 
 type ThemeProps = {
   initialTheme?: ThemeType;
@@ -50,11 +50,11 @@ export default function Theme({ initialTheme }: ThemeProps) {
 
     document.documentElement.dataset.theme = theme;
 
-    setThemeCookie(theme);
+    createCookie("theme", String(theme));
   }
 
   return (
-    <label className={`${styles.switch} switch`}>
+    <label className={styles.switch}>
       <input
         type="checkbox"
         name="theme"
