@@ -54,7 +54,7 @@ export default function Theme({ initialTheme }: ThemeProps) {
   }
 
   return (
-    <label className={styles.switch}>
+    <label className={`${styles.switch} switch`}>
       <input
         type="checkbox"
         name="theme"
@@ -62,7 +62,7 @@ export default function Theme({ initialTheme }: ThemeProps) {
         onChange={(event) => handleChange(event.currentTarget.checked)}
       />
 
-      <span className={styles.slider}>
+      <span className={`${styles.slider} slider`}>
         <span className={styles.sun}></span>
         <span className={styles.moon}></span>
       </span>
