@@ -14,7 +14,6 @@
   display: inline-block;
   width: 2.5rem;
   height: 1.4rem;
-  background: var(--desactive);
 
   border-radius: 999px;
   transition:
@@ -29,7 +28,6 @@
   height: 1rem;
   left: 0.2rem;
   top: 0.2rem;
-  background: var(--primary);
   border-radius: 50%;
   transition: transform 0.3s;
 }
@@ -39,7 +37,6 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text);
   font-size: 0.5rem;
   font-weight: bold;
   transition: opacity 0.3s;
@@ -52,10 +49,6 @@
 
 .no {
   right: 0.25rem;
-}
-
-.switch input:checked + .slider {
-  background: var(--active);
 }
 
 .switch input:checked + .slider::before {
@@ -73,9 +66,4 @@
 .switch input:focus-visible + .slider {
   outline: 2px solid currentColor;
   outline-offset: 3px;
-}
-
-.switch:hover .slider {
-  filter: brightness(1.2);
-  cursor: pointer;
 }

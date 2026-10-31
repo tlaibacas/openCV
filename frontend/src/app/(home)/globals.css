@@ -36,6 +36,15 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  :where(label, a):hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+    box-shadow: 0 0.5rem 1.5rem -0.25rem
+      color-mix(in srgb, var(--secondary) 60%, transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -56,4 +65,15 @@
 
 body {
   margin: 0;
+}
+.slider {
+  background-color: var(--desactive);
+}
+
+.slider::before {
+  background: var(--primary);
+}
+
+.switch input:checked + .slider {
+  background: var(--active);
 }

@@ -1,109 +1,104 @@
 .main {
-    position: fixed;
-    inset: 0;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    width: min(90%, 60rem);
-    max-height: 70dvh;
-    box-sizing: border-box;
-    padding: 2rem;
-    animation: fadeIn 3s ease-out backwards;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: min(90%, 60rem);
+  max-height: 70dvh;
+  box-sizing: border-box;
+  padding: 2rem;
+  animation: fadeIn 3s ease-out backwards;
 }
 .title {
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
-    font-family: "Trebuchet MS", sans-serif;
-    margin: 0;
-    color: var(--text);
-    text-align: center;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-family: "Trebuchet MS", sans-serif;
+  margin: 0;
+  text-align: center;
 }
 .remember {
-    font-size: clamp(0.6rem, 1.8vw, 1.1rem);
-    font-family: "Trebuchet MS", sans-serif;
-    margin: 0;
-    color: var(--text);
-    text-align: center;
+  font-size: clamp(0.6rem, 1.8vw, 1.1rem);
+  font-family: "Trebuchet MS", sans-serif;
+  margin: 0;
+  text-align: center;
 }
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(6.25rem, 7.5rem));
-    justify-content: center;
-    justify-items: center;
-    gap: 1.25rem clamp(1rem, 5vw, 2.25rem);
-    width: 100%;
-    max-height: 40dvh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.25rem, 7.5rem));
+  justify-content: center;
+  justify-items: center;
+  gap: 1.25rem clamp(1rem, 5vw, 2.25rem);
+  width: 100%;
+  max-height: 40dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .card {
-    width: 100%;
-    border: 0;
-    font: inherit;
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    box-sizing: border-box;
-    min-width: 0;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    background: linear-gradient(
-        to top left,
-        var(--primary) 50%,
-        var(--secondary) 100%
-    );
-    border-radius: 0.75rem;
-    transition:
-        transform 0.2s ease-out,
-        box-shadow 0.2s ease-out;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    -webkit-user-select: none;
-    user-select: none;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  width: 100%;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(
+    to top left,
+    var(--primary) 50%,
+    var(--secondary) 100%
+  );
+  border-radius: 0.75rem;
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 @media (hover: hover) and (pointer: fine) {
-    .card:hover {
-        transform: scale(1.05);
-        outline: 1px solid var(--secondary);
-        box-shadow: 0 0.5rem 1.5rem -0.25rem
-            color-mix(in srgb, var(--secondary) 60%, transparent);
-    }
+  .card:hover {
+    transform: scale(1.05);
+    outline: 1px solid var(--secondary);
+  }
 }
 .card:focus-visible {
-    outline: 3px solid var(--secondary);
-    outline-offset: 4px;
+  outline: 3px solid var(--secondary);
+  outline-offset: 4px;
 }
 .card:active {
-    transform: scale(0.95);
-    outline: 2px solid var(--secondary);
+  transform: scale(0.95);
+  outline: 2px solid var(--secondary);
 }
 .flag {
-    width: 100px;
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    -webkit-user-drag: none;
+  width: 100px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  -webkit-user-drag: none;
 }
 .text {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    font-size: 1.2rem;
-    line-height: 1.2;
-    text-align: center;
-    text-wrap: balance;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
 }

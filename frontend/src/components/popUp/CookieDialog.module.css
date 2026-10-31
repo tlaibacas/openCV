@@ -16,7 +16,6 @@
   padding: 2rem;
   border: none;
   border-radius: 1rem;
-  color: var(--text);
   background: var(--primary);
   text-align: center;
 }
