@@ -9,6 +9,7 @@ import {
   supportedLanguageCodes,
   languages,
 } from "@/libs/i18n/locales/countries";
+import { cookies } from "next/headers";
 
 type InitialPreferences = {
   theme: ThemeType | undefined;
@@ -65,17 +66,38 @@ function checkLanguageCookie(
   };
 }
 
-function getInitialPreferences(
-  cookieStore: ReadonlyRequestCookies,
-): InitialPreferences {
-  const cookieTheme = cookieStore.get("theme")?.value;
+function getTheme(cookieStore: ReadonlyRequestCookies): ThemeType | undefined {
+  const theme = cookieStore.get("theme")?.value;
 
-  const theme: ThemeType | undefined =
-    cookieTheme === "light" || cookieTheme === "dark" ? cookieTheme : undefined;
-
-  const savedLanguage = redirectToSavedLanguage(cookieStore);
-
-  return { theme, savedLanguage };
+  return theme === "light" || theme === "dark" ? theme : undefined;
 }
 
-export { redirectToSavedLanguage, checkLanguageCookie, getInitialPreferences };
+function getInitialPreferences(cookieStore: ReadonlyRequestCookies): {
+  theme: ThemeType | undefined;
+  savedLanguage: SavedLanguage;
+} {
+  return {
+    theme: getTheme(cookieStore),
+    savedLanguage: redirectToSavedLanguage(cookieStore),
+  };
+}
+
+async function getLanguageLayoutData(lang: string): Promise<{
+  theme: ThemeType | undefined;
+  cookieResult: CookieCode;
+}> {
+  const cookieStore = await cookies();
+
+  return {
+    theme: getTheme(cookieStore),
+    cookieResult: checkLanguageCookie(cookieStore, lang),
+  };
+}
+
+export {
+  redirectToSavedLanguage,
+  checkLanguageCookie,
+  getInitialPreferences,
+  isSupportedLanguage,
+  getLanguageLayoutData,
+};
