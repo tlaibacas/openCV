@@ -60,8 +60,8 @@ function checkLanguageCookie(
   return;
 }
 
-function getTheme(cookieStore: ReadonlyRequestCookies): ThemeType | undefined {
-  const theme = cookieStore.get("theme")?.value;
+function getTheme(cookieStore?: ReadonlyRequestCookies): ThemeType | undefined {
+  const theme = cookieStore?.get("theme")?.value;
 
   return theme === "light" || theme === "dark" ? theme : undefined;
 }
@@ -90,5 +90,6 @@ export {
   getInitialPreferences,
   isSupportedLanguage,
   getLanguageLayoutData,
+  getTheme,
   invalid,
 };
