@@ -33,34 +33,30 @@ function redirectToSavedLanguage(
 function checkLanguageCookie(
   cookies: ReadonlyRequestCookies,
   currentLanguage?: string,
-): CookieCode {
+): CookieCode | undefined {
   const savedLanguage: string | undefined = cookies.get("lang")?.value;
   const hasDisabledLanguageWarning: boolean =
     cookies.get("warn")?.value === "true";
 
   if (!savedLanguage) {
-    return { status: false };
+    return;
   }
 
   if (!supportedLanguageCodes.has(savedLanguage as Country["code"])) {
     return {
-      status: true,
       code: invalid,
     };
   }
 
   if (savedLanguage !== currentLanguage && !hasDisabledLanguageWarning) {
     return {
-      status: true,
       code: notEqual,
       languageVal: savedLanguage as Country["code"],
       languageName: languages[savedLanguage as keyof typeof languages].language,
     };
   }
 
-  return {
-    status: false,
-  };
+  return;
 }
 
 function getTheme(cookieStore: ReadonlyRequestCookies): ThemeType | undefined {
@@ -81,7 +77,7 @@ function getInitialPreferences(cookieStore: ReadonlyRequestCookies): {
 
 async function getLanguageLayoutData(lang: string): Promise<{
   theme: ThemeType | undefined;
-  cookieResult: CookieCode;
+  cookieResult: CookieCode | undefined;
 }> {
   const cookieStore = await cookies();
 
