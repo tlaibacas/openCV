@@ -5,7 +5,6 @@ import { languages } from "@/libs/i18n/locales/countries";
 import { useRouter } from "next/navigation";
 import styles from "./LangBar.module.css";
 import { createCookie } from "@/libs/cookies/cookies";
-import { remove } from "@/libs/i18n/translations/translations";
 
 function LangBar(langProp?: { langProp: string | undefined }) {
   const [open, setOpen] = useState(false);
