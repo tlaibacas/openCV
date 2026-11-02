@@ -3,6 +3,7 @@ import Theme from "./themeButton/Theme";
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import type { ThemeType } from "@/types/types";
+import LangBar from "./langBar/LangBar";
 type HeaderProps = {
   initialTheme?: ThemeType;
 };
@@ -27,6 +28,7 @@ export default function Header({ initialTheme }: HeaderProps) {
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
+      <LangBar />
       <Theme initialTheme={initialTheme} />
 
       <button
