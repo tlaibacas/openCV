@@ -67,14 +67,6 @@
   }
 }
 
-.slider {
-  background-color: var(--desactive);
-}
-
-.switch input:checked + .slider {
-  background: var(--secondary);
-}
-
 body {
   margin: 0;
 }
