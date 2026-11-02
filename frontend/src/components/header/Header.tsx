@@ -6,9 +6,10 @@ import type { ThemeType } from "@/types/types";
 import LangBar from "./langBar/LangBar";
 type HeaderProps = {
   initialTheme?: ThemeType;
+  langProp?: string | undefined;
 };
 
-export default function Header({ initialTheme }: HeaderProps) {
+export default function Header({ initialTheme, langProp }: HeaderProps) {
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
@@ -28,7 +29,7 @@ export default function Header({ initialTheme }: HeaderProps) {
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
-      <LangBar />
+      <LangBar langProp={langProp} />
       <Theme initialTheme={initialTheme} />
 
       <button
