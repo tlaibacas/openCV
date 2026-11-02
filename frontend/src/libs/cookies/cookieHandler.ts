@@ -11,6 +11,9 @@ import {
 } from "@/libs/i18n/locales/countries";
 import { cookies } from "next/headers";
 
+const invalid = "INVALID";
+const notEqual = "NOT_EQUAL";
+
 function isSupportedLanguage(value: string): value is Country["code"] {
   return supportedLanguageCodes.has(value as Country["code"]);
 }
@@ -42,14 +45,14 @@ function checkLanguageCookie(
   if (!supportedLanguageCodes.has(savedLanguage as Country["code"])) {
     return {
       status: true,
-      code: "INVALID_LANG",
+      code: invalid,
     };
   }
 
   if (savedLanguage !== currentLanguage && !hasDisabledLanguageWarning) {
     return {
       status: true,
-      code: "LANG_NOT_EQUAL",
+      code: notEqual,
       languageVal: savedLanguage as Country["code"],
       languageName: languages[savedLanguage as keyof typeof languages].language,
     };
@@ -57,7 +60,6 @@ function checkLanguageCookie(
 
   return {
     status: false,
-    code: "LANGUAGE_COOKIE_VALID",
   };
 }
 
@@ -95,4 +97,5 @@ export {
   getInitialPreferences,
   isSupportedLanguage,
   getLanguageLayoutData,
+  invalid,
 };
