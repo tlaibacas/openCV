@@ -57,10 +57,12 @@
 .switch input:checked + .slider::before {
   transform: translateX(2.57rem) rotate(360deg);
   filter: brightness(0.4);
-  background: var(--secondary);
 }
 
 .switch input:focus-visible + .slider {
   outline: 2px solid currentColor;
   outline-offset: 3px;
+}
+.switch input:checked + .slider {
+  background-color: var(--secondary);
 }
