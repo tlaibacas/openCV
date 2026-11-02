@@ -14,11 +14,15 @@
   display: inline-block;
   width: 2.5rem;
   height: 1.4rem;
-
+  background-color: var(--desactive);
   border-radius: 999px;
   transition:
     background 0.2s,
     filter 0.2s;
+}
+
+.switch input:checked + .slider {
+  background: var(--secondary);
 }
 
 .slider::before {
