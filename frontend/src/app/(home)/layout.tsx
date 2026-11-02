@@ -8,6 +8,7 @@ import {
 import { redirect } from "next/navigation";
 import { getInitialPreferences } from "@/libs/cookies/cookieHandler";
 import Header from "@/components/header/Header";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = siteMetadata;
 export const viewport: Viewport = siteViewport;
@@ -17,7 +18,7 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const preferences = getInitialPreferences();
+  const preferences = await getInitialPreferences(await cookies());
 
   if (preferences.savedLanguage) {
     redirect(`/${preferences.savedLanguage.value}`);
