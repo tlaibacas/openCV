@@ -34,7 +34,7 @@ export default async function Layout({ children, params }: Props) {
       <body>
         <Header initialTheme={preferences.theme} />
         {children}
-        {preferences.cookieResult.status && (
+        {preferences.cookieResult && (
           <CookieDialog cookie={preferences.cookieResult} />
         )}
       </body>
