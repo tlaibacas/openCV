@@ -41,7 +41,6 @@ type Loading = Record<Country["code"], string>;
 
 type ThemeType = "light" | "dark";
 
-type Remove = Record<Country["code"], string>;
 
 export type {
   Loading,
@@ -54,5 +53,5 @@ export type {
   CookieCode,
   SavedLanguage,
   ThemeType,
-  Remove,
+
 };
