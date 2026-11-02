@@ -24,10 +24,10 @@ function redirectToSavedLanguage(
   const savedLanguage: string | undefined = cookies.get("lang")?.value;
 
   if (!savedLanguage || !isSupportedLanguage(savedLanguage)) {
-    return { status: false };
+    return;
   }
 
-  return { status: true, val: savedLanguage };
+  return { value: savedLanguage };
 }
 
 function checkLanguageCookie(
