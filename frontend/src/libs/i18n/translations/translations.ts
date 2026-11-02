@@ -1,4 +1,4 @@
-import type { Loading, Remove } from "@/types/types";
+import type { Loading } from "@/types/types";
 
 const loading: Loading = {
   pt: "A carregar...",
@@ -6,10 +6,5 @@ const loading: Loading = {
   en: "Loading...",
   fr: "Chargement...",
 };
-const remove: Remove = {
-  pt: "Remover memoria",
-  es: "Eliminar memoria",
-  en: "Remove memory",
-  fr: "Supprimer la mémoire",
-};
-export { loading, remove };
+
+export { loading };
