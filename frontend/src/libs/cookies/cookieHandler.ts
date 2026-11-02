@@ -52,7 +52,7 @@ function checkLanguageCookie(
   if (savedLanguage !== currentLanguage && !hasDisabledLanguageWarning) {
     return {
       code: notEqual,
-      languageVal: savedLanguage as Country["code"],
+      languageValue: savedLanguage as Country["code"],
       languageName: languages[savedLanguage as keyof typeof languages].language,
     };
   }
@@ -77,13 +77,9 @@ function getInitialPreferences(): {
 }
 
 async function getLanguageLayoutData(lang: string): Promise<{
-  theme: ThemeType | undefined;
   cookieResult: CookieCode | undefined;
 }> {
-  const cookieStore = await cookies();
-
   return {
-    theme: getTheme(cookieStore),
     cookieResult: checkLanguageCookie(cookieStore, lang),
   };
 }
