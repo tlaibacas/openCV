@@ -26,41 +26,44 @@ function LangBar(langProp?: { langProp: string | undefined }) {
         <span aria-hidden="true">{open ? "▲" : "▼"}</span>
       </button>
 
-      {open && (
-        <ul className={styles.dropdown}>
-          {Object.values(languages).map(({ code, language, flagPath }) => (
-            <li key={code}>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelected(code);
-                  setOpen(false);
-                  createCookie("lang", code);
-                  router.push(`/${code}`);
-                }}
-                aria-current={selected === code ? "true" : undefined}
-              >
-                <img src={flagPath} alt="" />
-                {language}
-              </button>
-            </li>
-          ))}
-          <li>
+      <ul
+        className={`${styles.dropdown} ${open ? styles.open : ""}`}
+        aria-hidden={!open}
+        inert={!open}
+      >
+        {Object.values(languages).map(({ code, language, flagPath }) => (
+          <li key={code}>
             <button
               type="button"
               onClick={() => {
-                clearCookies("lang");
-                setSelected("en");
+                setSelected(code);
                 setOpen(false);
-                router.push("/en");
+                createCookie("lang", code);
+                router.push(`/${code}`);
               }}
+              aria-current={selected === code ? "true" : undefined}
             >
-              {remove[selected as keyof typeof remove]}
-              <img src={current.flagPath} alt="" />
+              <img src={flagPath} alt="" />
+              {language}
             </button>
           </li>
-        </ul>
-      )}
+        ))}
+
+        <li>
+          <button
+            type="button"
+            onClick={() => {
+              clearCookies("lang");
+              setSelected("en");
+              setOpen(false);
+              router.push("/en");
+            }}
+          >
+            {remove[selected as keyof typeof remove]}
+            <img src={current.flagPath} alt="" />
+          </button>
+        </li>
+      </ul>
     </nav>
   );
 }
