@@ -34,8 +34,7 @@ type CookieCode = {
 };
 
 type SavedLanguage = {
-  status: boolean | undefined;
-  val?: Country["code"] | undefined;
+  value?: Country["code"] | undefined;
 };
 
 type Loading = Record<Country["code"], string>;
