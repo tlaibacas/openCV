@@ -28,7 +28,6 @@ type CardStyles = {
 };
 type Code = "INVALID" | "NOT_EQUAL";
 type CookieCode = {
-  status: boolean;
   code?: Code | undefined;
   languageVal?: Country["code"];
   languageName?: Country["language"];
