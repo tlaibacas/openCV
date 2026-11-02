@@ -20,7 +20,7 @@ function isSupportedLanguage(value: string): value is Country["code"] {
 
 function redirectToSavedLanguage(
   cookies: ReadonlyRequestCookies,
-): SavedLanguage {
+): SavedLanguage | undefined {
   const savedLanguage: string | undefined = cookies.get("lang")?.value;
 
   if (!savedLanguage || !isSupportedLanguage(savedLanguage)) {
@@ -67,7 +67,7 @@ function getTheme(cookieStore: ReadonlyRequestCookies): ThemeType | undefined {
 
 function getInitialPreferences(cookieStore: ReadonlyRequestCookies): {
   theme: ThemeType | undefined;
-  savedLanguage: SavedLanguage;
+  savedLanguage: SavedLanguage | undefined;
 } {
   return {
     theme: getTheme(cookieStore),
