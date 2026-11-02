@@ -5,9 +5,9 @@ import { languages } from "@/libs/i18n/locales/countries";
 
 import styles from "./LangBar.module.css";
 
-function LangBar() {
+function LangBar(langProp?: { langProp: string | undefined }) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("en");
+  const [selected, setSelected] = useState(langProp?.langProp || "en");
 
   const current = languages[selected as keyof typeof languages];
 
