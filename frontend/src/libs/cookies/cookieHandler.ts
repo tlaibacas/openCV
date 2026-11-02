@@ -1,72 +1,65 @@
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import type {
   Country,
   CookieCode,
   SavedLanguage,
   ThemeType,
 } from "@/types/types";
+
 import {
   supportedLanguageCodes,
   languages,
 } from "@/libs/i18n/locales/countries";
-import { cookies } from "next/headers";
+
+type CookieStore = {
+  get(name: string): { value: string } | undefined;
+};
 
 const invalid = "INVALID";
 const notEqual = "NOT_EQUAL";
-const cookieStore = await cookies();
 
 function isSupportedLanguage(value: string): value is Country["code"] {
   return supportedLanguageCodes.has(value as Country["code"]);
 }
 
 function redirectToSavedLanguage(
-  cookies: ReadonlyRequestCookies,
+  cookieStore: CookieStore,
 ): SavedLanguage | undefined {
-  const savedLanguage: string | undefined = cookies.get("lang")?.value;
+  const savedLanguage = cookieStore.get("lang")?.value;
 
-  if (!savedLanguage || !isSupportedLanguage(savedLanguage)) {
-    return;
-  }
+  if (!savedLanguage || !isSupportedLanguage(savedLanguage)) return;
 
   return { value: savedLanguage };
 }
 
 function checkLanguageCookie(
-  cookies: ReadonlyRequestCookies,
+  cookieStore: CookieStore,
   currentLanguage?: string,
 ): CookieCode | undefined {
-  const savedLanguage: string | undefined = cookies.get("lang")?.value;
-  const hasDisabledLanguageWarning: boolean =
-    cookies.get("warn")?.value === "true";
+  const savedLanguage = cookieStore.get("lang")?.value;
+  const hasDisabledLanguageWarning = cookieStore.get("warn")?.value === "true";
 
-  if (!savedLanguage) {
-    return;
-  }
+  if (!savedLanguage) return;
 
-  if (!supportedLanguageCodes.has(savedLanguage as Country["code"])) {
-    return {
-      code: invalid,
-    };
+  if (!isSupportedLanguage(savedLanguage)) {
+    return { code: invalid };
   }
 
   if (savedLanguage !== currentLanguage && !hasDisabledLanguageWarning) {
     return {
       code: notEqual,
-      languageValue: savedLanguage as Country["code"],
-      languageName: languages[savedLanguage as keyof typeof languages].language,
+      languageValue: savedLanguage,
+      languageName: languages[savedLanguage].language,
     };
   }
-
-  return;
 }
 
-function getTheme(cookieStore?: ReadonlyRequestCookies): ThemeType | undefined {
-  const theme = cookieStore?.get("theme")?.value;
+function getTheme(cookieStore: CookieStore): ThemeType | undefined {
+  const theme = cookieStore.get("theme")?.value;
 
   return theme === "light" || theme === "dark" ? theme : undefined;
 }
 
-function getInitialPreferences(): {
+function getInitialPreferences(cookieStore: CookieStore): {
   theme: ThemeType | undefined;
   savedLanguage: SavedLanguage | undefined;
 } {
@@ -76,9 +69,10 @@ function getInitialPreferences(): {
   };
 }
 
-async function getLanguageLayoutData(lang: string): Promise<{
-  cookieResult: CookieCode | undefined;
-}> {
+function getLanguageLayoutData(
+  cookieStore: CookieStore,
+  lang: string,
+): { cookieResult: CookieCode | undefined } {
   return {
     cookieResult: checkLanguageCookie(cookieStore, lang),
   };
