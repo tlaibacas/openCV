@@ -72,7 +72,7 @@
 }
 
 .switch input:checked + .slider {
-  background: var(--active);
+  background: var(--secondery);
 }
 
 body {
