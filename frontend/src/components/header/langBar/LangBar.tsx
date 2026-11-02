@@ -6,12 +6,15 @@ import { useRouter } from "next/navigation";
 import styles from "./LangBar.module.css";
 import { clearCookies, createCookie } from "@/libs/cookies/cookies";
 import { remove } from "@/libs/i18n/translations/translations";
+import { cookies } from "next/headers";
 
 function LangBar(langProp?: { langProp: string | undefined }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(langProp?.langProp || "en");
   const router = useRouter();
   const current = languages[selected as keyof typeof languages];
+  const cookieStore = await cookies();
+  const langCookie = cookieStore.get("lang")?.value;
 
   return (
     <nav className={styles.langBar} aria-label="Language selection">
@@ -60,7 +63,7 @@ function LangBar(langProp?: { langProp: string | undefined }) {
             }}
           >
             {remove[selected as keyof typeof remove]}
-            <img src={current.flagPath} alt="" />
+            <img src={langCookie.flagPath} alt="" />
           </button>
         </li>
       </ul>
