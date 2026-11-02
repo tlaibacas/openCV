@@ -11,6 +11,7 @@
 
 .slider {
   position: relative;
+  background-color: var(--desactive);
   display: inline-block;
   width: 4rem;
   height: 1.4rem;
@@ -56,6 +57,7 @@
 .switch input:checked + .slider::before {
   transform: translateX(2.57rem) rotate(360deg);
   filter: brightness(0.4);
+  background: var(--secondary);
 }
 
 .switch input:focus-visible + .slider {
