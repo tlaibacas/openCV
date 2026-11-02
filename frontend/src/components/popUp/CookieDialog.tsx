@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import Remember from "@/components/card/remember/Remember";
 import styles from "./CookieDialog.module.css";
 import { clearCookies, createCookie } from "@/libs/cookies/cookies";
+import { invalid } from "@/libs/cookies/cookieHandler";
 type Props = {
   cookie: CookieCode;
 };
@@ -26,10 +27,10 @@ export default function CookieDialog({ cookie }: Props) {
     <dialog
       ref={dialogRef}
       className={`${styles.dialog} ${
-        cookie.code === "INVALID_LANG" ? styles.invalid : styles.warning
+        cookie.code === invalid ? styles.invalid : styles.warning
       }`}
     >
-      {cookie.code === "INVALID_LANG" ? (
+      {cookie.code === invalid ? (
         <>
           <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
