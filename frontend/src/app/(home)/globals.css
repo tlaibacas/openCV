@@ -19,7 +19,7 @@
   --primary: #111;
   --secondary: #003b66;
   --active: var(--secondary);
-  --desactive: #444;
+  --desactive: #555;
   --invalid: #8b0000;
   --warn: #e65100;
   --extras: var(--desactive);
@@ -33,7 +33,7 @@
     --primary: #111;
     --secondary: #003b66;
     --active: var(--secondary);
-    --desactive: #444;
+    --desactive: #555;
     --invalid: #8b0000;
     --warn: #e65100;
     --extras: var(--desactive);
