@@ -23,7 +23,7 @@ function LangBar(langProp?: { langProp: string | undefined }) {
       >
         <img src={current.flagPath} alt="" />
         {current.language}
-        <span aria-hidden="true">⌄</span>
+        <span aria-hidden="true">▼</span>
       </button>
 
       {open && (
