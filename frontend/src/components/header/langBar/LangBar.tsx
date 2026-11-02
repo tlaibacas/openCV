@@ -4,18 +4,15 @@ import { useState } from "react";
 import { languages } from "@/libs/i18n/locales/countries";
 import { useRouter } from "next/navigation";
 import styles from "./LangBar.module.css";
-import { clearCookies, createCookie } from "@/libs/cookies/cookies";
+import { createCookie } from "@/libs/cookies/cookies";
 import { remove } from "@/libs/i18n/translations/translations";
-import { cookies } from "next/headers";
 
 function LangBar(langProp?: { langProp: string | undefined }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(langProp?.langProp || "en");
   const router = useRouter();
   const current = languages[selected as keyof typeof languages];
-  const cookieStore = await cookies();
-  const langCookie = cookieStore.get("lang")?.value;
-
+  
   return (
     <nav className={styles.langBar} aria-label="Language selection">
       <button
@@ -51,21 +48,6 @@ function LangBar(langProp?: { langProp: string | undefined }) {
             </button>
           </li>
         ))}
-
-        <li>
-          <button
-            type="button"
-            onClick={() => {
-              clearCookies("lang");
-              setSelected("en");
-              setOpen(false);
-              router.push("/en");
-            }}
-          >
-            {remove[selected as keyof typeof remove]}
-            <img src={langCookie.flagPath} alt="" />
-          </button>
-        </li>
       </ul>
     </nav>
   );
