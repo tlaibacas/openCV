@@ -52,7 +52,7 @@ export default function CookieDialog({ cookie }: Props) {
           <p>Don&apos;t warn me again</p>
           <Remember onChange={setRemember} />
           <div>
-            <button onClick={() => router.push(`/${cookie.languageVal}`)}>
+            <button onClick={() => router.push(`/${cookie.languageValue}`)}>
               Go to {cookie.languageName}
             </button>
             <button
