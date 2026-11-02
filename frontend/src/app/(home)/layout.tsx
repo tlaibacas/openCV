@@ -23,8 +23,8 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   const preferences = getInitialPreferences(await cookies());
 
-  if (preferences.savedLanguage.status) {
-    redirect(`/${preferences.savedLanguage.val}`);
+  if (preferences.savedLanguage) {
+    redirect(`/${preferences.savedLanguage.value}`);
   }
 
   return (
