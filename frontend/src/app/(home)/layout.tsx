@@ -1,14 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-
 import "./globals.css";
-
 import {
   metadata as siteMetadata,
   viewport as siteViewport,
 } from "@/app/metadata/metadata";
-
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getInitialPreferences } from "@/libs/cookies/cookieHandler";
 import Header from "@/components/header/Header";
@@ -21,7 +17,7 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const preferences = getInitialPreferences(await cookies());
+  const preferences = getInitialPreferences();
 
   if (preferences.savedLanguage) {
     redirect(`/${preferences.savedLanguage.value}`);
