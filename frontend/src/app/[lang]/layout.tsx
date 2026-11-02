@@ -12,7 +12,6 @@ import Header from "@/components/header/Header";
 import "@/app/(home)/globals.css";
 import { cookies } from "next/dist/server/request/cookies";
 export const metadata: Metadata = siteMetadata;
-const cookieStore = await cookies();
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -25,7 +24,7 @@ export default async function Layout({ children, params }: Props) {
   if (!isSupportedLanguage(lang)) {
     notFound();
   }
-
+  const cookieStore = await cookies();
   const langLayoutData = getLanguageLayoutData(cookieStore, lang);
   const theme = getTheme(cookieStore);
 
