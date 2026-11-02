@@ -6,6 +6,7 @@ import { metadata as siteMetadata } from "@/app/metadata/metadata";
 import {
   isSupportedLanguage,
   getLanguageLayoutData,
+  getTheme,
 } from "@/libs/cookies/cookieHandler";
 
 import CookieDialog from "@/components/popUp/CookieDialog";
@@ -27,15 +28,16 @@ export default async function Layout({ children, params }: Props) {
     notFound();
   }
 
-  const preferences = await getLanguageLayoutData(lang);
+  const langLayoutData = await getLanguageLayoutData(lang);
+  const theme = getTheme();
 
   return (
-    <html lang={lang} data-theme={preferences.theme}>
+    <html lang={lang} data-theme={theme}>
       <body>
-        <Header initialTheme={preferences.theme} />
+        <Header initialTheme={theme} />
         {children}
-        {preferences.cookieResult && (
-          <CookieDialog cookie={preferences.cookieResult} />
+        {langLayoutData.cookieResult && (
+          <CookieDialog cookie={langLayoutData.cookieResult} />
         )}
       </body>
     </html>
