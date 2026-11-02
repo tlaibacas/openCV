@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en" data-theme={preferences.theme}>
       <body>
-        <Header initialTheme={preferences.theme} />
+        <Header initialTheme={preferences.theme} langProp={undefined} />
         {children}
       </body>
     </html>
