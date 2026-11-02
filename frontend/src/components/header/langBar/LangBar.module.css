@@ -12,6 +12,7 @@
   color: var(--text);
   background: var(--extras);
   border: 0;
+  border-radius: 0.25rem;
   cursor: pointer;
 }
 
@@ -33,6 +34,24 @@
   padding: 0.25rem 0;
   list-style: none;
   background: var(--extras);
+  border-radius: 0.25rem;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.4rem);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s;
+}
+
+.dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .dropdown button {
