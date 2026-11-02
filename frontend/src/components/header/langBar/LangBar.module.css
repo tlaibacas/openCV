@@ -10,7 +10,7 @@
   gap: 0.5rem;
   padding: 0.5rem;
   color: var(--text);
-  background: var(--primary);
+  background: var(--extras);
   border: 0;
   cursor: pointer;
 }
@@ -27,22 +27,22 @@
   top: 100%;
   left: 0;
   z-index: 10;
-  min-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0;
-  padding: 0.25rem;
+  padding: 0.25rem 0;
   list-style: none;
-  background: var(--primary);
-  border: 1px solid var(--secondary);
+  background: var(--extras);
 }
 
 .dropdown button {
   width: 100%;
+  padding-inline: 0.5rem;
+  justify-content: flex-start;
   text-align: left;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .trigger:hover,
-  .dropdown button:hover {
-    background: var(--secondary);
-  }
+.trigger:hover,
+.dropdown button:hover {
+  background: var(--secondary);
 }
