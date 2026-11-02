@@ -13,6 +13,7 @@ import { cookies } from "next/headers";
 
 const invalid = "INVALID";
 const notEqual = "NOT_EQUAL";
+const cookieStore = await cookies();
 
 function isSupportedLanguage(value: string): value is Country["code"] {
   return supportedLanguageCodes.has(value as Country["code"]);
@@ -65,7 +66,7 @@ function getTheme(cookieStore: ReadonlyRequestCookies): ThemeType | undefined {
   return theme === "light" || theme === "dark" ? theme : undefined;
 }
 
-function getInitialPreferences(cookieStore: ReadonlyRequestCookies): {
+function getInitialPreferences(): {
   theme: ThemeType | undefined;
   savedLanguage: SavedLanguage | undefined;
 } {
