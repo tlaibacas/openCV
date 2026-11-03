@@ -33,7 +33,7 @@ function redirectToSavedLanguage(
 
 function checkLanguageCookie(
   cookieStore: CookieStore,
-  currentLanguage?: string,
+  currentLanguage?: string | undefined,
 ): CookieCode | undefined {
   const savedLanguage = cookieStore.get("lang")?.value;
   const hasDisabledLanguageWarning = cookieStore.get("warn")?.value === "true";
