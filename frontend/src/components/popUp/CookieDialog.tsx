@@ -7,6 +7,12 @@ import Remember from "@/components/card/remember/Remember";
 import styles from "./CookieDialog.module.css";
 import { clearCookies, createCookie } from "@/libs/cookies/cookies";
 import { invalid } from "@/libs/cookies/cookieHandler";
+import {
+  dialog,
+  dontWarn,
+  goTo,
+  continueText,
+} from "@/libs/i18n/translations/translations";
 type Props = {
   cookie: CookieCode;
 };
@@ -46,14 +52,18 @@ export default function CookieDialog({ cookie }: Props) {
       ) : (
         <>
           <p>
-            Your saved language differs from the current page. Would you like to
-            continue or go to your preferred language?
+            {dialog.first[cookie.languageValue] ||
+              "Your saved language differs from the current page language."}
           </p>
-          <p>Don&apos;t warn me again</p>
-          <Remember onChange={setRemember} />
+          <p>
+            {dialog.second[cookie.languageValue] ||
+              "Would you like to continue or go to your preferred language?"}
+          </p>
+          <p>{dontWarn[cookie.languageValue] || "Don&apos;t warn me again"}</p>
+          <Remember langProp={cookie.languageValue} onChange={setRemember} />
           <div>
             <button onClick={() => router.push(`/${cookie.languageValue}`)}>
-              Go to {cookie.languageName}
+              {goTo[cookie.languageValue] || "Go to"} {cookie.languageName}
             </button>
             <button
               onClick={() => {
@@ -61,7 +71,7 @@ export default function CookieDialog({ cookie }: Props) {
                 dialogRef.current?.close();
               }}
             >
-              Continue
+              {continueText[cookie.languageValue] || "Continue"}
             </button>
           </div>
         </>
