@@ -37,13 +37,12 @@ type SavedLanguage = {
   value?: Country["code"] | undefined;
 };
 
-type Loading = Record<Country["code"], string>;
+type Translations = Record<Country["code"], string>;
 
 type ThemeType = "light" | "dark";
 
-
 export type {
-  Loading,
+  Translations,
   Props,
   Country,
   CardProps,
@@ -53,5 +52,4 @@ export type {
   CookieCode,
   SavedLanguage,
   ThemeType,
-
 };

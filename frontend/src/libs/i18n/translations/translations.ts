@@ -1,6 +1,6 @@
-import type { Loading } from "@/types/types";
+import type { Translations } from "@/types/types";
 
-const loading: Loading = {
+const loading: Translations = {
   pt: "A carregar...",
   es: "Cargando...",
   en: "Loading...",
