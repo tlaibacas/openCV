@@ -5,13 +5,14 @@ import { languages } from "@/libs/i18n/locales/countries";
 import { useRouter } from "next/navigation";
 import styles from "./LangBar.module.css";
 import { createCookie } from "@/libs/cookies/cookies";
+import Image from "next/image";
 
 function LangBar(langProp?: { langProp: string | undefined }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(langProp?.langProp || "en");
   const router = useRouter();
   const current = languages[selected as keyof typeof languages];
-  
+
   return (
     <nav className={styles.langBar} aria-label="Language selection">
       <button
@@ -20,7 +21,14 @@ function LangBar(langProp?: { langProp: string | undefined }) {
         aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
-        <img src={current.flagPath} alt="" />
+        <Image
+          className={styles.flag}
+          src={current.flagPath}
+          alt={`${current.language} flag`}
+          width={120}
+          height={80}
+          loading="eager"
+        />
         {current.language}
         <span aria-hidden="true">{open ? "▲" : "▼"}</span>
       </button>
@@ -42,7 +50,14 @@ function LangBar(langProp?: { langProp: string | undefined }) {
               }}
               aria-current={selected === code ? "true" : undefined}
             >
-              <img src={flagPath} alt="" />
+              <Image
+                className={styles.flag}
+                src={flagPath}
+                alt={`${language} flag`}
+                width={120}
+                height={80}
+                loading="eager"
+              />
               {language}
             </button>
           </li>
