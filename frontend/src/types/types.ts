@@ -10,12 +10,13 @@ type Param = {
 type CardProps = {
   countries: Countries;
 };
+type LanguageCode = "pt" | "en" | "es" | "fr";
 
 type Country = {
-  code: "pt" | "en" | "es" | "fr";
+  code: LanguageCode;
   alt: "Portuguese" | "English" | "Spanish" | "French";
   language: "Português" | "English" | "Español" | "Français";
-  flagPath: `/assets/${Country["code"]}.svg`;
+  flagPath: `/assets/${LanguageCode}.svg`;
 };
 
 type Countries = Record<Country["code"], Country>;
@@ -26,12 +27,16 @@ type CardStyles = {
   flag: string;
   text: string;
 };
-type Code = "INVALID" | "NOT_EQUAL";
-type CookieCode = {
-  code?: Code | undefined;
-  languageValue?: Country["code"];
-  languageName?: Country["language"];
-};
+
+type CookieCode =
+  | {
+      code: "INVALID";
+    }
+  | {
+      code: "NOT_EQUAL";
+      languageValue: Country["code"];
+      languageName: Country["language"];
+    };
 
 type SavedLanguage = {
   value?: Country["code"] | undefined;
