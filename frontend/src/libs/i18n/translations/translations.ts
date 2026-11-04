@@ -62,4 +62,19 @@ const remember: DualTranslations = {
   },
 };
 
-export { loading, dialog, dontWarn, goTo, continueText, remember };
+const AllRightsReserved: Translations = {
+  pt: "Todos os direitos reservados.",
+  es: "Todos los derechos reservados.",
+  en: "All rights reserved.",
+  fr: "Tous droits réservés.",
+};
+
+export {
+  loading,
+  dialog,
+  dontWarn,
+  goTo,
+  continueText,
+  remember,
+  AllRightsReserved,
+};
