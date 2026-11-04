@@ -37,7 +37,7 @@ export default async function Layout({ children, params }: Props) {
         {langLayoutData.cookieResult && (
           <CookieDialog cookie={langLayoutData.cookieResult} />
         )}
-        <Footer />
+        <Footer langProp={lang} />
       </body>
     </html>
   );
