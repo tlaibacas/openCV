@@ -1,7 +1,6 @@
 import "@/app/(home)/globals.css";
 import { loading } from "@/libs/i18n/translations/translations";
 import { Country } from "@/types/types";
-
 type Props = {
   params: Promise<{ lang: Country["code"] }>;
 };
