@@ -4,7 +4,6 @@ import { useState } from "react";
 import { languages } from "@/libs/i18n/locales/countries";
 import { useRouter } from "next/navigation";
 import styles from "./LangBar.module.css";
-import { createCookie } from "@/libs/cookies/cookies";
 import Image from "next/image";
 
 function LangBar(langProp?: { langProp: string | undefined }) {
