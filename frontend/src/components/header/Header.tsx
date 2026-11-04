@@ -32,6 +32,16 @@ export default function Header({
     };
   }, []);
 
+  useEffect(() => {
+    if (!langProp) return;
+
+    const timeout = setTimeout(() => {
+      setHidden(true);
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
       {pathProp !== "/" && <LangBar langProp={langProp} />}
