@@ -1,0 +1,50 @@
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.brand img {
+  width: 150px;
+  height: auto;
+}
+
+.name {
+  display: flex;
+  align-items: flex-end;
+  gap: 5rem;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.My {
+  font-size: 1rem;
+}
+
+.Virtual {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.CV {
+  font-size: 2.5rem;
+  color: #f58220;
+  font-weight: bold;
+}
