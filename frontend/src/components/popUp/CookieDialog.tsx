@@ -38,7 +38,6 @@ export default function CookieDialog({ cookie }: Props) {
     >
       {cookie.code === invalid ? (
         <>
-          <p>{cookie.code}</p>
           <p>Your saved language is invalid or the cookie is corrupted.</p>
           <button
             onClick={() => {
