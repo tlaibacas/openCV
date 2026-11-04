@@ -1,0 +1,28 @@
+.progress {
+  width: 180px;
+  height: 14px;
+  overflow: hidden;
+  border: 1px solid #777;
+  border-radius: 3px;
+  background: #111;
+  gap: 0.2rem;
+  display: flex;
+}
+
+.progress span {
+  display: block;
+  width: 10%;
+  height: 100%;
+  background: linear-gradient(#54baff, #0874ce, #004b91);
+  animation: boot 2s linear infinite;
+}
+
+@keyframes boot {
+  from {
+    transform: translateX(-1000%);
+  }
+
+  to {
+    transform: translateX(1000%);
+  }
+}
