@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const preferences = await getInitialPreferences(await cookies());
+  const preferences = getInitialPreferences(await cookies());
 
   if (preferences.savedLanguage) {
     redirect(`/${preferences.savedLanguage.value}`);
@@ -27,7 +27,11 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en" data-theme={preferences.theme}>
       <body>
-        <Header initialTheme={preferences.theme} langProp={undefined} />
+        <Header
+          initialTheme={preferences.theme}
+          langProp={undefined}
+          pathProp="/"
+        />
         {children}
       </body>
     </html>
