@@ -11,6 +11,7 @@ import CookieDialog from "@/components/popUp/CookieDialog";
 import Header from "@/components/header/Header";
 import "@/app/(home)/globals.css";
 import { cookies } from "next/dist/server/request/cookies";
+import Footer from "@/components/footer/Footer";
 export const metadata: Metadata = siteMetadata;
 
 type Props = {
@@ -36,6 +37,7 @@ export default async function Layout({ children, params }: Props) {
         {langLayoutData.cookieResult && (
           <CookieDialog cookie={langLayoutData.cookieResult} />
         )}
+        <Footer />
       </body>
     </html>
   );
