@@ -40,7 +40,7 @@ export default function Header({
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [langProp]);
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
