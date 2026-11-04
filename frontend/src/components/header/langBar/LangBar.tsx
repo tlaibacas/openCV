@@ -45,7 +45,6 @@ function LangBar(langProp?: { langProp: string | undefined }) {
               onClick={() => {
                 setSelected(code);
                 setOpen(false);
-                createCookie("lang", code);
                 router.push(`/${code}`);
               }}
               aria-current={selected === code ? "true" : undefined}
