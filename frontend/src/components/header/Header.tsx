@@ -7,9 +7,14 @@ import LangBar from "./langBar/LangBar";
 type HeaderProps = {
   initialTheme?: ThemeType;
   langProp?: string | undefined;
+  pathProp?: string | undefined;
 };
 
-export default function Header({ initialTheme, langProp }: HeaderProps) {
+export default function Header({
+  initialTheme,
+  langProp,
+  pathProp,
+}: HeaderProps) {
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
     function handleWheel(event: WheelEvent) {
@@ -29,13 +34,13 @@ export default function Header({ initialTheme, langProp }: HeaderProps) {
 
   return (
     <header className={`${styles.header} ${hidden ? styles.hidden : ""}`}>
-      <LangBar langProp={langProp} />
+      {pathProp !== "/" && <LangBar langProp={langProp} />}
       <Theme initialTheme={initialTheme} />
 
       <button
         className={styles.toggle}
         onClick={() => setHidden(!hidden)}
-        aria-label={hidden ? "Mostrar header" : "Esconder header"}
+        aria-label={hidden ? "Show header" : "Hide header"}
         aria-expanded={!hidden}
       >
         {hidden ? "▼" : "▲"}
