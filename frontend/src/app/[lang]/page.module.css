@@ -48,3 +48,9 @@
   color: #f58220;
   font-weight: bold;
 }
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -11,7 +11,7 @@ export default async function Page({ params }: Props) {
   const { lang } = await params;
 
   return (
-    <main>
+    <main className={styles.main}>
       <div className={styles.logo}>
         <div className={styles.brand}>
           <div className={styles.name}>
