@@ -42,6 +42,7 @@ export default function CookieDialog({ cookie }: Props) {
           <button
             onClick={() => {
               clearCookies("lang", "warn");
+              router.refresh();
               router.push("/");
             }}
           >
@@ -67,7 +68,9 @@ export default function CookieDialog({ cookie }: Props) {
             <button
               onClick={() => {
                 createCookie("warn", String(remember));
+
                 dialogRef.current?.close();
+                router.refresh();
               }}
             >
               {continueText[cookie.languageValue] || "Continue"}
