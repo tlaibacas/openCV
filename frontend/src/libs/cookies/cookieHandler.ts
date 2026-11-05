@@ -72,9 +72,10 @@ function getInitialPreferences(cookieStore: CookieStore): {
 function getLanguageLayoutData(
   cookieStore: CookieStore,
   lang: string,
-): { cookieResult: CookieCode | undefined } {
+): { cookieResult: CookieCode | undefined; showPage: boolean } {
   return {
     cookieResult: checkLanguageCookie(cookieStore, lang),
+    showPage: cookieStore.get("warn")?.value === "true",
   };
 }
 
