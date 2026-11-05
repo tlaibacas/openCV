@@ -28,21 +28,16 @@ export default async function Layout({ children, params }: Props) {
   const cookieStore = await cookies();
   const langLayoutData = getLanguageLayoutData(cookieStore, lang);
   const theme = getTheme(cookieStore);
+  const valid = langLayoutData.cookieResult;
 
   return (
     <html lang={lang} data-theme={theme}>
       <body>
-        {!langLayoutData.cookieResult && (
-          <>
-            <Header initialTheme={theme} langProp={lang} />
-            {children}
-            <Footer langProp={lang} />
-          </>
-        )}
+        <Header initialTheme={theme} langProp={lang} />
+        {children}
+        <Footer langProp={lang} />
 
-        {langLayoutData.cookieResult && (
-          <CookieDialog cookie={langLayoutData.cookieResult} />
-        )}
+        {valid && <CookieDialog cookie={valid} />}
       </body>
     </html>
   );
