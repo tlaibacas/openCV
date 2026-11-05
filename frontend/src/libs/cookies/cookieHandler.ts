@@ -77,7 +77,8 @@ function getLanguageLayoutData(
   return {
     cookieResult: checkLanguageCookie(cookieStore, lang),
     showPage:
-  cookieStore.has("warn") &&
+  showPage:
+  !cookieStore.has("warn") ||
   cookieStore.get("warn")?.value !== "false",
   };
 }
