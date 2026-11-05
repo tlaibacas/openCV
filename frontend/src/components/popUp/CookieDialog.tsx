@@ -14,7 +14,7 @@ import {
   continueText,
 } from "@/libs/i18n/translations/translations";
 type Props = {
-  cookie: CookieCode;
+  cookie: Exclude<CookieCode, { showPage: true }>;
 };
 
 export default function CookieDialog({ cookie }: Props) {
