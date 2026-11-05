@@ -1,3 +1,4 @@
+
 import type {
   Country,
   CookieCode,
@@ -34,10 +35,11 @@ function redirectToSavedLanguage(
 
 function checkLanguageCookie(
   cookieStore: CookieStore,
-  currentLanguage?: string | undefined,
+  currentLanguage?: string,
 ): CookieCode | undefined {
   const savedLanguage = cookieStore.get("lang")?.value;
-  const hasDisabledLanguageWarning = cookieStore.get("warn")?.value === "true";
+  const hasDisabledLanguageWarning =
+    cookieStore.get("warn")?.value === "true";
 
   if (!savedLanguage) return;
 
@@ -70,12 +72,17 @@ function getInitialPreferences(cookieStore: CookieStore): {
   };
 }
 
-const cookieResult = checkLanguageCookie(cookieStore, lang);
+function getLanguageLayoutData(
+  cookieStore: CookieStore,
+  lang: string,
+): { cookieResult: CookieCode | undefined; showPage: boolean } {
+  const cookieResult = checkLanguageCookie(cookieStore, lang);
 
-return {
-  cookieResult,
-  showPage: !cookieResult,
-};
+  return {
+    cookieResult,
+    showPage: !cookieResult,
+  };
+}
 
 export {
   redirectToSavedLanguage,
