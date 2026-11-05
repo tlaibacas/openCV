@@ -23,7 +23,7 @@ export default function LangCards() {
                 createCookie("lang", country.code);
               }
 
-              createCookie("warn", "");
+              
 
   router.push(`/${country.code}`);
             }}
