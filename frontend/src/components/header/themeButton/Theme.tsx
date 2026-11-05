@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from "react";
 import styles from "./Theme.module.css";
 import type { ThemeType } from "@/types/types";
 import { createCookie } from "@/libs/cookies/cookies";
+import { useRouter } from "next/navigation";
 
 type ThemeProps = {
   initialTheme?: ThemeType;
@@ -28,6 +29,7 @@ function getServerSnapshot() {
 }
 
 export default function Theme({ initialTheme }: ThemeProps) {
+  const router = useRouter();
   const systemDark = useSyncExternalStore(
     subscribe,
     getSnapshot,
@@ -51,6 +53,7 @@ export default function Theme({ initialTheme }: ThemeProps) {
     document.documentElement.dataset.theme = theme;
 
     createCookie("theme", String(theme));
+    router.refresh();
   }
 
   return (
