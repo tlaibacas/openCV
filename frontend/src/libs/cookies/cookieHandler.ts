@@ -70,17 +70,12 @@ function getInitialPreferences(cookieStore: CookieStore): {
   };
 }
 
-function getLanguageLayoutData(
-  cookieStore: CookieStore,
-  lang: string,
-): { cookieResult: CookieCode | undefined; showPage: boolean } {
-  return {
-    cookieResult: checkLanguageCookie(cookieStore, lang),
-  showPage:
-  !cookieStore.has("warn") ||
-  cookieStore.get("warn")?.value !== "false",
-  };
-}
+const cookieResult = checkLanguageCookie(cookieStore, lang);
+
+return {
+  cookieResult,
+  showPage: !cookieResult,
+};
 
 export {
   redirectToSavedLanguage,
