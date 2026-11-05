@@ -37,17 +37,15 @@ export default async function Layout({ children, params }: Props) {
   return (
     <html lang={lang} data-theme={theme}>
       <body>
-        {langLayoutData.showPage && (
-          <>
-            <Header initialTheme={theme} langProp={lang} />
-            {children}
-            <Footer langProp={lang} />
-          </>
-        )}
-
-        {!langLayoutData.showPage && (
-          <CookieDialog cookie={langLayoutData.cookieResult} />
-        )}
+     {langLayoutData.showPage ? (
+  <>
+    <Header initialTheme={theme} langProp={lang} />
+    {children}
+    <Footer langProp={lang} />
+  </>
+) : (
+  <CookieDialog cookie={langLayoutData.cookieResult} />
+)}
       </body>
     </html>
   );
