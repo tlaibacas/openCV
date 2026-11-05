@@ -23,7 +23,9 @@ export default function LangCards() {
                 createCookie("lang", country.code);
               }
 
-              router.push(`/${country.code}`);
+              createCookie("warn", "");
+
+  router.push(`/${country.code}`);
             }}
           >
             <Image
