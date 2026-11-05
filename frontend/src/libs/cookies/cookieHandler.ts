@@ -80,7 +80,7 @@ function getLanguageLayoutData(
 
   return {
     cookieResult,
-    showPage: !cookieResult,
+    showPage: !cookieResult?.code,
   };
 }
 
