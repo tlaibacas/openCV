@@ -12,6 +12,7 @@ import Header from "@/components/header/Header";
 import "@/app/(home)/globals.css";
 import { cookies } from "next/dist/server/request/cookies";
 import Footer from "@/components/footer/Footer";
+
 export const metadata: Metadata = siteMetadata;
 
 type Props = {
@@ -33,9 +34,13 @@ export default async function Layout({ children, params }: Props) {
   return (
     <html lang={lang} data-theme={theme}>
       <body>
-        <Header initialTheme={theme} langProp={lang} />
-        {children}
-        <Footer langProp={lang} />
+        {isSupportedLanguage(lang) && langLayoutData.showPage && (
+          <>
+            <Header initialTheme={theme} langProp={lang} />
+            {children}
+            <Footer langProp={lang} />
+          </>
+        )}
 
         {valid && <CookieDialog cookie={valid} />}
       </body>
