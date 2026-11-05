@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+íimport type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { metadata as siteMetadata } from "@/app/metadata/metadata";
@@ -33,17 +33,17 @@ export default async function Layout({ children, params }: Props) {
 
   return (
     <html lang={lang} data-theme={theme}>
-      <body>
-        {isSupportedLanguage(lang) && langLayoutData.showPage && (
-          <>
-            <Header initialTheme={theme} langProp={lang} />
-            {children}
-            <Footer langProp={lang} />
-          </>
-        )}
-
-        {valid && <CookieDialog cookie={valid} />}
-      </body>
+  <body>
+  {valid ? (
+    <CookieDialog cookie={valid} />
+  ) : (
+    <>
+      <Header initialTheme={theme} langProp={lang} />
+      {children}
+      <Footer langProp={lang} />
+    </>
+  )}
+</body>
     </html>
   );
 }
