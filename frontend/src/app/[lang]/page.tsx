@@ -13,7 +13,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <main className={styles.main}>
-      <div className={styles.logo}>
+      <div>
         <div className={styles.brand}>
           <div className={styles.name}>
             <span className={styles.My}>My</span>
