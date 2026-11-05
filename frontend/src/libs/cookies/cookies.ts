@@ -1,7 +1,11 @@
-const COOKIE_MAX_AGE: number = 604800;
+const COOKIE_MAX_AGE = 604800;
 
-function createCookie(key: string, value: string) {
-  document.cookie = `${key}=${value}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
+function createCookie(
+  key: string,
+  value: string,
+  maxAge: number = COOKIE_MAX_AGE,
+) {
+  document.cookie = `${key}=${value}; path=/; max-age=${maxAge}; samesite=lax`;
 }
 function clearCookies(...names: string[]) {
   names.forEach((name) => {
