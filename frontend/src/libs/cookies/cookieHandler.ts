@@ -12,6 +12,7 @@ import {
 
 type CookieStore = {
   get(name: string): { value: string } | undefined;
+  has(name: string): boolean;
 };
 
 const invalid = "INVALID";
