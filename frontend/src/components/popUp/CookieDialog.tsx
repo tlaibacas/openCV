@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function CookieDialog({ cookie }: Props) {
-  const [remember, setRemember] = useState(false);
+  const [, setRemember] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
 
