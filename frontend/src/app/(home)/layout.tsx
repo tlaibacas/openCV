@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import type { ReactNode } from "react";
+import type { ChildrenProps } from "@/types/types";
 import "./globals.css";
 import {
   metadata as siteMetadata,
@@ -13,11 +13,7 @@ import { cookies } from "next/headers";
 export const metadata: Metadata = siteMetadata;
 export const viewport: Viewport = siteViewport;
 
-type Props = {
-  children: ReactNode;
-};
-
-export default async function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: ChildrenProps) {
   const preferences = getInitialPreferences(await cookies());
 
   if (preferences.savedLanguage) {
