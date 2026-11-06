@@ -1,9 +1,7 @@
-
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
-
+import { LangProps } from "@/types/types";
 import { metadata as siteMetadata } from "@/app/metadata/metadata";
 import {
   isSupportedLanguage,
@@ -19,12 +17,7 @@ import "@/app/(home)/globals.css";
 
 export const metadata: Metadata = siteMetadata;
 
-type Props = {
-  params: Promise<{ lang: string }>;
-  children: ReactNode;
-};
-
-export default async function Layout({ children, params }: Props) {
+export default async function Layout({ children, params }: LangProps) {
   const { lang } = await params;
 
   if (!isSupportedLanguage(lang)) {
