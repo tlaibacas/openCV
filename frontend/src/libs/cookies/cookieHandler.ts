@@ -3,16 +3,13 @@ import type {
   CookieCode,
   SavedLanguage,
   ThemeType,
+  CookieStore,
 } from "@/types/types";
 
 import {
   supportedLanguageCodes,
   languages,
 } from "@/libs/i18n/locales/countries";
-
-type CookieStore = {
-  get(name: string): { value: string } | undefined;
-};
 
 const invalid = "INVALID";
 const notEqual = "NOT_EQUAL";
@@ -34,19 +31,15 @@ function redirectToSavedLanguage(
 function checkLanguageCookie(
   cookieStore: CookieStore,
   currentLanguage?: string,
-): CookieCode {
+): CookieCode | undefined {
   const savedLanguage = cookieStore.get("lang")?.value;
-  const hasDisabledLanguageWarning =
-    cookieStore.get("warn")?.value === "true";
+  const hasDisabledLanguageWarning = cookieStore.get("warn")?.value === "true";
 
-  if (!savedLanguage) {
-    return { showPage: true };
-  }
+  if (!savedLanguage) return;
 
   if (!isSupportedLanguage(savedLanguage)) {
     return {
       code: invalid,
-      showPage: false,
     };
   }
 
@@ -55,11 +48,10 @@ function checkLanguageCookie(
       code: notEqual,
       languageValue: savedLanguage,
       languageName: languages[savedLanguage].language,
-      showPage: false,
     };
   }
 
-  return { showPage: true };
+  return;
 }
 
 function getTheme(cookieStore: CookieStore): ThemeType | undefined {
@@ -81,12 +73,11 @@ function getInitialPreferences(cookieStore: CookieStore): {
 function getLanguageLayoutData(
   cookieStore: CookieStore,
   lang: string,
-): { cookieResult: CookieCode; showPage: boolean } {
+): { cookieResult: CookieCode | undefined } {
   const cookieResult = checkLanguageCookie(cookieStore, lang);
 
   return {
     cookieResult,
-    showPage: cookieResult.showPage,
   };
 }
 
