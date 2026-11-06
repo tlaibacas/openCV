@@ -38,16 +38,11 @@ type CardStyles = {
 type CookieCode =
   | {
       code: "INVALID";
-      showPage: false;
     }
   | {
       code: "NOT_EQUAL";
       languageValue: Country["code"];
       languageName: Country["language"];
-      showPage: false;
-    }
-  | {
-      showPage: true;
     };
 
 type SavedLanguage = {
@@ -56,7 +51,12 @@ type SavedLanguage = {
 
 type Translations = Record<Country["code"], string>;
 
+type CookieStore = {
+  get(name: string): { value: string } | undefined;
+};
+
 export type {
+  CookieStore,
   Translations,
   ChildrenProps,
   Country,
