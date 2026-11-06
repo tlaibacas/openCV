@@ -32,14 +32,14 @@ export default async function Layout({ children, params }: LangProps) {
   return (
     <html lang={lang} data-theme={theme}>
       <body>
-        {cookieResult.showPage ? (
+        {cookieResult ? (
+          <CookieDialog cookie={cookieResult} />
+        ) : (
           <>
             <Header initialTheme={theme} langProp={lang} />
             {children}
             <Footer langProp={lang} />
           </>
-        ) : (
-          <CookieDialog cookie={cookieResult} />
         )}
       </body>
     </html>
