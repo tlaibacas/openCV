@@ -1,22 +1,26 @@
-type Props = {
-  params: Promise<{ lang: string }> | { lang: string };
-};
+import { ReactNode } from "react";
 
-type Param = {
-  lang: Country["code"];
-  alt: Country["alt"];
-};
-
-type CardProps = {
-  countries: Countries;
-};
 type LanguageCode = "pt" | "en" | "es" | "fr";
+
+type ThemeType = "light" | "dark";
 
 type Country = {
   code: LanguageCode;
   alt: "Portuguese" | "English" | "Spanish" | "French";
   language: "Português" | "English" | "Español" | "Français";
   flagPath: `/assets/${LanguageCode}.svg`;
+};
+
+type ChildrenProps = {
+  children: ReactNode;
+};
+
+type LangProps = ChildrenProps & {
+  params: Promise<{ lang: string }>;
+};
+
+type CardProps = {
+  countries: Countries;
 };
 
 type Countries = Record<Country["code"], Country>;
@@ -49,17 +53,15 @@ type SavedLanguage = {
 
 type Translations = Record<Country["code"], string>;
 
-type ThemeType = "light" | "dark";
-
 export type {
   Translations,
-  Props,
+  ChildrenProps,
   Country,
   CardProps,
   Countries,
   CardStyles,
-  Param,
   CookieCode,
   SavedLanguage,
   ThemeType,
+  LangProps,
 };
