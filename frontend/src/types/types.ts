@@ -14,6 +14,9 @@ type Country = {
 type ChildrenProps = {
   children: ReactNode;
 };
+type PropsCode = {
+  params: Promise<{ lang: Country["code"] }>;
+};
 
 type LangProps = ChildrenProps & {
   params: Promise<{ lang: string }>;
@@ -64,4 +67,5 @@ export type {
   SavedLanguage,
   ThemeType,
   LangProps,
+  PropsCode,
 };

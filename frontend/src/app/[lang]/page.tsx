@@ -1,14 +1,11 @@
 import "@/app/(home)/globals.css";
 import { loading } from "@/libs/i18n/translations/translations";
-import { Country } from "@/types/types";
+import { PropsCode } from "@/types/types";
 import Image from "next/image";
 import styles from "./page.module.css";
 import Loading from "@/components/main/loading/Loading";
-type Props = {
-  params: Promise<{ lang: Country["code"] }>;
-};
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: PropsCode) {
   const { lang } = await params;
 
   return (
